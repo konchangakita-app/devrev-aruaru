@@ -266,3 +266,16 @@ docker compose up   # → http://localhost:3101
 ### Astro との整合
 
 投稿が GitHub 経由であれば、公開サイトはビルド時静的生成のまま。**Astro 継続で問題なし。**
+
+---
+
+## 12. あるあるサイト — 本番ドメイン
+
+| 項目 | 値 |
+|---|---|
+| 本番 URL | **https://devrev-aruaru.konchangakita.com** |
+| ホスティング | Vercel |
+| コード上の正本 | `web/astro.config.mjs` の `site` |
+| hack-plus からのリンク | **しない**（連載ルールどおり。URL はブログに載せない） |
+
+サブドメインはリポジトリ名 `devrev-aruaru` と揃える（`devrev-aruar` 表記は使わない）。
