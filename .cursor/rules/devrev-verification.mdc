@@ -1,0 +1,31 @@
+---
+description: DevRev ISS 検証時の PAT・API・スクショ手順
+globs: docs/internal/verification/**/*
+alwaysApply: false
+---
+
+# DevRev 検証ワークフロー
+
+ISS 検証を始める前に **ORG: kon-jp** を確認する。未指定なら実行しない。
+
+## 1. PAT 解決
+
+`devrev-pat-manager` の `--profile kon-jp` のみ使用。未登録なら `devrev-sampleapp/skills/devrev-pat-manager/pat-profiles/kon-jp.env` を案内し中断する。
+
+## 2. API 確認（devrev-platform-fetch）
+
+sampleapp の `skills/` から Docker 実行:
+
+- `fetch_work.py` — `WORK_ID=ISS-XX` でステージ・last_code_activity 確認
+- `fetch_auth_connections.py` — GitHub 接続方式（OAuth/PAT）確認
+- `fetch_timeline_entries.py` — タイムライン記録確認
+
+## 3. UI スクショ
+
+Browser MCP で `app.devrev.ai/kon-jp/...` を操作。検証結果は `docs/internal/verification/iss-XX/` に保存。
+
+## 禁止事項（検証中も）
+
+- 新規 ISS 起票
+- パーツ作成・設定変更（Computer に委ねる）
+- 別 org の PAT で代用

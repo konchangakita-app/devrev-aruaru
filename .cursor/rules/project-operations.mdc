@@ -1,0 +1,40 @@
+---
+description: devrev-aruaru の Computer/Cursor 役割分担と DevRev スキル参照
+alwaysApply: true
+---
+
+# devrev-aruaru プロジェクト運用
+
+運用マスターは @docs/OPERATIONS.md。GitHub 連携方針は @docs/devrev-github-issue-policy.md。
+
+## Computer のみ
+
+- あるあるネタの DevRev Issue（ISS）起票
+- パーツの作成・設定
+- ステージ管理（Issue の計画・トリアージ）
+
+## Cursor が行う
+
+- 起票済み ISS に沿った検証（DevRev UI 操作・API 確認・スクショ）
+- コード実装・PR（ブランチ/コミット/PR に `ISS-XXX` を記載）
+- ブログネタ追記（`hack-plus/docs/blog-ideas.md`）
+- あるある `entries.json` 更新（Computer 主だが Cursor も可）
+
+## DevRev スキル（正本は devrev-sampleapp）
+
+スキル正本: `konchangakita/devrev-sampleapp/skills/`（`.cursor/skills/` は symlink）。
+
+| スキル | 用途 |
+|---|---|
+| `devrev-pat-manager` | PAT 解決（`--profile kon-jp`）。チャットに PAT を貼らない |
+| `devrev-platform-fetch` | ISS 状態・auth 接続・timeline の API 検証 |
+| `devrev-snap-in-operations` | スナップイン設定変更時 |
+
+Docker 実行は **sampleapp の `skills/` ディレクトリから**:
+
+```bash
+cd konchangakita/devrev-sampleapp/skills
+eval "$(docker compose run --rm skill-py python devrev-pat-manager/scripts/devrev_pat_cli.py resolve --profile kon-jp --export-shell 2>/dev/null)"
+```
+
+検証ログは `docs/internal/verification/` に記録する。

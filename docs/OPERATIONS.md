@@ -4,7 +4,7 @@
 
 - マスター（正）: 本ファイル `devrev-aruaru/docs/OPERATIONS.md`
 - 従: `hack-plus/docs/blog-ideas.md` の冒頭から本ファイルを参照する
-- 最終更新: 2026-08-25
+- 最終更新: 2026-08-26
 
 ---
 
@@ -44,16 +44,30 @@ GitHub Repo1 / Repo2  ← コードとコンテンツ
 
 | 作業 | 担当 | 備考 |
 |---|---|---|
-| DevRev パーツの作成・管理 | **Computer のみ** | kon-jp への API アクセス（PAT）を持つのは Computer |
-| DevRev Issue（ISS）の起票・ステージ管理 | **Computer のみ** | DevRev 側の一元管理。Cursor は DevRev を直接操作しない |
+| DevRev パーツの作成・管理 | **Computer のみ** | あるあるネタの Part 整備は Computer が行う |
+| DevRev Issue（ISS）の起票 | **Computer のみ** | あるあるネタ・ブログ backlog 等の起票は Computer |
+| 起票済み ISS の DevRev 検証 | **Cursor 主** | UI 操作・API 確認・スクショ（PAT 使用可） |
 | ブログネタの記録（blog-ideas.md 追記） | **Computer と Cursor 両方** | Cursor は検証中に即メモしてよい |
-| Web サイトのスクリーンショット取得 | **Cursor 主** | Cursor の方が得意 |
+| Web サイトのスクリーンショット取得 | **Cursor 主** | 公開サイト・DevRev UI とも Cursor |
 | サイト／ブログのコード実装 | **Cursor 主** | 実装は Cursor。対応する Issue は Computer が起票 |
 | あるある本体の更新（entries.json） | **Computer 主**（Cursor も可） | Computer は devrev-aruaru-add スキルを使用 |
 
 ### Cursor への明示指示
-- **DevRev（パーツ／Issue／ステージ）を直接操作しないこと。** DevRev への登録が必要なものは、後述の受け渡し方式で Computer に委ねる。
-- できること: ブログネタの追記、スクショ取得、コード実装、あるある entries.json への追記。
+- **DevRev の起票・パーツ設定は Computer に委ねる。** あるあるネタの ISS 起票や Part 作成は Cursor から行わない。
+- **起票済み ISS の検証では DevRev を操作してよい。** UI 操作・API 確認・スクショ取得に PAT を使う（`devrev-pat-manager --profile kon-jp`）。
+- その他 Cursor が行うこと: ブログネタの追記、コード実装、あるある entries.json への追記。
+
+### DevRev スキル（Cursor）
+
+スキル正本は `konchangakita/devrev-sampleapp/skills/`。本リポジトリの `.cursor/skills/` は symlink で参照する。
+
+| スキル | 用途 |
+|---|---|
+| `devrev-pat-manager` | PAT 解決（`pat-profiles/kon-jp.env`） |
+| `devrev-platform-fetch` | ISS 状態・接続・timeline の API 検証 |
+| `devrev-snap-in-operations` | スナップイン設定変更時 |
+
+Docker 実行は sampleapp の `skills/` から行う。詳細は `.cursor/rules/` を参照。
 
 ---
 
