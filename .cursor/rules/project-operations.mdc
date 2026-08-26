@@ -38,3 +38,18 @@ eval "$(docker compose run --rm skill-py python devrev-pat-manager/scripts/devre
 ```
 
 検証ログは `docs/internal/verification/` に記録する。
+
+## 【とあるあるあるサイト】構成作業 × DA-1 ブログ（並行）
+
+サイト構成の相談・設計を始めたセッションでは、**構成の議論とブログ（DA-1 連載）を並行**する。
+
+1. **最初に読む**: `docs/OPERATIONS.md` §9、`hack-plus/.company/operations/content/series-devrev-aruaru.md`、`hack-plus/docs/blog-ideas.md`（DA-1）
+2. **構成の議論を進める**（あるあるサイト Repo1 の設計。entries 詳細は実装時まで保留可）
+3. **同セッションで記録・執筆**
+   - 方針決定 → `hack-plus/.company/secretary/notes/YYYY-MM-DD-decisions.md`
+   - 議論ログは下書きの素材にする → `hack-plus/web/content/drafts/`（`series-devrev-aruaru.md` の frontmatter 準拠）
+   - `blog-ideas.md` の DA-1 ステータスを `drafting` に更新
+4. **書かない**: あるある本文の紹介、公開サイト URL、ブログからサイトへのリンク
+5. **DevRev Issue 起票**は Computer に委ねる（Cursor は起票しない）
+
+オーナーが「記事用にログ」と言わなくても、構成の話を始めたら上記を**自動で**行う。

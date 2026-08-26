@@ -4,7 +4,7 @@
 
 - マスター（正）: 本ファイル `devrev-aruaru/docs/OPERATIONS.md`
 - 従: `hack-plus/docs/blog-ideas.md` の冒頭から本ファイルを参照する
-- 最終更新: 2026-08-26
+- 最終更新: 2026-08-26（§2 連載例外・§9 Cursor→hack-plus 指示系統を追加）
 
 ---
 
@@ -33,10 +33,17 @@ GitHub Repo1 / Repo2  ← コードとコンテンツ
 
 ## 2. ブログ（Repo2）の主題ポリシー ★最重要
 
-- ブログの**主語は「AIを使ったWebサイト構築」**。AIをどう使ってサイトを設計・実装・公開したか、そのノウハウと過程が主役。
-- **DevRev は主役にしない。** 「構築を進めるなかで、タスク管理やGitHub連携にDevRevを使うとこう便利」という**エッセンス／脇役**として登場させる。
-- **DevRev 解説が主役化したら、それは Repo1（あるある）側のネタ。** 主語がDevRevになるものは Repo1 に置く。
-- ネタを書く／記事にする前に必ずセルフチェック: 「この記事の主語はWebサイト構築か？ DevRevが主役になっていないか？」
+- ブログの**既定の主語は「AIを使ったWebサイト構築」**。AIをどう使ってサイトを設計・実装・公開したか、そのノウハウと過程が主役。
+- **既定では DevRev は主役にしない。** 「構築を進めるなかで、タスク管理やGitHub連携にDevRevを使うとこう便利」という**エッセンス／脇役**として登場させる。
+- **DevRev 解説が主役化した単発記事**は、Repo1（あるある）側のネタとして扱う（主語がDevRevになるものは Repo1 に置く）。
+- ネタを書く／記事にする前にセルフチェック: 「この記事の主語はWebサイト構築か？ DevRevが主役になっていないか？」
+
+### 例外：【とあるあるあるサイト】連載
+
+- hack-plus 内の **「【とあるあるあるサイト】」シリーズ**（`series: devrev-aruaru-site`）は、**DevRev を主語にしてよい**（あるあるサイトの開発・運用・ハマりどころが読者価値の中心）。
+- タイトル接頭辞はインパクト重視のシリーズ名。本文では DevRev を前面に出してよい。
+- 本線 I/II/III ロードマップの一般記事には §2 の既定ルールを適用する。
+- シリーズ固有ルールの正本: `hack-plus/.company/operations/content/series-devrev-aruaru.md`
 
 ---
 
@@ -139,3 +146,67 @@ Docker 実行は sampleapp の `skills/` から行う。詳細は `.cursor/rules
 - 開発方針（DevRev を唯一の Issue 基盤とする）: `devrev-aruaru/docs/devrev-github-issue-policy.md`
 - GitHub スナップイン検証レポート: `devrev-aruaru/docs/github-snapin-verification-report.md`
 - ブログネタ帳: `hack-plus/docs/blog-ideas.md`
+- 【とあるあるあるサイト】連載ルール: `hack-plus/.company/operations/content/series-devrev-aruaru.md`
+- hack-plus 仮想組織（記事制作フロー）: `hack-plus/.company/CLAUDE.md`
+
+---
+
+## 9. Cursor から hack-plus 記事を指示する系統
+
+オーナーは **devrev-aruaru ワークスペースの Cursor** から、hack-plus のブログ記事の方針・執筆・修正を指示できる。hack-plus の `.company/`（company スキル運用）と役割を分け、二重管理を避ける。
+
+### 役割の分担
+
+| 層 | 場所 | 担当すること |
+|---|---|---|
+| 横断・2リポジトリ | 本ファイル `OPERATIONS.md` | リポジトリ主語、Computer/Cursor/DevRev 分担、連載例外 |
+| ネタ帳 | `hack-plus/docs/blog-ideas.md` | 記事ネタ・想定タイトル・ステータス |
+| 方針・文体（一般） | `hack-plus/.company/operations/content/style-guide.md` | サイト全体の文体・表記（継続アップデート） |
+| 連載固有 | `series-devrev-aruaru.md` | 接頭辞・タグ・frontmatter・修正手順 |
+| 制作実行 | `hack-plus/.company/` | 秘書ルーティング → content → サブエージェント → QA → engineering 公開 |
+| 記事本体 | `hack-plus/web/content/drafts/` → `articles/` | Markdown 下書き・公開記事 |
+
+**Cursor セッション ≈ オーナーが秘書に相談**（company 運営モード）。方針決定と記録はここから行い、公開フロー・チェックリストは `.company` の既存ワークフローに従う。
+
+### 指示の流れ
+
+```
+1. オーナーが Cursor（devrev-aruaru）で方針・ネタ・執筆を指示
+2. Cursor が記録
+   - ネタ → blog-ideas.md
+   - 方針決定 → hack-plus/.company/secretary/notes/YYYY-MM-DD-decisions.md
+   - 連載ルール変更 → series-devrev-aruaru.md（必要時）
+3. 執筆 → web/content/drafts/ に下書き
+   - 連載は series-devrev-aruaru.md の frontmatter 必須項目に従う
+4. レビュー・公開 → hack-plus .company の記事作成フロー（変更しない）
+   - draft-content-reviewer → draft-design-reviewer → QA → engineering
+5. DevRev Issue 起票が必要な場合 → Computer に委ねる（Cursor は起票しない）
+
+### サイト構成作業と DA-1 の並行（自動）
+
+devrev-aruaru で**あるあるサイトの構成**（サイトマップ・ページ設計・AI との設計対話など）を始めたセッションでは、オーナーが「記事」と言わなくても次を**同セッションで**行う。
+
+1. `series-devrev-aruaru.md` と `blog-ideas.md`（DA-1）を参照
+2. 構成の議論を進める（entries 詳細・サイト URL 掲載は不要）
+3. 決定事項を `secretary/notes/YYYY-MM-DD-decisions.md` に記録
+4. 議論ログを `hack-plus/web/content/drafts/` の下書きに反映（frontmatter はシリーズルール準拠）
+5. `blog-ideas.md` の DA-1 を `drafting` に更新
+
+`.cursor/rules/project-operations.mdc` に同内容を記載（新セッション向け）。
+```
+
+### 修正の方法
+
+| 変更の種類 | 正本の更新 | 記事ファイル |
+|---|---|---|
+| 接頭辞・タグ・series ルール | `series-devrev-aruaru.md` | 該当下書き／公開記事を追随修正 |
+| 文体・トーン（全体） | `style-guide.md` | 必要に応じて既存記事を順次修正 |
+| ネタ・タイトル案 | `blog-ideas.md` | drafts の title / frontmatter |
+| 下書きの内容 | — | `web/content/drafts/` を直接編集 |
+| 公開済み記事（軽微） | — | `web/content/articles/` を編集（事実誤認・リンク切れ等） |
+| 公開済み記事（構成・時制・大改稿） | — | drafts に戻してフロー再通過を推奨 |
+
+### Computer / Cursor の境界（再掲）
+
+- **Computer**: DevRev Issue 起票、Part 整備、未起票ネタの backlog Issue 化
+- **Cursor**: ネタ追記、下書き執筆、`.company` ルール更新、あるあるサイト実装、起票済み ISS の検証
