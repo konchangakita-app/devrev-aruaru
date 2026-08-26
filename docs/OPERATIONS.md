@@ -210,3 +210,59 @@ devrev-aruaru で**あるあるサイトの構成**（サイトマップ・ペ�
 
 - **Computer**: DevRev Issue 起票、Part 整備、未起票ネタの backlog Issue 化
 - **Cursor**: ネタ追記、下書き執筆、`.company` ルール更新、あるあるサイト実装、起票済み ISS の検証
+
+---
+
+## 10. あるあるサイト — ローカル開発ポート
+
+`konchangakita-com` ワークスペースは **3001–3099** を予約している。本リポジトリ（`konchangakita-app/devrev-aruaru`）は別レンジを使う。
+
+| 項目 | 値 |
+|---|---|
+| ローカル Web（docker-compose） | **3101** |
+| 正本（konchangakita-com） | `hq/.company/secretary/notes/2026-05-11-docker-port-allocation.md`（3001–3099 のみ） |
+
+```bash
+docker compose up   # → http://localhost:3101
+```
+
+---
+
+## 11. あるあるサイト — 投稿・採用フロー（GitHub 経由）
+
+サイトは **静的**のまま。ユーザー投稿は Web フォーム・認証・DB を使わず、**GitHub** で受け付ける。
+
+### 一般ユーザー（推奨入口）
+
+**GitHub Issue**（テンプレート付き）— PR よりハードルが低い。
+
+1. リポジトリの「あるあるを投稿」Issue テンプレートを開く
+2. 症状・原因・対処・再現手順を記入して送信
+3. メンテナが内容を確認・匿名化
+4. メンテナ（または Cursor）が `entries.json` / 検証記事を **PR** で追加
+5. マージ → Vercel が再ビルド → サイトに反映
+
+一般ユーザーが **直接 PR を書く必要はない**（書ける人は PR も可）。
+
+### 上級者・コントリビュータ
+
+**GitHub PR** — fork → `entries` や検証 Markdown を追加 → PR。
+
+- テンプレート・スキーマに沿っていればそのままレビュー
+- 匿名化が必要な記述はレビューで修正
+
+### DevRev Issue の位置づけ（社内）
+
+**外部ユーザー向けではない。** 社内の検証・起票・ステージ管理用。
+
+| 場所 | 誰が使う | 用途 |
+|---|---|---|
+| GitHub Issue | 一般ユーザー・コントリビュータ | あるあるの **投稿・提案** |
+| GitHub PR | メンテナ・上級コントリビュータ | コンテンツの **反映** |
+| DevRev ISS | Computer / 社内メンバー | 検証タスク・改善の **管理**（起票は Computer） |
+
+サイトの About / CONTRIBUTING には **GitHub Issue へのリンク**を載せる（DevRev は載せない）。
+
+### Astro との整合
+
+投稿が GitHub 経由であれば、公開サイトはビルド時静的生成のまま。**Astro 継続で問題なし。**

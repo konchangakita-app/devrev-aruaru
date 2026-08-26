@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const repoUrl = 'https://github.com/konchangakita-app/devrev-aruaru';
+const issueUrl = `${repoUrl}/issues/new?template=aruaru-submission`;
+---
+
+<BaseLayout title="About | DevRevあるある">
+  <article class="space-y-6 leading-relaxed text-slate-300">
+    <h1 class="text-2xl font-bold text-amber-400">About</h1>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold text-slate-100">このサイトについて</h2>
+      <p>
+        DevRevを導入・運用するなかで遭遇する「あるある」（ハマりどころ・回避策）を集めた、非公式のナレッジサイトです
+      </p>
+      <p class="text-sm text-slate-500">
+        公式ドキュメントの補完であり、DevRev公式の見解や保証を代表するものではありません
+      </p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold text-slate-100">コンテンツの種類</h2>
+      <ul class="list-disc space-y-1 pl-5 text-sm">
+        <li><strong>あるある</strong> — 症状・原因・対処の短いナレッジ</li>
+        <li><strong>検証してみた</strong> — 手順と結果をまとめた記事形式の検証ログ</li>
+      </ul>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-lg font-semibold text-slate-100">あるあるを投稿する</h2>
+      <p class="text-sm">
+        GitHub Issue から投稿できます。内容を確認・匿名化したうえで、メンテナがリポジトリに反映します
+      </p>
+      <a
+        href={issueUrl}
+        class="inline-block rounded bg-amber-500 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-amber-400"
+      >
+        GitHub Issue で投稿する
+      </a>
+      <p class="text-xs text-slate-500">
+        GitHubアカウントが必要です。PRを書く必要はありません
+      </p>
+    </section>
+  </article>
+</BaseLayout>

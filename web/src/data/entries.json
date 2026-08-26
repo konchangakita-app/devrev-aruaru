@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "github-oauth-no-events",
+    "title": "GitHub連携したのにイベントが届かない",
+    "symptom": "リポジトリにブランチやPRを作っても、DevRev側でコード変更やステージ遷移が一切起きない",
+    "cause": "OAuth接続ではOrg配下リポジトリのWebhookイベントがDevRevに届かない場合がある。GitHub App（スナップイン）経由の接続が必要",
+    "fix": "Settings > Snap-ins から GitHub for DevRev をインストールし、GitHub Appとして対象Org/リポジトリを接続し直す",
+    "tags": ["GitHub連携", "スナップイン"],
+    "publishedAt": "2026-08-20"
+  },
+  {
+    "slug": "pr-merge-stage-not-completed",
+    "title": "PRマージしたのにIssueがCompletedにならない",
+    "symptom": "PRをマージしたが、紐づくIssueのステージがCompletedに遷移しない",
+    "cause": "ステージ自動遷移はワークフロー設定次第。「マージ＝完了」とは限らない",
+    "fix": "DevRevのワークフロー設定で、PRマージ時の遷移先ステージを確認する。期待どおりなら設定を変更する",
+    "tags": ["GitHub連携", "Issue"],
+    "publishedAt": "2026-08-18"
+  }
+]

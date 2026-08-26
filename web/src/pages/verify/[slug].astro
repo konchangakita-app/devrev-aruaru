@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const verifications = await getCollection('verifications');
+  return Promise.all(
+    verifications.map(async (entry) => {
+      const { Content } = await render(entry);
+      return {
+        params: { slug: entry.id },
+        props: { entry, Content },
+      };
+    }),
+  );
+}
+
+const { entry, Content } = Astro.props;
+---
+
+<BaseLayout title={`${entry.data.title} | 検証してみた`} description={entry.data.excerpt}>
+  <article class="article-body">
+    <header class="mb-8 space-y-3">
+      <h1 class="text-2xl font-bold text-amber-400">{entry.data.title}</h1>
+      <p class="text-sm text-slate-400">{entry.data.excerpt}</p>
+      <div class="flex flex-wrap gap-2">
+        {entry.data.tags.map((tag) => (
+          <a href={`/tags/${encodeURIComponent(tag)}`} class="rounded bg-slate-800 px-2 py-0.5 text-xs text-amber-300/90 hover:bg-slate-700">
+            {tag}
+          </a>
+        ))}
+      </div>
+    </header>
+    <Content />
+  </article>
+</BaseLayout>

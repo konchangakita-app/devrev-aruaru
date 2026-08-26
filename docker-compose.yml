@@ -1,0 +1,16 @@
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.dev
+    container_name: devrev-aruaru-website
+    ports:
+      - "3101:3101"
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      - /app/dist
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run dev

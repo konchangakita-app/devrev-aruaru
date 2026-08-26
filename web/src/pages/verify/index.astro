@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const verifications = (await getCollection('verifications')).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+---
+
+<BaseLayout title="検証してみた | DevRevあるある" description="DevRevの機能・連携を実際に検証した記録">
+  <h1 class="text-2xl font-bold text-amber-400">検証してみた</h1>
+  <p class="mt-2 text-sm text-slate-400">手順・結果・学びを記事形式でまとめています</p>
+
+  <ul class="mt-8 space-y-4">
+    {verifications.map((item) => (
+      <li class="rounded-lg border border-slate-800 bg-slate-900/50 p-5">
+        <a href={`/verify/${item.id}`} class="text-lg font-medium hover:text-amber-300">{item.data.title}</a>
+        <p class="mt-2 text-sm text-slate-400">{item.data.excerpt}</p>
+        <p class="mt-2 text-xs text-slate-500">{item.data.publishedAt.toISOString().slice(0, 10)}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

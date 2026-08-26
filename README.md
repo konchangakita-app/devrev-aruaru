@@ -10,6 +10,17 @@ DevRev のハマりどころ・ナレッジを公開するサイトのリポジ�
 | [開発方針](docs/devrev-github-issue-policy.md) | DevRev を唯一の Issue 管理基盤とする方針 |
 | [スナップイン検証レポート](docs/github-snapin-verification-report.md) | GitHub for DevRev スナップインの検証結果 |
 
+## ローカル開発
+
+```bash
+docker compose up
+# → http://localhost:3101
+```
+
+ポート **3101**（`konchangakita-com` の 3001–3099 とは別レンジ）。詳細は `docs/OPERATIONS.md` §10。
+
+サイト実装は `web/`（Astro）。あるあるの投稿は GitHub Issue（`OPERATIONS.md` §11）。
+
 ## 開発方針（要点）
 
 本リポジトリは **DevRev をメインの開発基盤**とし、Issue 管理は DevRev に一本化します。GitHub Issue は使いません。GitHub はコード（ブランチ / PR / コミット）専用の場として使います。

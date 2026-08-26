@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntries } from '../../lib/entries';
+
+export function getStaticPaths() {
+  return getEntries().map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<BaseLayout title={`${entry.title} | DevRevあるある`} description={entry.symptom}>
+  <article class="space-y-6">
+    <header class="space-y-3">
+      <h1 class="text-2xl font-bold text-amber-400">{entry.title}</h1>
+      <div class="flex flex-wrap gap-2">
+        {entry.tags.map((tag) => (
+          <a href={`/tags/${encodeURIComponent(tag)}`} class="rounded bg-slate-800 px-2 py-0.5 text-xs text-amber-300/90 hover:bg-slate-700">
+            {tag}
+          </a>
+        ))}
+      </div>
+      <p class="text-xs text-slate-500">公開日: {entry.publishedAt}</p>
+    </header>
+
+    <section class="space-y-2">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-400">症状</h2>
+      <p class="leading-relaxed text-slate-200">{entry.symptom}</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-400">原因</h2>
+      <p class="leading-relaxed text-slate-200">{entry.cause}</p>
+    </section>
+
+    <section class="space-y-2">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-400">対処</h2>
+      <p class="leading-relaxed text-slate-200">{entry.fix}</p>
+    </section>
+  </article>
+</BaseLayout>

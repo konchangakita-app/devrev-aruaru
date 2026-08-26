@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply leading-relaxed;
+  }
+}
+
+@layer components {
+  .article-body h2 {
+    @apply mt-8 mb-3 text-lg font-semibold text-amber-300;
+  }
+
+  .article-body p {
+    @apply mb-4 text-slate-300;
+  }
+
+  .article-body ol {
+    @apply mb-4 list-decimal space-y-1 pl-5 text-slate-300;
+  }
+
+  .article-body ul {
+    @apply mb-4 list-disc space-y-1 pl-5 text-slate-300;
+  }
+}

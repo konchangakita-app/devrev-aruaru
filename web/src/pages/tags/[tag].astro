@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AruaruCard from '../../components/AruaruCard.astro';
+import { getAllTags, getEntriesByTag } from '../../lib/entries';
+
+export function getStaticPaths() {
+  return getAllTags().map((tag) => ({
+    params: { tag },
+    props: { tag, entries: getEntriesByTag(tag) },
+  }));
+}
+
+const { tag, entries } = Astro.props;
+---
+
+<BaseLayout title={`${tag} | DevRevあるある`}>
+  <h1 class="text-2xl font-bold text-amber-400">タグ: {tag}</h1>
+  <p class="mt-2 text-sm text-slate-400">{entries.length} 件のあるある</p>
+
+  <div class="mt-8 space-y-4">
+    {entries.map((entry) => <AruaruCard entry={entry} />)}
+  </div>
+</BaseLayout>

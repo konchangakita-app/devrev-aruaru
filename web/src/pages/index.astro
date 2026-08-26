@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AruaruCard from '../components/AruaruCard.astro';
+import { getEntries } from '../lib/entries';
+import { getCollection } from 'astro:content';
+
+const entries = getEntries().slice(0, 3);
+const verifications = (await getCollection('verifications'))
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 2);
+---
+
+<BaseLayout title="DevRevあるある">
+  <section class="space-y-4">
+    <h1 class="text-3xl font-bold text-amber-400">DevRevあるある</h1>
+    <p class="text-slate-300 leading-relaxed">
+      DevRevを使い始めるとぶつかる「あるある」を、症状・原因・対処の形でまとめたナレッジサイトです
+    </p>
+    <p class="text-sm text-slate-500">非公式。公式ドキュメントの補完としてご利用ください</p>
+  </section>
+
+  <section class="mt-10 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-semibold">新着あるある</h2>
+      <a href="/aruaru" class="text-sm text-amber-400 hover:underline">すべて見る</a>
+    </div>
+    <div class="space-y-4">
+      {entries.map((entry) => <AruaruCard entry={entry} />)}
+    </div>
+  </section>
+
+  <section class="mt-10 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-semibold">検証してみた</h2>
+      <a href="/verify" class="text-sm text-amber-400 hover:underline">すべて見る</a>
+    </div>
+    <ul class="space-y-3">
+      {verifications.map((item) => (
+        <li class="rounded-lg border border-slate-800 bg-slate-900/50 p-4">
+          <a href={`/verify/${item.id}`} class="font-medium hover:text-amber-300">{item.data.title}</a>
+          <p class="mt-1 text-sm text-slate-400">{item.data.excerpt}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
