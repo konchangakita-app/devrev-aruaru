@@ -1012,6 +1012,133 @@ html[data-theme="dark"] {
     flex: none;
   }
 
+  /* Search */
+  .search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 640px;
+    margin-bottom: 20px;
+    padding: 8px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+  }
+
+  .search-form svg {
+    width: 20px;
+    height: 20px;
+    color: var(--page-text-muted);
+    flex: none;
+  }
+
+  .search-form input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    color: var(--page-text);
+    outline: none;
+    min-width: 0;
+  }
+
+  .search-form .btn {
+    flex: none;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .search-hint {
+    color: var(--page-text-muted);
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .search-results {
+    margin-top: 8px;
+  }
+
+  /* Empty state */
+  .empty-state {
+    padding: 32px 24px;
+    text-align: center;
+    background: var(--card-bg);
+    border: 1px dashed var(--card-border);
+    border-radius: 12px;
+  }
+
+  .empty-state--404 {
+    padding: 48px 24px;
+  }
+
+  .empty-state__eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+
+  .empty-state__title {
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--page-text);
+    margin: 0 0 8px;
+  }
+
+  .empty-state--404 .legacy-page-title {
+    margin-bottom: 12px;
+  }
+
+  .empty-state__message,
+  .empty-state__hint {
+    font-size: 14px;
+    color: var(--page-text-muted);
+    margin: 0 0 8px;
+    line-height: 1.6;
+  }
+
+  .empty-state__hint {
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  .empty-state__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .about-page section {
+    margin-top: 2rem;
+  }
+
+  .about-note {
+    font-size: 13px;
+    color: var(--page-text-muted);
+  }
+
+  .verify-lead {
+    margin: -12px 0 20px;
+  }
+
+  .verify-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .verify-item time {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--page-text-muted);
+  }
+
   .btn {
     display: inline-flex;
     align-items: center;

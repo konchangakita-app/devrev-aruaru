@@ -289,4 +289,31 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 
 **スクショ**: `scripts/capture-build-screenshots.mjs` + `docs/internal/build-screenshots/README.md`（Playwright は temp dir 実行、`ARUARU_ROOT` でパス解決）
 
-**次**: Phase 5 — About、404、OGP PNG、検索
+**次**: Phase 6 — entries 拡充、Pagefind 本格導入（件数増後）、DA-4 公開（別ライン）
+
+---
+
+### 2026-09-07 — Phase 5 About・404・空状態・OGP・検索（Cursor）
+
+**参照**: `design-log.md` バックログ（空状態/404/OGP/検索）、`devrev-aruaru-ogp.html`
+
+**実施内容**
+
+| 項目 | 内容 |
+|---|---|
+| `404.astro` | 非公式トーンの Not Found + トップ/一覧 CTA |
+| `EmptyState.astro` | タグ0件・検索0件・検証0件で再利用 |
+| `search.astro` + `searchEntries()` | キーワード部分一致（タイトル/本文/タグ/カテゴリ）。Hero・ナビ検索を `/search` に |
+| `about.astro` | 旧 Tailwind → `article-body` + あるある度の説明 |
+| `verify/index.astro` | デザインシステムに合わせて刷新 |
+| OGP | `BaseLayout` に og/twitter メタ。`web/public/og/*.png` を `export-ogp.mjs` で書き出し |
+| `scripts/export-ogp.mjs` | Playwright で OGP HTML から PNG 3点 |
+
+**意図**
+
+- 検索は件数が少ないうちはサーバ側フィルタ（SSG）で十分。Pagefind は entries 10件前後から検討
+- OGP URL は `astro.config` の `site` と整合
+
+**検証**: `npm run build` 成功
+
+**次**: entries 拡充、About/検索のスクショ、必要なら Pagefind

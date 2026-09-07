@@ -1,0 +1,25 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  message?: string;
+  hint?: string;
+}
+
+const {
+  eyebrow,
+  title = '該当するあるあるがありません',
+  message = 'キーワードを変えるか、カテゴリ一覧から探してみてください。',
+  hint,
+} = Astro.props;
+---
+
+<div class="empty-state">
+  {eyebrow && <p class="empty-state__eyebrow">{eyebrow}</p>}
+  <p class="empty-state__title">{title}</p>
+  {message && <p class="empty-state__message">{message}</p>}
+  {hint && <p class="empty-state__hint">{hint}</p>}
+  <div class="empty-state__actions">
+    <slot />
+  </div>
+</div>

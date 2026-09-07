@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="ページが見つかりません | DevRevあるある"
+  description="お探しのページは見つかりませんでした"
+>
+  <section class="block">
+    <div class="empty-state empty-state--404">
+      <p class="empty-state__eyebrow">404</p>
+      <h1 class="legacy-page-title">このページは見つかりませんでした</h1>
+      <p class="empty-state__message">
+        URLが変わったか、まだ「あるある」が登録されていないかもしれません。非公式サイトなので、気軽にトップから探し直してください。
+      </p>
+      <div class="empty-state__actions cta-row">
+        <a class="btn btn-primary" href="/">トップへ</a>
+        <a class="btn btn-outline" href="/aruaru">あるある一覧</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

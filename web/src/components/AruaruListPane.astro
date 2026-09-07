@@ -56,36 +56,36 @@ function countFor(category: string) {
 
 <script>
   const root = document.querySelector('[data-aruaru-list]');
-  if (!root) return;
+  if (root) {
+    const params = new URLSearchParams(window.location.search);
+    const requested = params.get('category');
 
-  const params = new URLSearchParams(window.location.search);
-  const requested = params.get('category');
+    function activate(category: string) {
+      root.querySelectorAll<HTMLAnchorElement>('.pane-menu a').forEach((link) => {
+        link.classList.toggle('active', link.dataset.category === category);
+      });
+      root.querySelectorAll<HTMLAnchorElement>('.pl-row').forEach((row) => {
+        row.hidden = row.dataset.category !== category;
+      });
+    }
 
-  function activate(category: string) {
-    root.querySelectorAll<HTMLAnchorElement>('.pane-menu a').forEach((link) => {
-      link.classList.toggle('active', link.dataset.category === category);
-    });
-    root.querySelectorAll<HTMLAnchorElement>('.pl-row').forEach((row) => {
-      row.hidden = row.dataset.category !== category;
+    const links = [...root.querySelectorAll<HTMLAnchorElement>('.pane-menu a')];
+    const categories = links.map((link) => link.dataset.category).filter(Boolean) as string[];
+    const initial =
+      requested && categories.includes(requested) ? requested : (categories[0] ?? '');
+
+    if (initial) activate(initial);
+
+    links.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const category = link.dataset.category;
+        if (!category) return;
+        event.preventDefault();
+        const url = new URL(window.location.href);
+        url.searchParams.set('category', category);
+        window.history.replaceState({}, '', url);
+        activate(category);
+      });
     });
   }
-
-  const links = [...root.querySelectorAll<HTMLAnchorElement>('.pane-menu a')];
-  const categories = links.map((link) => link.dataset.category).filter(Boolean) as string[];
-  const initial =
-    requested && categories.includes(requested) ? requested : (categories[0] ?? '');
-
-  if (initial) activate(initial);
-
-  links.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const category = link.dataset.category;
-      if (!category) return;
-      event.preventDefault();
-      const url = new URL(window.location.href);
-      url.searchParams.set('category', category);
-      window.history.replaceState({}, '', url);
-      activate(category);
-    });
-  });
 </script>

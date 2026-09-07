@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AruaruCard from '../../components/AruaruCard.astro';
+import EmptyState from '../../components/EmptyState.astro';
 import { getCollection } from 'astro:content';
 
 const verifications = (await getCollection('verifications')).sort(
@@ -8,16 +10,34 @@ const verifications = (await getCollection('verifications')).sort(
 ---
 
 <BaseLayout title="検証してみた | DevRevあるある" description="DevRevの機能・連携を実際に検証した記録">
-  <h1 class="text-2xl font-bold text-amber-400">検証してみた</h1>
-  <p class="mt-2 text-sm text-slate-400">手順・結果・学びを記事形式でまとめています</p>
+  <section class="block">
+    <div class="section-head">
+      <h2>検証してみた</h2>
+      <span class="legacy-muted">{verifications.length} 件</span>
+    </div>
+    <p class="legacy-muted verify-lead">手順・結果・学びを記事形式でまとめています。</p>
 
-  <ul class="mt-8 space-y-4">
-    {verifications.map((item) => (
-      <li class="rounded-lg border border-slate-800 bg-slate-900/50 p-5">
-        <a href={`/verify/${item.id}`} class="text-lg font-medium hover:text-amber-300">{item.data.title}</a>
-        <p class="mt-2 text-sm text-slate-400">{item.data.excerpt}</p>
-        <p class="mt-2 text-xs text-slate-500">{item.data.publishedAt.toISOString().slice(0, 10)}</p>
-      </li>
-    ))}
-  </ul>
+    {
+      verifications.length === 0 ? (
+        <EmptyState
+          title="検証記事はまだありません"
+          message="あるあると同様、順次追加していきます。"
+        >
+          <a class="btn btn-outline" href="/aruaru">あるあるを見る</a>
+        </EmptyState>
+      ) : (
+        <div class="verify-list">
+          {verifications.map((item) => (
+            <div class="verify-item">
+              <a href={`/verify/${item.id}`}>{item.data.title}</a>
+              <p>{item.data.excerpt}</p>
+              <time datetime={item.data.publishedAt.toISOString()}>
+                {item.data.publishedAt.toISOString().slice(0, 10)}
+              </time>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </section>
 </BaseLayout>

@@ -82,3 +82,22 @@ export function getCategoryGroups(): { category: string; entries: AruaruEntry[] 
     entries: getEntriesByCategory(category),
   }));
 }
+
+export function searchEntries(query: string): AruaruEntry[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+
+  return getEntries().filter((entry) => {
+    const haystack = [
+      entry.title,
+      entry.symptom,
+      entry.cause,
+      entry.fix,
+      entry.category,
+      ...entry.tags,
+    ]
+      .join(' ')
+      .toLowerCase();
+    return haystack.includes(q);
+  });
+}
