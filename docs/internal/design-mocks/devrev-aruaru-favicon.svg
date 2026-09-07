@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DevRevあるある">
+  <!-- 非公式ファンサイト用 favicon。DevRev公式ロゴは不使用。ブランドカラー(黄#FFE600/黒#161616)のみ使用。 -->
+  <rect width="64" height="64" rx="14" fill="#FFE600"/>
+  <text x="32" y="47" font-family="'Space Grotesk', Arial, sans-serif" font-size="44" font-weight="700" text-anchor="middle" fill="#161616">A</text>
+</svg>

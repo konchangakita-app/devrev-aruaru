@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DevRevあるある — OGP / バナー（黄地×黒文字）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161616; --accent: #ffe600; --text: #fff;
+    --heading: 'Space Grotesk', system-ui, sans-serif;
+    --body: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #2c2a2b; font-family: var(--body); color: #fff; padding: 32px; }
+  h2.section { font-family: var(--heading); font-size: 16px; color: #a5a2a4; margin: 4px 0 14px; font-weight: 500; }
+  .stack { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+
+  /* --- The OGP image itself: 1200 x 630 (scaled to fit preview) --- */
+  .ogp {
+    width: 1200px; height: 630px; background: var(--accent); color: var(--bg);
+    position: relative; overflow: hidden;
+    transform-origin: top left;
+  }
+  .ogp .pad { position: absolute; inset: 0; padding: 80px 90px; display: flex; flex-direction: column; justify-content: space-between; }
+  .ogp .top { display: flex; align-items: center; gap: 18px; }
+  .ogp .mark {
+    width: 72px; height: 72px; border-radius: 18px; background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--heading); font-weight: 700; font-size: 46px; color: var(--accent);
+  }
+  .ogp .eyebrow { font-family: var(--mono); font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bg); opacity: 0.7; }
+  .ogp .title { font-family: var(--heading); font-weight: 700; font-size: 118px; line-height: 0.98; letter-spacing: -0.02em; }
+  .ogp .sub { font-size: 30px; font-weight: 500; max-width: 900px; line-height: 1.4; }
+  .ogp .bottom { display: flex; align-items: center; justify-content: space-between; }
+  .ogp .badge { font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; background: var(--bg); color: var(--accent); padding: 8px 18px; border-radius: 9999px; }
+  .ogp .url { font-family: var(--mono); font-size: 20px; color: var(--bg); opacity: 0.75; }
+
+  /* Scaled preview wrappers */
+  .frame { background: #161616; border: 1px solid #3e3c3d; border-radius: 12px; padding: 16px; }
+  .scale-60 { width: 720px; height: 378px; }
+  .scale-60 .ogp { transform: scale(0.6); }
+  .scale-33 { width: 400px; height: 210px; }
+  .scale-33 .ogp { transform: scale(0.3333); }
+
+  /* Social card preview (how it looks when shared) */
+  .social { width: 400px; background: #fff; border: 1px solid #d0d0d0; border-radius: 12px; overflow: hidden; color: #161616; }
+  .social .thumb { width: 400px; height: 210px; overflow: hidden; }
+  .social .thumb .ogp { transform: scale(0.3333); }
+  .social .meta { padding: 12px 14px; }
+  .social .meta .dom { font-size: 12px; color: #7a7579; text-transform: lowercase; }
+  .social .meta .t { font-size: 15px; font-weight: 600; margin: 3px 0; }
+  .social .meta .d { font-size: 13px; color: #514c4f; line-height: 1.5; }
+
+  .note { font-family: var(--mono); font-size: 12px; color: #a5a2a4; margin-top: 10px; line-height: 1.6; }
+
+  /* --- Simple variants: title only --- */
+  .simple-wide {
+    width: 1200px; height: 630px; background: var(--accent); color: var(--bg);
+    display: flex; align-items: center; justify-content: center; transform-origin: top left;
+  }
+  .simple-wide .t { font-family: var(--heading); font-weight: 700; font-size: 130px; letter-spacing: -0.02em; }
+  .simple-sq {
+    width: 800px; height: 800px; background: var(--accent); color: var(--bg);
+    display: flex; align-items: center; justify-content: center; text-align: center; transform-origin: top left;
+  }
+  .simple-sq .t { font-family: var(--heading); font-weight: 700; font-size: 128px; line-height: 1.0; letter-spacing: -0.02em; }
+  .sw-60 { width: 720px; height: 378px; } .sw-60 .simple-wide { transform: scale(0.6); }
+  .sq-40 { width: 320px; height: 320px; } .sq-40 .simple-sq { transform: scale(0.4); }
+</style>
+</head>
+<body>
+
+  <h2 class="section">OGP画像（1200×630・60%表示）</h2>
+  <div class="frame scale-60">
+    <div class="ogp" id="ogp-main">
+      <div class="pad">
+        <div class="top">
+          <div class="mark">A</div>
+          <span class="eyebrow">Unofficial Fan Site</span>
+        </div>
+        <div>
+          <div class="title">DevRev<br/>あるある</div>
+          <p class="sub">DevRevでつまずいた「あるある」を、症状・原因・対処でまとめたナレッジ集。</p>
+        </div>
+        <div class="bottom">
+          <span class="badge">非公式ファンサイト</span>
+          <span class="url">devrev-aruaru.example</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note">※ 実書き出し時は 1200×630 の PNG に。公式ロゴ不使用・ブランドカラーのみ。URL/文言は差し替え可。</p>
+
+  <div class="stack" style="margin-top:36px;">
+    <div>
+      <h2 class="section">Slack / X 共有カードの見え方</h2>
+      <div class="social">
+        <div class="thumb"><div class="ogp">
+          <div class="pad">
+            <div class="top"><div class="mark">A</div><span class="eyebrow">Unofficial Fan Site</span></div>
+            <div><div class="title">DevRev<br/>あるある</div><p class="sub">DevRevでつまずいた「あるある」を、症状・原因・対処でまとめたナレッジ集。</p></div>
+            <div class="bottom"><span class="badge">非公式ファンサイト</span><span class="url">devrev-aruaru.example</span></div>
+          </div>
+        </div></div>
+        <div class="meta">
+          <div class="dom">devrev-aruaru.example</div>
+          <div class="t">DevRevあるある（非公式ファンサイト）</div>
+          <div class="d">DevRevでつまずいた「あるある」を、症状・原因・対処でまとめたナレッジ集。</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="section">サムネイル（33%）</h2>
+      <div class="frame scale-33">
+        <div class="ogp">
+          <div class="pad">
+            <div class="top"><div class="mark">A</div><span class="eyebrow">Unofficial Fan Site</span></div>
+            <div><div class="title">DevRev<br/>あるある</div><p class="sub">DevRevでつまずいた「あるある」を、症状・原因・対処でまとめたナレッジ集。</p></div>
+            <div class="bottom"><span class="badge">非公式ファンサイト</span><span class="url">devrev-aruaru.example</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section" style="margin-top:40px;">シンプル版（タイトルのみ・Blog / SNS向け）</h2>
+  <div class="stack">
+    <div>
+      <div class="frame sw-60">
+        <div class="simple-wide"><div class="t">DevRevあるある</div></div>
+      </div>
+      <p class="note">横長 1200×630（OGP / ヘッダー用・60%表示）</p>
+    </div>
+    <div>
+      <div class="frame sq-40">
+        <div class="simple-sq"><div class="t">DevRev<br/>あるある</div></div>
+      </div>
+      <p class="note">正方形 800×800（アイコン / サムネ用・40%表示）</p>
+    </div>
+  </div>
+
+</body>
+</html>
