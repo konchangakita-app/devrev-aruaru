@@ -1,0 +1,43 @@
+---
+const popularTags = ['スナップイン', 'GitHub連携', 'Issue'];
+---
+
+<div class="hero-band">
+  <div class="wrap">
+    <section class="hero hero--home">
+      <span class="eyebrow hero-eyebrow">Unofficial Knowledge Site</span>
+      <h1>
+        DevRevで<span class="accent">つまずいた</span>を、<br />次の人がつまずかないために。
+      </h1>
+      <p class="lead">
+        DevRevを使い始めるとぶつかる「あるある」を、症状・原因・対処の形でまとめた
+        ナレッジサイトです。ハマりどころと回避策を、実務のスピードで引けるように。
+      </p>
+      <form class="hero-search" role="search" action="/aruaru" method="get">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M21 21l-4.3-4.3"></path>
+        </svg>
+        <input
+          type="search"
+          name="q"
+          placeholder="キーワードで探す（例: GitHub, スナップイン, Issue）"
+          aria-label="あるあるを検索"
+        />
+        <button type="submit">検索</button>
+      </form>
+      <div class="hero-hints">
+        よく見られている:
+        {
+          popularTags.map((tag) => (
+            <a href={`/tags/${encodeURIComponent(tag)}`}>{tag}</a>
+          ))
+        }
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary hero-btn-primary" href="/aruaru">あるあるを見る</a>
+        <a class="btn btn-outline hero-btn-outline" href="/verify">検証してみた</a>
+      </div>
+    </section>
+  </div>
+</div>

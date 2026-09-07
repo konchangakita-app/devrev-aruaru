@@ -7,6 +7,8 @@ const entrySchema = z.object({
   symptom: z.string(),
   cause: z.string(),
   fix: z.string(),
+  category: z.string(),
+  frequency: z.number().int().min(1).max(3),
   tags: z.array(z.string()),
   publishedAt: z.string(),
 });
@@ -37,4 +39,39 @@ export function getAllTags(): string[] {
 
 export function getEntriesByTag(tag: string): AruaruEntry[] {
   return getEntries().filter((entry) => entry.tags.includes(tag));
+}
+
+export function getCategories(): string[] {
+  const categories = new Set<string>();
+  for (const entry of getEntries()) {
+    categories.add(entry.category);
+  }
+  return [...categories].sort();
+}
+
+export function getEntriesByCategory(category: string): AruaruEntry[] {
+  return getEntries().filter((entry) => entry.category === category);
+}
+
+export function getAdjacentEntries(slug: string): {
+  prev?: AruaruEntry;
+  next?: AruaruEntry;
+} {
+  const entries = getEntries();
+  const index = entries.findIndex((entry) => entry.slug === slug);
+  if (index === -1) return {};
+  return {
+    prev: index < entries.length - 1 ? entries[index + 1] : undefined,
+    next: index > 0 ? entries[index - 1] : undefined,
+  };
+}
+
+export function getRelatedEntries(entry: AruaruEntry, limit = 2): AruaruEntry[] {
+  const sameCategory = getEntries().filter(
+    (item) => item.slug !== entry.slug && item.category === entry.category,
+  );
+  const others = getEntries().filter(
+    (item) => item.slug !== entry.slug && item.category !== entry.category,
+  );
+  return [...sameCategory, ...others].slice(0, limit);
 }

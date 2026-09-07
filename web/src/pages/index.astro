@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AruaruCard from '../components/AruaruCard.astro';
+import HeroHome from '../components/HeroHome.astro';
 import { getEntries } from '../lib/entries';
 import { getCollection } from 'astro:content';
 
@@ -11,36 +12,32 @@ const verifications = (await getCollection('verifications'))
 ---
 
 <BaseLayout title="DevRevあるある">
-  <section class="space-y-4">
-    <h1 class="legacy-page-title">DevRevあるある</h1>
-    <p class="legacy-muted leading-relaxed">
-      DevRevを使い始めるとぶつかる「あるある」を、症状・原因・対処の形でまとめたナレッジサイトです
-    </p>
-    <p class="legacy-muted text-sm">非公式。公式ドキュメントの補完としてご利用ください</p>
-  </section>
+  <HeroHome slot="hero" />
 
-  <section class="mt-10 space-y-4">
+  <section class="block">
     <div class="section-head">
       <h2>新着あるある</h2>
       <a href="/aruaru">すべて見る →</a>
     </div>
-    <div class="space-y-4">
-      {entries.map((entry) => <AruaruCard entry={entry} />)}
+    <div class="cards">
+      {entries.map((entry) => (
+        <AruaruCard entry={entry} />
+      ))}
     </div>
   </section>
 
-  <section class="mt-10 space-y-4">
+  <section class="block">
     <div class="section-head">
       <h2>検証してみた</h2>
       <a href="/verify">すべて見る →</a>
     </div>
-    <ul class="space-y-3">
-      {verifications.map((item) => (
-        <li class="rounded-lg border border-slate-800 bg-slate-900/50 p-4">
-          <a href={`/verify/${item.id}`} class="font-medium hover:text-amber-300">{item.data.title}</a>
-          <p class="mt-1 text-sm text-slate-400">{item.data.excerpt}</p>
-        </li>
-      ))}
-    </ul>
+    {
+      verifications.map((item) => (
+        <div class="verify-item">
+          <a href={`/verify/${item.id}`}>{item.data.title}</a>
+          <p>{item.data.excerpt}</p>
+        </div>
+      ))
+    }
   </section>
 </BaseLayout>

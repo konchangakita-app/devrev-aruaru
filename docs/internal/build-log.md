@@ -162,8 +162,9 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 
 - [x] Computer モック → `docs/internal/design-mocks/` に配置済み（2026-09-07、commit `9d1b966`）
 - [x] デザイントークン + BaseLayout シェル（Phase 1）— 2026-09-07 Cursor 実装
-- [ ] トップ案 A / 一覧案 E / 詳細ページ（Phase 3）
-- [ ] `entries.json` — `frequency`・`category`
+- [x] 共有コンポーネント + entries スキーマ + トップ/詳細 UI（Phase 2）— 2026-09-07
+- [ ] トップ案 A カテゴリ窓 / 一覧案 E 2ペイン（Phase 4）
+- [x] `entries.json` — `frequency`・`category`（2件に付与済み）
 - [ ] entries 10 件前後
 - [ ] 検索・OGP・404（Phase 5）
 - [ ] DA-4 公開（hack-plus、別ライン）
@@ -234,3 +235,28 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 **ブログ素材メモ**: 「モック CSS をそのまま移植せず、クラス名を site-header / page-main 等に整理した」「テーマは html 要素 + head inline script で FOUC 回避」
 
 **次**: Phase 2 — `FrequencyMeter` / `AruaruCard` / `Hero` コンポーネント
+
+---
+
+### 2026-09-07 — Phase 2 共有コンポーネント + 主要ページ UI（Cursor）
+
+**参照モック**: `design-mock.html`（Hero/Card）、`detail-mock.html`（詳細3ブロック）
+
+**実施内容**
+
+| 項目 | 内容 |
+|---|---|
+| コンポーネント | `FrequencyMeter`, `TagPill`, `HeroHome`, `HeroDetail`, `SectionBlock`, `EntryPager`, `AruaruCard` 刷新 |
+| データ | `entries.json` に `category` + `frequency`(1–3)。`lib/entries.ts` にカテゴリ/関連/前後ヘルパー |
+| トップ `/` | 黄ヒーロー（検索 UI・CTA）+ 新着カード + 検証リスト |
+| 詳細 | コンパクト黄ヒーロー + 症状/原因/対処 + タグ + 関連 + ページャ |
+| 一覧・タグ | 新 `AruaruCard` グリッド（案E 2ペインは Phase 4） |
+
+**entries 暫定値**
+
+- `github-oauth-no-events`: category=Snap-in, frequency=3
+- `pr-merge-stage-not-completed`: category=GitHub連携, frequency=2
+
+**検証**: `npm run build` 成功
+
+**次**: Phase 4 — 案A カテゴリ窓（トップ）、案E 2ペイン（`/aruaru`）

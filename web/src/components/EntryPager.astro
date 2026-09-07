@@ -1,0 +1,33 @@
+---
+import type { AruaruEntry } from '../lib/entries';
+
+interface Props {
+  prev?: AruaruEntry;
+  next?: AruaruEntry;
+}
+
+const { prev, next } = Astro.props;
+---
+
+{
+  (prev || next) && (
+    <nav class="pager" aria-label="前後のあるある">
+      {prev ? (
+        <a class="prev" href={`/aruaru/${prev.slug}`}>
+          <span class="dir">← 前のあるある</span>
+          <span class="pt">{prev.title}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next ? (
+        <a class="next" href={`/aruaru/${next.slug}`}>
+          <span class="dir">次のあるある →</span>
+          <span class="pt">{next.title}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+    </nav>
+  )
+}

@@ -40,7 +40,7 @@ const fontUrl =
   <body>
     <Header />
     <slot name="hero" />
-    <main class="page-main">
+    <main class:list={['page-main', Astro.slots.hero && 'page-main--with-hero']}>
       <div class="wrap">
         <slot />
       </div>

@@ -1,6 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getEntries } from '../../lib/entries';
+import AruaruCard from '../../components/AruaruCard.astro';
+import EntryPager from '../../components/EntryPager.astro';
+import HeroDetail from '../../components/HeroDetail.astro';
+import SectionBlock from '../../components/SectionBlock.astro';
+import TagPill from '../../components/TagPill.astro';
+import {
+  getAdjacentEntries,
+  getEntries,
+  getRelatedEntries,
+} from '../../lib/entries';
 
 export function getStaticPaths() {
   return getEntries().map((entry) => ({
@@ -10,35 +19,46 @@ export function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
+const { prev, next } = getAdjacentEntries(entry.slug);
+const related = getRelatedEntries(entry);
 ---
 
 <BaseLayout title={`${entry.title} | DevRevあるある`} description={entry.symptom}>
-  <article class="space-y-6">
-    <header class="space-y-3">
-      <h1 class="text-2xl font-bold text-amber-400">{entry.title}</h1>
-      <div class="flex flex-wrap gap-2">
-        {entry.tags.map((tag) => (
-          <a href={`/tags/${encodeURIComponent(tag)}`} class="rounded bg-slate-800 px-2 py-0.5 text-xs text-amber-300/90 hover:bg-slate-700">
-            {tag}
-          </a>
-        ))}
-      </div>
-      <p class="text-xs text-slate-500">公開日: {entry.publishedAt}</p>
-    </header>
+  <HeroDetail slot="hero" entry={entry} />
 
-    <section class="space-y-2">
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-400">症状</h2>
-      <p class="leading-relaxed text-slate-200">{entry.symptom}</p>
-    </section>
+  <article class="entry-article">
+    <SectionBlock type="symptom" label="症状">
+      <p>{entry.symptom}</p>
+    </SectionBlock>
 
-    <section class="space-y-2">
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-400">原因</h2>
-      <p class="leading-relaxed text-slate-200">{entry.cause}</p>
-    </section>
+    <SectionBlock type="cause" label="原因">
+      <p>{entry.cause}</p>
+    </SectionBlock>
 
-    <section class="space-y-2">
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-400">対処</h2>
-      <p class="leading-relaxed text-slate-200">{entry.fix}</p>
-    </section>
+    <SectionBlock type="solution" label="対処">
+      <p>{entry.fix}</p>
+    </SectionBlock>
+
+    <div class="tags entry-tags">
+      {entry.tags.map((tag) => (
+        <TagPill href={`/tags/${encodeURIComponent(tag)}`} label={tag} />
+      ))}
+    </div>
+
+    {
+      related.length > 0 && (
+        <section class="related">
+          <h3>関連するあるある</h3>
+          {related.map((item) => (
+            <a class="rel-card" href={`/aruaru/${item.slug}`}>
+              <div class="rc-top">{item.category}</div>
+              <div class="rc-title">{item.title}</div>
+            </a>
+          ))}
+        </section>
+      )
+    }
+
+    <EntryPager prev={prev} next={next} />
   </article>
 </BaseLayout>

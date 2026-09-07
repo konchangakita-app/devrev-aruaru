@@ -7,10 +7,15 @@ const entries = getEntries();
 ---
 
 <BaseLayout title="あるある一覧 | DevRevあるある" description="DevRevのハマりどころ・回避策の一覧">
-  <h1 class="legacy-page-title">あるある一覧</h1>
-  <p class="legacy-muted">{entries.length} 件</p>
-
-  <div class="mt-8 space-y-4">
-    {entries.map((entry) => <AruaruCard entry={entry} />)}
-  </div>
+  <section class="block">
+    <div class="section-head">
+      <h2>あるある一覧</h2>
+      <span class="legacy-muted">{entries.length} 件</span>
+    </div>
+    <div class="cards">
+      {entries.map((entry) => (
+        <AruaruCard entry={entry} />
+      ))}
+    </div>
+  </section>
 </BaseLayout>
