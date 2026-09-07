@@ -39,17 +39,20 @@ eval "$(docker compose run --rm skill-py python devrev-pat-manager/scripts/devre
 
 検証ログは `docs/internal/verification/` に記録する。
 
-## 【とあるあるあるサイト】構成作業 × DA-1 ブログ（並行）
+## 【とあるあるあるサイト】構築 × ブログネタ（並行・生記録）
 
-サイト構成の相談・設計を始めたセッションでは、**構成の議論とブログ（DA-1 連載）を並行**する。
+サイト構成・実装・デザインのセッションでは、**議論とブログネタ用ログを並行**する（オーナーが「記事」と言わなくても自動）。
 
-1. **最初に読む**: `docs/OPERATIONS.md` §9、`hack-plus/.company/operations/content/series-devrev-aruaru.md`、`hack-plus/docs/blog-ideas.md`（DA-1）
-2. **構成の議論を進める**（あるあるサイト Repo1 の設計。entries 詳細は実装時まで保留可）
-3. **同セッションで記録・執筆**
-   - 方針決定 → `hack-plus/.company/secretary/notes/YYYY-MM-DD-decisions.md`
-   - 議論ログは下書きの素材にする → `hack-plus/web/content/drafts/`（`series-devrev-aruaru.md` の frontmatter 準拠）
-   - `blog-ideas.md` の DA-1 ステータスを `drafting` に更新
-4. **書かない**: あるある本文の紹介、公開サイト URL、ブログからサイトへのリンク
-5. **DevRev Issue 起票**は Computer に委ねる（Cursor は起票しない）
+**方針（2026-09-07）**: 構築中は記事形式に整えない。`docs/internal/build-log.md` にひたすら追記。サイト構成が出来上がってから連載分割・下書き化。
 
-オーナーが「記事用にログ」と言わなくても、構成の話を始めたら上記を**自動で**行う。
+1. **最初に読む**: `docs/OPERATIONS.md` §9、`docs/internal/build-log.md`、`hack-plus/docs/blog-ideas.md`
+2. **構成・実装の議論を進める**（entries 詳細・サイト URL 掲載は不要）
+3. **同セッションで記録**
+   - 時系列ログ → `docs/internal/build-log.md`（デザイン深掘りは `design-log.md` も可）
+   - 方針の確定 → `hack-plus/.company/secretary/notes/YYYY-MM-DD-decisions.md`（要約）
+   - ネタメモ → `blog-ideas.md`（`drafting` への更新は不要）
+4. **構築中は書かない**: hack-plus `drafts/` への記事整形、連載回数の確定
+5. **書かない（ログでも）**: あるある本文紹介、公開サイト URL、ブログ→サイトリンク
+6. **DevRev Issue 起票**は Computer に委ねる（Cursor は起票しない）
+
+DA-1〜4 は過去方針で直接執筆・公開済み。以降は build-log 優先。
