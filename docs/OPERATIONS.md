@@ -4,7 +4,7 @@
 
 - マスター（正）: 本ファイル `devrev-aruaru/docs/OPERATIONS.md`
 - 従: `hack-plus/docs/blog-ideas.md` の冒頭から本ファイルを参照する
-- 最終更新: 2026-08-26（§2 連載例外・§9 Cursor→hack-plus 指示系統を追加）
+- 最終更新: 2026-09-07（§9 構築ログ優先・記事整形は構築完了後）
 
 ---
 
@@ -164,7 +164,8 @@ Docker 実行は sampleapp の `skills/` から行う。詳細は `.cursor/rules
 | 方針・文体（一般） | `hack-plus/.company/operations/content/style-guide.md` | サイト全体の文体・表記（継続アップデート） |
 | 連載固有 | `series-devrev-aruaru.md` | 接頭辞・タグ・frontmatter・修正手順 |
 | 制作実行 | `hack-plus/.company/` | 秘書ルーティング → content → サブエージェント → QA → engineering 公開 |
-| 記事本体 | `hack-plus/web/content/drafts/` → `articles/` | Markdown 下書き・公開記事 |
+| 構築ログ（生記録） | `devrev-aruaru/docs/internal/build-log.md` | サイト組み上げ・相談の時系列（**記事形式にしない**） |
+| 記事本体 | `hack-plus/web/content/drafts/` → `articles/` | 構築完了後にログから整形した Markdown |
 
 **Cursor セッション ≈ オーナーが秘書に相談**（company 運営モード）。方針決定と記録はここから行い、公開フロー・チェックリストは `.company` の既存ワークフローに従う。
 
@@ -182,18 +183,22 @@ Docker 実行は sampleapp の `skills/` から行う。詳細は `.cursor/rules
    - draft-content-reviewer → draft-design-reviewer → QA → engineering
 5. DevRev Issue 起票が必要な場合 → Computer に委ねる（Cursor は起票しない）
 
-### サイト構成作業と DA-1 の並行（自動）
+### サイト構築とブログネタの並行記録（自動）
 
-devrev-aruaru で**あるあるサイトの構成**（サイトマップ・ページ設計・AI との設計対話など）を始めたセッションでは、オーナーが「記事」と言わなくても次を**同セッションで**行う。
+devrev-aruaru で**あるあるサイトの構成・実装・デザイン**（サイトマップ、ページ設計、Computer/Cursor との設計対話など）を行うセッションでは、オーナーが「記事」と言わなくても **ブログネタ用の生記録** を同セッションで残す。
 
-1. `series-devrev-aruaru.md` と `blog-ideas.md`（DA-1）を参照
-2. 構成の議論を進める（entries 詳細・サイト URL 掲載は不要）
-3. 決定事項を `secretary/notes/YYYY-MM-DD-decisions.md` に記録
-4. 議論ログを `hack-plus/web/content/drafts/` の下書きに反映（frontmatter はシリーズルール準拠）
-5. `blog-ideas.md` の DA-1 を `drafting` に更新
+**方針（2026-09-07 確定）**: 構築中は **記事形式に整えない**。ひたすらログに追記し、サイト構成が一通り出来上がってから、連載を何回に分けるか等を検討して hack-plus の下書き・公開に移す。
+
+1. 参照: `docs/internal/build-log.md`（構築ログ正本）、トピック別は `design-log.md` 等、`blog-ideas.md`（ネタ ID のメモ）
+2. 構成・実装の議論を進める（entries 詳細・サイト URL 掲載は不要）
+3. **Cursor / Computer が `build-log.md` に時系列追記**（相談内容・判断・採否・理由。脚色しない）
+4. 確定した方針は `secretary/notes/YYYY-MM-DD-decisions.md` に要約してもよい
+5. **構築中は `hack-plus/web/content/drafts/` に下書きを書かない**（frontmatter 執筆・連載分割の確定は構築完了後）
+6. `blog-ideas.md` にはネタ・想定テーマをメモ（ステータスは `idea` のままで可）
+
+**過去分**: DA-1〜4 は 2026-08 時点の「下書き並行」方針で直接執筆・公開済み。以降の構築（デザイン反映以降など）は上記ログ優先。
 
 `.cursor/rules/project-operations.mdc` に同内容を記載（新セッション向け）。
-```
 
 ### 修正の方法
 
