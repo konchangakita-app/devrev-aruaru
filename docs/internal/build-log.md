@@ -87,7 +87,7 @@
 - 見た目は着手前の仮 UI（slate + amber、`max-w-3xl` 1 カラム）。Computer のブランドデザインは **未反映**
 - `entries.json` は 2 件（MVP 目標 10 件前後には未達）
 - `docs/internal/design-log.md` に 2026-09-05 デザイン方針・モック方針が大量に記録済み（Computer フェーズ1）
-- `computer_outputs/*.html` は design-log から参照されているが **Repo1 に未コミット**（実装時の参照用）
+- `docs/internal/design-mocks/` に Computer 作成のモック5点 + README が配置済み（コミット `9d1b966`）。実装参照可能
 
 **ブログ（Repo2）の到達点（事実）**
 
@@ -160,8 +160,8 @@
 
 design-log / 2026-08-26 decisions より。実装タスクのメモ（完了したら日付を追記）。
 
-- [ ] Computer モック `computer_outputs/` を Repo1 参照可能にする
-- [ ] デザイントークン + BaseLayout シェル（Phase 1）
+- [x] Computer モック → `docs/internal/design-mocks/` に配置済み（2026-09-07、commit `9d1b966`）
+- [x] デザイントークン + BaseLayout シェル（Phase 1）— 2026-09-07 Cursor 実装
 - [ ] トップ案 A / 一覧案 E / 詳細ページ（Phase 3）
 - [ ] `entries.json` — `frequency`・`category`
 - [ ] entries 10 件前後
@@ -182,3 +182,55 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 | Cursor 相談の型 | 本ファイル §相談方法 | DA-1 補足 or 独立回 |
 
 **連載分割**: サイト構成（デザイン反映まで）が一通り揃った時点で、`build-log` 全体を読み返して DA-N の切り口・回数を決める。
+
+---
+
+### 2026-09-07 — デザインモック配置確認（Cursor）
+
+**きっかけ**: オーナー「Computer で作成したモックや OGP を配置した。確認して」
+
+**配置先（事実）**: `docs/internal/design-mocks/`（6ファイル + README）。git commit `9d1b966`
+
+| ファイル | 確認結果 |
+|---|---|
+| `devrev-aruaru-design-mock.html` | トップ。黒ナビ・黄ヒーロー・検索 UI・あるある度メーター・テーマ切替・非公式バッジ。design-log トークン一致 |
+| `devrev-aruaru-detail-mock.html` | 詳細。3ブロック・コード dark 固定・出典 note・画像型・前後ページャ |
+| `devrev-aruaru-list-ideas.html` | 案 A/C/E 比較。採用方針（A+E）を README に明記 |
+| `devrev-aruaru-ogp.html` | OGP 1200×630 + シンプル版（横長/正方形）+ 共有カードプレビュー。**PNG は未同梱**（HTML から書き出し前提） |
+| `devrev-aruaru-favicon.svg` | 黄角丸 + 「A」。`web/public/` へのコピーは未実施 |
+| `README.md` | 実装要点の索引あり |
+
+**design-log / build-log との整合**: 方針どおり。古い `computer_outputs/` 未配置メモを build-log から更新。
+
+**実装 Phase 0 完了**: モック参照可能。次は Phase 1（トークン + BaseLayout シェル）。
+
+---
+
+### 2026-09-07 — Phase 1 デザイン基盤（Cursor）
+
+**きっかけ**: オーナー「ブログ書くためにもステップバイステップで進めていきましょう」→ Phase 1 着手
+
+**参照モック**: `devrev-aruaru-design-mock.html`（Header/Footer/トークン）
+
+**実施内容**
+
+| 項目 | 変更 |
+|---|---|
+| `web/src/styles/global.css` | モックの CSS 変数（`--page-*`）+ シェル用コンポーネントクラス |
+| `BaseLayout.astro` | Google Fonts、favicon、`hero` スロット、880px wrap、テーマ初期化 script |
+| `Header.astro` | 黒ナビ、非公式バッジ、検索アイコン（`/aruaru` リンク）、ThemeToggle |
+| `Footer.astro` | 2カラム + disclaimer + 公式出典リンク |
+| `web/public/favicon.svg` | モック同型（黄地 + A） |
+| テーマ | `html[data-theme="dark"]` + `localStorage`（`aruaru-theme`）+ `prefers-color-scheme` |
+
+**意図的に Phase 2 へ回したもの**
+
+- 黄ヒーロー（トップ・詳細）→ `Hero.astro` + 各ページ
+- `AruaruCard` 等のカード UI（旧 slate/amber Tailwind が本文に残る过渡状態）
+- 案A カテゴリ窓 / 案E 2ペイン
+
+**検証**: `npm run build` 成功（10 pages）
+
+**ブログ素材メモ**: 「モック CSS をそのまま移植せず、クラス名を site-header / page-main 等に整理した」「テーマは html 要素 + head inline script で FOUC 回避」
+
+**次**: Phase 2 — `FrequencyMeter` / `AruaruCard` / `Hero` コンポーネント

@@ -6,6 +6,7 @@
 |---|---|
 | [`build-log.md`](./build-log.md) | **構築ログ正本** — サイト組み上げ・Cursor/Computer 相談の時系列（ブログネタ素材。記事形式にしない） |
 | [`design-log.md`](./design-log.md) | デザイン相談の深掘り（Computer 主。build-log のトピック別） |
+| [`design-mocks/`](./design-mocks/) | デザイン HTML モック・OGP プレビュー・favicon SVG（Cursor 実装の見た目参照） |
 | `verification/iss-62/` | GitHub for DevRev スナップイン検証（ISS-62）のテスト用差分 |
 
 検証結果のまとめは [`docs/github-snapin-verification-report.md`](../github-snapin-verification-report.md) を参照してください。

@@ -12,17 +12,17 @@ const verifications = (await getCollection('verifications'))
 
 <BaseLayout title="DevRevあるある">
   <section class="space-y-4">
-    <h1 class="text-3xl font-bold text-amber-400">DevRevあるある</h1>
-    <p class="text-slate-300 leading-relaxed">
+    <h1 class="legacy-page-title">DevRevあるある</h1>
+    <p class="legacy-muted leading-relaxed">
       DevRevを使い始めるとぶつかる「あるある」を、症状・原因・対処の形でまとめたナレッジサイトです
     </p>
-    <p class="text-sm text-slate-500">非公式。公式ドキュメントの補完としてご利用ください</p>
+    <p class="legacy-muted text-sm">非公式。公式ドキュメントの補完としてご利用ください</p>
   </section>
 
   <section class="mt-10 space-y-4">
-    <div class="flex items-center justify-between">
-      <h2 class="text-xl font-semibold">新着あるある</h2>
-      <a href="/aruaru" class="text-sm text-amber-400 hover:underline">すべて見る</a>
+    <div class="section-head">
+      <h2>新着あるある</h2>
+      <a href="/aruaru">すべて見る →</a>
     </div>
     <div class="space-y-4">
       {entries.map((entry) => <AruaruCard entry={entry} />)}
@@ -30,9 +30,9 @@ const verifications = (await getCollection('verifications'))
   </section>
 
   <section class="mt-10 space-y-4">
-    <div class="flex items-center justify-between">
-      <h2 class="text-xl font-semibold">検証してみた</h2>
-      <a href="/verify" class="text-sm text-amber-400 hover:underline">すべて見る</a>
+    <div class="section-head">
+      <h2>検証してみた</h2>
+      <a href="/verify">すべて見る →</a>
     </div>
     <ul class="space-y-3">
       {verifications.map((item) => (

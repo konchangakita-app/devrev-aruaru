@@ -7,8 +7,8 @@ const entries = getEntries();
 ---
 
 <BaseLayout title="あるある一覧 | DevRevあるある" description="DevRevのハマりどころ・回避策の一覧">
-  <h1 class="text-2xl font-bold text-amber-400">あるある一覧</h1>
-  <p class="mt-2 text-sm text-slate-400">{entries.length} 件</p>
+  <h1 class="legacy-page-title">あるある一覧</h1>
+  <p class="legacy-muted">{entries.length} 件</p>
 
   <div class="mt-8 space-y-4">
     {entries.map((entry) => <AruaruCard entry={entry} />)}
