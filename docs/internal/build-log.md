@@ -6,6 +6,7 @@
 > **脚色しない**: 相談内容・AI の提案・採用/不採用・理由・迷いをそのまま書く。記事化時に匿名化（`OPERATIONS.md` §6）。
 >
 > **関連ログ**:
+> - DevRev Issue: **ISS-68**（サイト構築のトラッキング）→ [`../iss-68-aruaru-site.md`](../iss-68-aruaru-site.md)
 > - デザイン深掘り → [`design-log.md`](./design-log.md)
 > - 方針の確定事項（要約）→ `hack-plus/.company/secretary/notes/YYYY-MM-DD-decisions.md`
 > - ネタ帳（連載 ID のメモ）→ `hack-plus/docs/blog-ideas.md`
@@ -317,3 +318,17 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 **検証**: `npm run build` 成功
 
 **次**: entries 拡充、About/検索のスクショ、必要なら Pagefind
+
+---
+
+### 2026-09-07 — ISS-68 へ作業ブランチを分離（Cursor）
+
+**背景**: サイト構築が ISS-67 ブランチに載っていた。ISS-67（スナップイン再構築）は完了済み。Computer が **ISS-68** を起票。
+
+**実施**
+
+- 新ブランチ `feature/ISS-68-aruaru-site`（base: `origin/main`）
+- サイト関連コミット（design-log / build-log / Phase 0〜5）を cherry-pick
+- `docs/iss-68-aruaru-site.md` を追加
+
+**以降**: コミット・PR に `work-item:ISS-68` / ブランチ名 `feature/ISS-68-*` を使用
