@@ -11,6 +11,17 @@
     "publishedAt": "2026-08-20"
   },
   {
+    "slug": "github-missing-work-item-id",
+    "title": "ブランチやPRにIssue IDが無いとステージが動かない",
+    "symptom": "GitHubでPRを出したのに、DevRev Issueが In Development / In Review に遷移しない",
+    "cause": "GitHub for DevRev スナップインは、ブランチ名・コミット・PRに DevRev Issue ID（ISS-XXX / work-item:ISS-XXX）が含まれることを前提に code change を生成する",
+    "fix": "ブランチ名を `feature/ISS-XXX-...` にし、コミットメッセージ末尾に `work-item:ISS-XXX`、PRタイトルに `[ISS-XXX]` を付ける（`docs/devrev-github-issue-policy.md` 参照）",
+    "category": "GitHub連携",
+    "frequency": 3,
+    "tags": ["GitHub連携", "Issue", "スナップイン"],
+    "publishedAt": "2026-08-19"
+  },
+  {
     "slug": "pr-merge-stage-not-completed",
     "title": "PRマージしたのにIssueがCompletedにならない",
     "symptom": "PRをマージしたが、紐づくIssueのステージがCompletedに遷移しない",
@@ -20,5 +31,82 @@
     "frequency": 2,
     "tags": ["GitHub連携", "Issue"],
     "publishedAt": "2026-08-18"
+  },
+  {
+    "slug": "snapin-triage-no-auto",
+    "title": "PRを開いてもIssueがtriageのまま",
+    "symptom": "GitHubでPRを作成したが、紐づくDevRev Issueのステージが triage から動かない",
+    "cause": "ワークフローで「PR open → In Development」等の遷移が未設定、または code change が生成されていない（Issue ID 欠落・Webhook未着など）",
+    "fix": "まず code change が DevRev に記録されているか確認。問題なければワークフローのステージ遷移ルールを見直す",
+    "category": "Snap-in",
+    "frequency": 2,
+    "tags": ["スナップイン", "Issue", "GitHub連携"],
+    "publishedAt": "2026-08-17"
+  },
+  {
+    "slug": "computer-wss-blocked",
+    "title": "Computerデスクトップが繋がらない（Web版は動く）",
+    "symptom": "ブラウザ版 DevRev は使えるのに、Computer デスクトップアプリだけ接続できない・同期しない",
+    "cause": "企業ネットワークや端末のファイアウォールが wss（443）をブロックしていることが多い",
+    "fix": "IT に wss 通信（443/TLS）の許可を依頼する。プロキシ環境では Computer 用の通信要件ドキュメントを添えて確認する",
+    "category": "Computer",
+    "frequency": 3,
+    "tags": ["Computer"],
+    "publishedAt": "2026-08-16"
+  },
+  {
+    "slug": "computer-signin-loop",
+    "title": "Computerでサインインループから抜けられない",
+    "symptom": "ログイン画面とブラウザ認証を繰り返し、デスクトップアプリに入れない",
+    "cause": "Cookie/セッションの競合、古いキャッシュ、複数アカウント切り替えの残留など",
+    "fix": "Computer を完全終了 → ブラウザの DevRev セッションを一度ログアウト → アプリ再起動。改善しなければキャッシュ削除または再インストール",
+    "category": "Computer",
+    "frequency": 3,
+    "tags": ["Computer"],
+    "publishedAt": "2026-08-15"
+  },
+  {
+    "slug": "computer-local-skill-permission",
+    "title": "Computerのローカルスキルが実行されない",
+    "symptom": "スキル実行を指示しても応答がなく、ログにも痕跡が残らない",
+    "cause": "端末側の実行権限・作業ディレクトリ・スキル配置パスが正しくない",
+    "fix": "スキルの README どおりに配置パスと実行権限を確認。Computer の作業フォルダ設定と、ターミナルから手動実行できるかを切り分ける",
+    "category": "Computer",
+    "frequency": 2,
+    "tags": ["Computer"],
+    "publishedAt": "2026-08-14"
+  },
+  {
+    "slug": "sql-account-name-filter",
+    "title": "SQLでaccount名を直接フィルタすると0件になる",
+    "symptom": "表示名やメールアドレスで `WHERE account = '...'` してもヒットしない",
+    "cause": "DevRev の account は表示名ではなく DON（ID）で参照する必要がある",
+    "fix": "対象ユーザーの DON を DevRev UI または API で取得し、`account.id` や DON フィールドでフィルタする",
+    "category": "SQL",
+    "frequency": 3,
+    "tags": ["SQL"],
+    "publishedAt": "2026-08-13"
+  },
+  {
+    "slug": "sql-don-cast-error",
+    "title": "SQLでDONを数値にキャストして失敗する",
+    "symptom": "CAST(don AS INT64) 等で型エラー、または想定外の結果になる",
+    "cause": "DON は文字列識別子であり、数値型に変換できない",
+    "fix": "DON は STRING のまま比較・JOIN する。集計キーが必要なら別カラム（数値ID）の有無をスキーマで確認する",
+    "category": "SQL",
+    "frequency": 2,
+    "tags": ["SQL"],
+    "publishedAt": "2026-08-12"
+  },
+  {
+    "slug": "sql-bool-null-excludes",
+    "title": "SQLのbool条件でNULL行が全部落ちる",
+    "symptom": "`WHERE flag = false` だけ書くと、NULL のレコードが結果に出てこない",
+    "cause": "SQL では NULL との比較は UNKNOWN となり、false 条件から除外される",
+    "fix": "`WHERE flag IS NOT TRUE` や `(flag = false OR flag IS NULL)` など、意図に合わせて NULL を明示的に扱う",
+    "category": "SQL",
+    "frequency": 1,
+    "tags": ["SQL"],
+    "publishedAt": "2026-08-11"
   }
 ]

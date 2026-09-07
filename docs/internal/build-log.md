@@ -166,7 +166,7 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 - [x] 共有コンポーネント + entries スキーマ + トップ/詳細 UI（Phase 2）— 2026-09-07
 - [ ] トップ案 A カテゴリ窓 / 一覧案 E 2ペイン（Phase 4）
 - [x] `entries.json` — `frequency`・`category`（2件に付与済み）
-- [ ] entries 10 件前後
+- [x] entries 10 件前後 — 2026-09-07 Phase 6（10件）
 - [ ] 検索・OGP・404（Phase 5）
 - [ ] DA-4 公開（hack-plus、別ライン）
 
@@ -332,3 +332,23 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 - `docs/iss-68-aruaru-site.md` を追加
 
 **以降**: コミット・PR に `work-item:ISS-68` / ブランチ名 `feature/ISS-68-*` を使用
+
+---
+
+### 2026-09-07 — Phase 6 entries 拡充 + Phase 5 画面スクショ（Cursor）
+
+**実施内容**
+
+| 項目 | 内容 |
+|---|---|
+| `entries.json` | 2件 → **10件**（Computer / SQL / Snap-in / GitHub連携）。list-ideas モックと検証知見ベース |
+| 検索・タグ | 新カテゴリ・タグページが SSG で生成（22 pages） |
+| `HeroHome` | よく見られているタグを Computer / SQL 等に更新 |
+| スクショ | `phase-5-6/` — search, about, 404, 2ペイン（SQL） |
+| `capture-build-screenshots.mjs` | `CAPTURE_PHASE=5-6` 対応 |
+
+**Pagefind**: 10件到達。現状は SSG + `searchEntries()` で十分。全文 index は entries 増加・執筆フロー確定後に検討
+
+**検証**: `npm run build` 成功（22 pages）
+
+**次**: Pagefind 検討、トップ/一覧の再スクショ（10件反映）、PR 作成

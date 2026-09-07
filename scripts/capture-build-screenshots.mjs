@@ -12,22 +12,34 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = process.env.ARUARU_ROOT
   ? path.resolve(process.env.ARUARU_ROOT)
   : path.resolve(__dirname, '..');
-const outDir = path.join(root, 'docs/internal/build-screenshots/phase-1-2');
+const phase = process.env.CAPTURE_PHASE ?? '1-2';
+const outDir = path.join(root, `docs/internal/build-screenshots/phase-${phase}`);
 
-const shots = [
-  { url: 'http://localhost:3101/', file: '01-top-light.png', darkFile: '02-top-dark.png' },
-  {
-    url: 'http://localhost:3101/aruaru/github-oauth-no-events/',
-    file: '03-detail-light.png',
-    darkFile: '04-detail-dark.png',
-  },
-  { url: 'http://localhost:3101/aruaru/', file: '05-list-light.png', darkFile: null },
-  {
-    url: 'http://localhost:3101/tags/GitHub%E9%80%A3%E6%90%BA',
-    file: '06-tag-light.png',
-    darkFile: null,
-  },
-];
+const shotsByPhase = {
+  '1-2': [
+    { url: 'http://localhost:3101/', file: '01-top-light.png', darkFile: '02-top-dark.png' },
+    {
+      url: 'http://localhost:3101/aruaru/github-oauth-no-events/',
+      file: '03-detail-light.png',
+      darkFile: '04-detail-dark.png',
+    },
+    { url: 'http://localhost:3101/aruaru/', file: '05-list-light.png', darkFile: null },
+    {
+      url: 'http://localhost:3101/tags/GitHub%E9%80%A3%E6%90%BA',
+      file: '06-tag-light.png',
+      darkFile: null,
+    },
+  ],
+  '5-6': [
+    { url: 'http://localhost:3101/search?q=GitHub', file: '07-search-light.png', darkFile: null },
+    { url: 'http://localhost:3101/about/', file: '09-about-light.png', darkFile: null },
+    { url: 'http://localhost:3101/this-page-does-not-exist', file: '10-404-light.png', darkFile: null },
+    { url: 'http://localhost:3101/aruaru/?category=SQL', file: '11-list-sql-light.png', darkFile: null },
+  ],
+};
+
+const shots = shotsByPhase[phase] ?? shotsByPhase['1-2'];
+const includeMocks = phase === '1-2';
 
 const mockShots = [
   {
@@ -62,6 +74,7 @@ try {
   const page = await context.newPage();
 
   for (const shot of mockShots) {
+    if (!includeMocks) continue;
     await capturePage(page, shot.url, shot.file, null);
     console.log('saved', shot.file);
   }
@@ -71,11 +84,13 @@ try {
     console.log('saved', shot.file, shot.darkFile ?? '');
   }
 
-  // Mobile width — top page
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('http://localhost:3101/', { waitUntil: 'networkidle' });
-  await page.screenshot({ path: path.join(outDir, '08-top-mobile-light.png'), fullPage: true });
-  console.log('saved 08-top-mobile-light.png');
+  if (phase === '1-2') {
+    // Mobile width — top page
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('http://localhost:3101/', { waitUntil: 'networkidle' });
+    await page.screenshot({ path: path.join(outDir, '08-top-mobile-light.png'), fullPage: true });
+    console.log('saved 08-top-mobile-light.png');
+  }
 } finally {
   await browser.close();
 }

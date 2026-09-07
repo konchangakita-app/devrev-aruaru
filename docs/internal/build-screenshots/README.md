@@ -16,7 +16,7 @@ tmpdir=$(mktemp -d) && cd "$tmpdir" \
   && npm init -y >/dev/null && npm i playwright@1.51.0 >/dev/null \
   && npx playwright install chromium \
   && cp /path/to/devrev-aruaru/scripts/capture-build-screenshots.mjs ./capture.mjs \
-  && ARUARU_ROOT=/path/to/devrev-aruaru node capture.mjs
+  && ARUARU_ROOT=/path/to/devrev-aruaru CAPTURE_PHASE=5-6 node capture.mjs
 ```
 
 リポジトリ内に `playwright` を devDependency 追加する場合は `node scripts/capture-build-screenshots.mjs` で直接実行可。
@@ -26,7 +26,7 @@ tmpdir=$(mktemp -d) && cd "$tmpdir" \
 | パス | 内容 |
 |---|---|
 | `phase-1-2/` | Phase 1–2 実装 + モック参照 + ライト/ダーク（一部） |
-| （今後）`phase-4/` | カテゴリ窓・2ペイン一覧 |
+| `phase-5-6/` | 検索・About・404・2ペイン（SQL カテゴリ） |
 
 ## ファイル命名
 
