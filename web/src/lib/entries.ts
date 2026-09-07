@@ -75,3 +75,10 @@ export function getRelatedEntries(entry: AruaruEntry, limit = 2): AruaruEntry[] 
   );
   return [...sameCategory, ...others].slice(0, limit);
 }
+
+export function getCategoryGroups(): { category: string; entries: AruaruEntry[] }[] {
+  return getCategories().map((category) => ({
+    category,
+    entries: getEntriesByCategory(category),
+  }));
+}

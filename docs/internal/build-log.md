@@ -259,4 +259,34 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 
 **検証**: `npm run build` 成功
 
-**次**: Phase 4 — 案A カテゴリ窓（トップ）、案E 2ペイン（`/aruaru`）
+**次**: Phase 5 — About 刷新、404/空状態、OGP、検索
+
+---
+
+### 2026-09-07 — Phase 4 案A カテゴリ窓 + 案E 2ペイン一覧（Cursor）
+
+**きっかけ**: オーナー「動作が早い方で続き」→ DevTools スクショは見送り、Playwright スクリプト + 実装優先
+
+**参照モック**: `devrev-aruaru-list-ideas.html` 案A（`.cat-windows`）、案E（`.twopane`）
+
+**実施内容**
+
+| 項目 | 内容 |
+|---|---|
+| `CategoryWindows.astro` | カテゴリごとの窓（タイトルリスト・窓内スクロール・件数バッジ） |
+| `AruaruListPane.astro` | 左カテゴリメニュー + 右タイトル行。`?category=` + 軽量 client script |
+| `getCategoryGroups()` | `entries.ts` に追加 |
+| トップ `/` | 「カテゴリ別で探す」セクション（新着の下） |
+| `/aruaru` | カードグリッド → 2ペインに差し替え |
+| `global.css` | 案A/E スタイル + モバイル 1 カラム |
+
+**意図**
+
+- カテゴリ窓の「すべて →」は `/aruaru?category=…` へ（2ペインと連動）
+- 2ペインは SSG のまま、フィルタのみクライアント（件数が少ないうちは十分）
+
+**検証**: `npm run build` 成功
+
+**スクショ**: `scripts/capture-build-screenshots.mjs` + `docs/internal/build-screenshots/README.md`（Playwright は temp dir 実行、`ARUARU_ROOT` でパス解決）
+
+**次**: Phase 5 — About、404、OGP PNG、検索

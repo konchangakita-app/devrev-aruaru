@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AruaruCard from '../components/AruaruCard.astro';
+import CategoryWindows from '../components/CategoryWindows.astro';
 import HeroHome from '../components/HeroHome.astro';
-import { getEntries } from '../lib/entries';
+import { getCategoryGroups, getEntries } from '../lib/entries';
 import { getCollection } from 'astro:content';
 
 const entries = getEntries().slice(0, 3);
+const categoryGroups = getCategoryGroups();
 const verifications = (await getCollection('verifications'))
   .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
   .slice(0, 2);
@@ -25,6 +27,18 @@ const verifications = (await getCollection('verifications'))
       ))}
     </div>
   </section>
+
+  {
+    categoryGroups.length > 0 && (
+      <section class="block block--tight">
+        <div class="section-head">
+          <h2>カテゴリ別で探す</h2>
+          <a href="/aruaru">カテゴリ一覧 →</a>
+        </div>
+        <CategoryWindows groups={categoryGroups} />
+      </section>
+    )
+  }
 
   <section class="block">
     <div class="section-head">

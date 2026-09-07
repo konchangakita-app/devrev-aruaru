@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import AruaruCard from '../../components/AruaruCard.astro';
-import { getEntries } from '../../lib/entries';
+import AruaruListPane from '../../components/AruaruListPane.astro';
+import { getCategories, getEntries } from '../../lib/entries';
 
 const entries = getEntries();
+const categories = getCategories();
+const activeCategory = Astro.url.searchParams.get('category') ?? undefined;
 ---
 
 <BaseLayout title="あるある一覧 | DevRevあるある" description="DevRevのハマりどころ・回避策の一覧">
@@ -12,10 +14,6 @@ const entries = getEntries();
       <h2>あるある一覧</h2>
       <span class="legacy-muted">{entries.length} 件</span>
     </div>
-    <div class="cards">
-      {entries.map((entry) => (
-        <AruaruCard entry={entry} />
-      ))}
-    </div>
+    <AruaruListPane categories={categories} entries={entries} activeCategory={activeCategory} />
   </section>
 </BaseLayout>

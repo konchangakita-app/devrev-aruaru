@@ -1,0 +1,40 @@
+---
+import type { AruaruEntry } from '../lib/entries';
+
+interface Props {
+  groups: { category: string; entries: AruaruEntry[] }[];
+}
+
+const { groups } = Astro.props;
+
+function dotClass(frequency: number) {
+  if (frequency >= 3) return 'dot dot--high';
+  if (frequency >= 2) return 'dot dot--medium';
+  return 'dot dot--low';
+}
+---
+
+<div class="cat-windows">
+  {
+    groups.map(({ category, entries }) => (
+      <div class="cwin">
+        <div class="cwin-head">
+          <span class="h">
+            {category} <span class="count">{entries.length}</span>
+          </span>
+          <a href={`/aruaru?category=${encodeURIComponent(category)}`}>すべて →</a>
+        </div>
+        <ul class="cwin-list">
+          {entries.map((entry) => (
+            <li>
+              <a href={`/aruaru/${entry.slug}`}>
+                <span class={dotClass(entry.frequency)} aria-hidden="true" />
+                <span class="ttl">{entry.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</div>

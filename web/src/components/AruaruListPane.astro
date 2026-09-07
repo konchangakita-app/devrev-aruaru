@@ -1,0 +1,91 @@
+---
+import type { AruaruEntry } from '../lib/entries';
+
+interface Props {
+  categories: string[];
+  entries: AruaruEntry[];
+  activeCategory?: string;
+}
+
+const { categories, entries, activeCategory } = Astro.props;
+const defaultCategory = activeCategory ?? categories[0] ?? '';
+
+function dotClass(frequency: number) {
+  if (frequency >= 3) return 'dot dot--high';
+  if (frequency >= 2) return 'dot dot--medium';
+  return 'dot dot--low';
+}
+
+function countFor(category: string) {
+  return entries.filter((entry) => entry.category === category).length;
+}
+---
+
+<div class="twopane" data-aruaru-list>
+  <nav class="pane-menu" aria-label="カテゴリ">
+    {
+      categories.map((category) => (
+        <a
+          href={`/aruaru?category=${encodeURIComponent(category)}`}
+          data-category={category}
+          class:list={[category === defaultCategory && 'active']}
+        >
+          <span>{category}</span>
+          <span class="c">{countFor(category)}</span>
+        </a>
+      ))
+    }
+  </nav>
+  <div class="pane-list">
+    {
+      entries.map((entry) => (
+        <a
+          class="pl-row"
+          href={`/aruaru/${entry.slug}`}
+          data-category={entry.category}
+          hidden={defaultCategory ? entry.category !== defaultCategory : undefined}
+        >
+          <span class={dotClass(entry.frequency)} aria-hidden="true" />
+          <span class="ttl">{entry.title}</span>
+          <span class="cat">{entry.category}</span>
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector('[data-aruaru-list]');
+  if (!root) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get('category');
+
+  function activate(category: string) {
+    root.querySelectorAll<HTMLAnchorElement>('.pane-menu a').forEach((link) => {
+      link.classList.toggle('active', link.dataset.category === category);
+    });
+    root.querySelectorAll<HTMLAnchorElement>('.pl-row').forEach((row) => {
+      row.hidden = row.dataset.category !== category;
+    });
+  }
+
+  const links = [...root.querySelectorAll<HTMLAnchorElement>('.pane-menu a')];
+  const categories = links.map((link) => link.dataset.category).filter(Boolean) as string[];
+  const initial =
+    requested && categories.includes(requested) ? requested : (categories[0] ?? '');
+
+  if (initial) activate(initial);
+
+  links.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const category = link.dataset.category;
+      if (!category) return;
+      event.preventDefault();
+      const url = new URL(window.location.href);
+      url.searchParams.set('category', category);
+      window.history.replaceState({}, '', url);
+      activate(category);
+    });
+  });
+</script>
