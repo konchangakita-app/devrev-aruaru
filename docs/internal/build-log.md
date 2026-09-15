@@ -9,7 +9,7 @@
 > - DevRev Issue: **ISS-68**（サイト構築のトラッキング）→ [`../iss-68-aruaru-site.md`](../iss-68-aruaru-site.md)
 > - デザイン深掘り → [`design-log.md`](./design-log.md)
 > - 方針の確定事項（要約）→ `hack-plus/.company/secretary/notes/YYYY-MM-DD-decisions.md`
-> - ネタ帳（連載 ID のメモ）→ `hack-plus/docs/blog-ideas.md`
+> - ネタ帳（連載 ID のメモ）→ [`blog-ideas.md`](./blog-ideas.md)（**構築中は Repo1 正本**。完成後 hack-plus へ統合）
 > - 既に公開済みの DA-1〜4 は、当時「下書き並行」方針で直接執筆された（本ログ運用前）
 
 ---
@@ -352,3 +352,43 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 **検証**: `npm run build` 成功（22 pages）
 
 **次**: Pagefind 検討、トップ/一覧の再スクショ（10件反映）、PR 作成
+
+---
+
+### 2026-09-15 — トップ UX 仕上げ：ヒーロー圧縮・カードクリック・リンク色（Cursor）
+
+**きっかけ**: オーナー「ローカル構築中のサイトを起動して確認」→ 現状把握後、トップの黄ヒーローが小画面で長く「新着あるある」まで遠い、カードはタイトルだけリンク、リンクホバーが黄色下線で違和感、との修正依頼が続いた。
+
+**実施内容**
+
+| 項目 | 内容 |
+|---|---|
+| カード全体クリック | `AruaruCard` に stretched link。タグは `z-index` で独立クリック維持 |
+| リンクホバー色 | 黄色（`--accent`）下線 → `--link-underline`（muted）。カード・verify・section-head・article-body |
+| ヒーロー文言 | eyebrow「Unofficial Knowledge Site」削除。h1 を1行「DevRevでつまずいたを、次の人の糧に」。リード2行（句点なし） |
+| ヒーローサイズ | モック比で大きすぎたため段階調整：コンパクト化 → 70–80% → +10% → 縦+20% → 検索欄幅130%（`max-width: 601px`） |
+| レスポンシブ | `@media (max-width: 640px)` で `.hero--home` 専用の padding / タイポ / 余白。ヒーロー下 `section.block` の上 padding も短縮 |
+
+**サイズ調整の経緯（事実）**
+
+- 初回: Phase 1 モック相当の `76px/68px` padding がそのまま残っていた感 → `.hero--home` 専用スタイルで分離
+- オーナー「70–80%くらい」→ padding / フォント / margin を約75%に
+- 「10%大きく」→ 全体約110%
+- 「縦幅20%大きく」→ 縦方向 spacing のみ約120%（フォントサイズは据え置き）
+- 「検索欄横幅130%」→ `462px` → `601px`
+
+**意図**
+
+- ヒーローは世界観の演出だが、**ナレッジサイトでは一覧への到達距離が優先**。黄帯は残しつつ縦を削る
+- カード全体クリックは一覧 UX の定番。タグだけ別リンクは stretched link パターンで両立
+- 本文エリアのリンクに黄色下線は「CTA/ブランド」と混同しやすい → muted に統一
+
+**コミット**: `8446157` — `feat(web): compact home hero and improve aruaru card UX work-item:ISS-68`
+
+**検証**: ローカル `npm run dev`（:3101）で確認。本番は未デプロイ（main マージ前）
+
+**ブログ記録**: 同日、`docs/internal/blog-ideas.md` を Repo1 正本として新設（構築中は hack-plus へ書かない方針に統合）。DA-6 候補を同ファイルに記載
+
+**ブログ素材メモ**: 「モック通りのヒーローを載せたら小画面で長すぎた」「AI と数値で size を往復調整した」「stretched link でカード全体クリック + タグ独立」の3点が記事ネタになりやすい
+
+**次**: PR 作成、10件反映後の再スクショ、本番デプロイ
