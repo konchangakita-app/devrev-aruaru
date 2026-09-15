@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AruaruCard from '../../components/AruaruCard.astro';
+import EmptyState from '../../components/EmptyState.astro';
 import { getAllTags, getEntriesByTag } from '../../lib/entries';
 
 export function getStaticPaths() {
@@ -14,10 +15,25 @@ const { tag, entries } = Astro.props;
 ---
 
 <BaseLayout title={`${tag} | DevRevあるある`}>
-  <h1 class="text-2xl font-bold text-amber-400">タグ: {tag}</h1>
-  <p class="mt-2 text-sm text-slate-400">{entries.length} 件のあるある</p>
-
-  <div class="mt-8 space-y-4">
-    {entries.map((entry) => <AruaruCard entry={entry} />)}
-  </div>
+  <section class="block">
+    <div class="section-head">
+      <h2>タグ: {tag}</h2>
+      <span class="legacy-muted">{entries.length} 件</span>
+    </div>
+    <div class="cards">
+      {
+        entries.length === 0 ? (
+          <EmptyState
+            title={`タグ「${tag}」のあるあるは0件です`}
+            message="タグが付いたエントリがまだないか、名称が変わった可能性があります。"
+          >
+            <a class="btn btn-outline" href="/aruaru">一覧を見る</a>
+            <a class="btn btn-outline" href="/search">検索する</a>
+          </EmptyState>
+        ) : (
+          entries.map((entry) => <AruaruCard entry={entry} />)
+        )
+      }
+    </div>
+  </section>
 </BaseLayout>

@@ -4,7 +4,7 @@
 
 - マスター（正）: 本ファイル `devrev-aruaru/docs/OPERATIONS.md`
 - 従: `hack-plus/docs/blog-ideas.md` の冒頭から本ファイルを参照する
-- 最終更新: 2026-08-26（§2 連載例外・§9 Cursor→hack-plus 指示系統を追加）
+- 最終更新: 2026-09-15（§9 構築ログ・blog-ideas Repo1 正本化）
 
 ---
 
@@ -160,11 +160,13 @@ Docker 実行は sampleapp の `skills/` から行う。詳細は `.cursor/rules
 | 層 | 場所 | 担当すること |
 |---|---|---|
 | 横断・2リポジトリ | 本ファイル `OPERATIONS.md` | リポジトリ主語、Computer/Cursor/DevRev 分担、連載例外 |
-| ネタ帳 | `hack-plus/docs/blog-ideas.md` | 記事ネタ・想定タイトル・ステータス |
+| ネタ帳（構築中） | `devrev-aruaru/docs/internal/blog-ideas.md` | 【とあるあるあるサイト】連載の想定タイトル・切り口（**構築完了後** hack-plus へ統合） |
+| ネタ帳（公開・一般） | `hack-plus/docs/blog-ideas.md` | 一般ネタ + DA-1〜4 公開分。構築中の連載追記は Repo1 正本 |
 | 方針・文体（一般） | `hack-plus/.company/operations/content/style-guide.md` | サイト全体の文体・表記（継続アップデート） |
 | 連載固有 | `series-devrev-aruaru.md` | 接頭辞・タグ・frontmatter・修正手順 |
 | 制作実行 | `hack-plus/.company/` | 秘書ルーティング → content → サブエージェント → QA → engineering 公開 |
-| 記事本体 | `hack-plus/web/content/drafts/` → `articles/` | Markdown 下書き・公開記事 |
+| 構築ログ（生記録） | `devrev-aruaru/docs/internal/build-log.md` | サイト組み上げ・相談の時系列（**記事形式にしない**） |
+| 記事本体 | `hack-plus/web/content/drafts/` → `articles/` | 構築完了後にログから整形した Markdown |
 
 **Cursor セッション ≈ オーナーが秘書に相談**（company 運営モード）。方針決定と記録はここから行い、公開フロー・チェックリストは `.company` の既存ワークフローに従う。
 
@@ -173,27 +175,31 @@ Docker 実行は sampleapp の `skills/` から行う。詳細は `.cursor/rules
 ```
 1. オーナーが Cursor（devrev-aruaru）で方針・ネタ・執筆を指示
 2. Cursor が記録
-   - ネタ → blog-ideas.md
-   - 方針決定 → hack-plus/.company/secretary/notes/YYYY-MM-DD-decisions.md
-   - 連載ルール変更 → series-devrev-aruaru.md（必要時）
+   - 時系列 → `docs/internal/build-log.md`
+   - ネタ（連載）→ `docs/internal/blog-ideas.md`（構築中は Repo1 正本）
+   - 方針決定 → hack-plus `.company/secretary/notes/`（要約・任意）
 3. 執筆 → web/content/drafts/ に下書き
    - 連載は series-devrev-aruaru.md の frontmatter 必須項目に従う
 4. レビュー・公開 → hack-plus .company の記事作成フロー（変更しない）
    - draft-content-reviewer → draft-design-reviewer → QA → engineering
 5. DevRev Issue 起票が必要な場合 → Computer に委ねる（Cursor は起票しない）
 
-### サイト構成作業と DA-1 の並行（自動）
+### サイト構築とブログネタの並行記録（自動）
 
-devrev-aruaru で**あるあるサイトの構成**（サイトマップ・ページ設計・AI との設計対話など）を始めたセッションでは、オーナーが「記事」と言わなくても次を**同セッションで**行う。
+devrev-aruaru で**あるあるサイトの構成・実装・デザイン**（サイトマップ、ページ設計、Computer/Cursor との設計対話など）を行うセッションでは、オーナーが「記事」と言わなくても **ブログネタ用の生記録** を同セッションで残す。
 
-1. `series-devrev-aruaru.md` と `blog-ideas.md`（DA-1）を参照
-2. 構成の議論を進める（entries 詳細・サイト URL 掲載は不要）
-3. 決定事項を `secretary/notes/YYYY-MM-DD-decisions.md` に記録
-4. 議論ログを `hack-plus/web/content/drafts/` の下書きに反映（frontmatter はシリーズルール準拠）
-5. `blog-ideas.md` の DA-1 を `drafting` に更新
+**方針（2026-09-07 確定）**: 構築中は **記事形式に整えない**。ひたすらログに追記し、サイト構成が一通り出来上がってから、連載を何回に分けるか等を検討して hack-plus の下書き・公開に移す。
+
+1. 参照: `docs/internal/build-log.md`（構築ログ正本）、`docs/internal/blog-ideas.md`（連載ネタ正本・構築中）、トピック別は `design-log.md` 等
+2. 構成・実装の議論を進める（entries 詳細・サイト URL 掲載は不要）
+3. **Cursor / Computer が `build-log.md` に時系列追記**（相談内容・判断・採否・理由。脚色しない）
+4. 確定した方針は `secretary/notes/YYYY-MM-DD-decisions.md` に要約してもよい（hack-plus `.company`、任意）
+5. **構築中は `hack-plus/web/content/drafts/` に下書きを書かない**（frontmatter 執筆・連載分割の確定は構築完了後）
+6. **`docs/internal/blog-ideas.md` にネタ・想定テーマをメモ**（ステータスは `idea` のままで可。hack-plus への統合は構築完了後）
+
+**過去分**: DA-1〜4 は 2026-08 時点の「下書き並行」方針で直接執筆・公開済み。以降の構築（デザイン反映以降など）は上記ログ優先。
 
 `.cursor/rules/project-operations.mdc` に同内容を記載（新セッション向け）。
-```
 
 ### 修正の方法
 
@@ -201,7 +207,7 @@ devrev-aruaru で**あるあるサイトの構成**（サイトマップ・ペ�
 |---|---|---|
 | 接頭辞・タグ・series ルール | `series-devrev-aruaru.md` | 該当下書き／公開記事を追随修正 |
 | 文体・トーン（全体） | `style-guide.md` | 必要に応じて既存記事を順次修正 |
-| ネタ・タイトル案 | `blog-ideas.md` | drafts の title / frontmatter |
+| ネタ・タイトル案（構築中） | `docs/internal/blog-ideas.md` | 完成後 hack-plus `blog-ideas.md` へ統合 |
 | 下書きの内容 | — | `web/content/drafts/` を直接編集 |
 | 公開済み記事（軽微） | — | `web/content/articles/` を編集（事実誤認・リンク切れ等） |
 | 公開済み記事（構成・時制・大改稿） | — | drafts に戻してフロー再通過を推奨 |

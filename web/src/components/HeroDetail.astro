@@ -1,0 +1,27 @@
+---
+import type { AruaruEntry } from '../lib/entries';
+import FrequencyMeter from './FrequencyMeter.astro';
+
+interface Props {
+  entry: AruaruEntry;
+}
+
+const { entry } = Astro.props;
+---
+
+<div class="hero-band">
+  <div class="wrap">
+    <section class="hero hero--detail">
+      <div class="breadcrumb">
+        <a href="/">トップ</a> / <a href="/aruaru">あるある</a> / {entry.category}
+      </div>
+      <h1>{entry.title}</h1>
+      <div class="meta-row">
+        <FrequencyMeter frequency={entry.frequency} variant="hero" />
+        <span class="cat">{entry.category}</span>
+        <span class="dot" aria-hidden="true">•</span>
+        <span class="date">{entry.publishedAt}</span>
+      </div>
+    </section>
+  </div>
+</div>

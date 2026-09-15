@@ -1,0 +1,20 @@
+---
+interface Props {
+  frequency: 1 | 2 | 3;
+  variant?: 'default' | 'hero';
+}
+
+const { frequency, variant = 'default' } = Astro.props;
+---
+
+<span
+  class:list={['aruaru-meter', variant === 'hero' && 'aruaru-meter--hero']}
+  title="あるある度（どれくらいよく遭遇するか）"
+>
+  <span class="lbl">あるある度</span>
+  <span class="dots" aria-hidden="true">
+    {[1, 2, 3].map((level) => (
+      <span class:list={['d', level <= frequency && 'on']} />
+    ))}
+  </span>
+</span>

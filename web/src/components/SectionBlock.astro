@@ -1,0 +1,15 @@
+---
+interface Props {
+  type: 'symptom' | 'cause' | 'solution';
+  label: string;
+  heading?: string;
+}
+
+const { type, label, heading } = Astro.props;
+---
+
+<div class={`qblock ${type}`}>
+  <span class="label">{label}</span>
+  {heading && <h2>{heading}</h2>}
+  <slot />
+</div>

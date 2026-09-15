@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmptyState from '../components/EmptyState.astro';
+import { searchEntries } from '../lib/entries';
+
+const q = Astro.url.searchParams.get('q')?.trim() ?? '';
+const results = q ? searchEntries(q) : [];
+
+function dotClass(frequency: number) {
+  if (frequency >= 3) return 'dot dot--high';
+  if (frequency >= 2) return 'dot dot--medium';
+  return 'dot dot--low';
+}
+---
+
+<BaseLayout
+  title={q ? `「${q}」の検索結果 | DevRevあるある` : '検索 | DevRevあるある'}
+  description="DevRevあるあるをキーワード検索"
+>
+  <section class="block">
+    <div class="section-head">
+      <h2>{q ? '検索結果' : 'あるあるを検索'}</h2>
+      {q && <span class="legacy-muted">{results.length} 件</span>}
+    </div>
+
+    <form class="search-form" role="search" action="/search" method="get">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="M21 21l-4.3-4.3"></path>
+      </svg>
+      <input
+        type="search"
+        name="q"
+        value={q}
+        placeholder="キーワード（例: GitHub, スナップイン, OAuth）"
+        aria-label="検索キーワード"
+        autofocus
+      />
+      <button type="submit" class="btn btn-primary">検索</button>
+    </form>
+
+    {
+      !q && (
+        <p class="search-hint">
+          タイトル・症状・原因・対処・カテゴリ・タグから部分一致で探します。
+        </p>
+      )
+    }
+
+    {
+      q && results.length === 0 && (
+        <EmptyState
+          title={`「${q}」に一致するあるあるはありません`}
+          message="別のキーワードを試すか、タグやカテゴリから探してみてください。"
+          hint="まだ誰も書いていない「あるある」かもしれません。"
+        >
+          <a class="btn btn-outline" href="/aruaru">一覧を見る</a>
+          <a class="btn btn-outline" href="/about">投稿方法（About）</a>
+        </EmptyState>
+      )
+    }
+
+    {
+      q && results.length > 0 && (
+        <div class="pane-list search-results">
+          {
+            results.map((entry) => (
+              <a class="pl-row" href={`/aruaru/${entry.slug}`}>
+                <span class={dotClass(entry.frequency)} aria-hidden="true" />
+                <span class="ttl">{entry.title}</span>
+                <span class="cat">{entry.category}</span>
+              </a>
+            ))
+          }
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

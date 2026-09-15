@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Computerデスクトップアプリが繋がらない時はwss(443)の通信許可を確認 — DevRevあるある</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23FFE600'/%3E%3Ctext%20x='32'%20y='47'%20font-family='Space%20Grotesk,%20Arial,%20sans-serif'%20font-size='44'%20font-weight='700'%20text-anchor='middle'%20fill='%23161616'%3EA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #161616;
+    --surface: #211f20;
+    --surface-2: #2c2a2b;
+    --border: #3e3c3d;
+    --text: #ffffff;
+    --text-muted: #a5a2a4;
+    --accent: #ffe600;
+    --accent-strong: #ffcd06;
+    --light: #f4f4f4;
+    --heading: 'Space Grotesk', system-ui, sans-serif;
+    --body: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    /* Body-area theme tokens — LIGHT (default) */
+    --page-bg: #f4f4f4;
+    --page-text: #161616;
+    --page-text-muted: #514c4f;
+    --card-bg: #ffffff;
+    --card-border: #e8e8e8;
+    --rule: #161616;
+    --tag-bg: #f4f4f4;
+    --tag-border: #e8e8e8;
+    --code-bg: #161616;      /* code blocks stay dark in both themes for legibility */
+    --code-text: #f4f4f4;
+    --note-bg: #ffffff;
+    --sev-high: #c90651; --sev-high-bg: rgba(201,6,81,0.10);
+    --sev-med:  #d84500; --sev-med-bg:  rgba(243,81,6,0.10);
+    --sev-low:  #2f7a00; --sev-low-bg:  rgba(18,77,0,0.10);
+  }
+  body[data-theme="dark"] {
+    --page-bg: #161616;
+    --page-text: #ffffff;
+    --page-text-muted: #a5a2a4;
+    --card-bg: #211f20;
+    --card-border: #3e3c3d;
+    --rule: #3e3c3d;
+    --tag-bg: #2c2a2b;
+    --tag-border: #3e3c3d;
+    --code-bg: #0e0e0e;
+    --code-text: #f4f4f4;
+    --note-bg: #211f20;
+    --sev-high: #ff4570; --sev-high-bg: rgba(255,69,112,0.15);
+    --sev-med:  #ff893a; --sev-med-bg:  rgba(255,137,58,0.15);
+    --sev-low:  #7adb12; --sev-low-bg:  rgba(122,219,18,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--page-bg); color: var(--page-text);
+    font-family: var(--body); line-height: 1.8;
+    -webkit-font-smoothing: antialiased; transition: background .25s, color .25s;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  /* Header (dark, fixed) */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(22,22,22,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav { max-width: 780px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .brand .mark { font-family: var(--heading); font-weight: 700; font-size: 20px; color: var(--text); text-decoration: none; letter-spacing: -0.01em; }
+  .badge-unofficial { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bg); background: var(--accent); padding: 2px 8px; border-radius: 9999px; font-weight: 500; margin-left: 10px; }
+  nav.links { display: flex; align-items: center; gap: 20px; }
+  nav.links a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s; }
+  nav.links a:hover { color: var(--accent); }
+  .theme-toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); background: transparent; border: 1px solid var(--border); padding: 5px 12px; border-radius: 9999px; transition: border-color .15s, color .15s; }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-search { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 9999px; cursor: pointer; color: var(--text); background: transparent; border: 1px solid var(--border); transition: border-color .15s, color .15s; }
+  .nav-search:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-search svg { width: 16px; height: 16px; }
+
+  /* Article hero — compact yellow band */
+  .hero-band { background: var(--accent); color: var(--bg); }
+  .hero { padding: 30px 0 34px; }
+  .breadcrumb { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--bg); opacity: 0.7; margin-bottom: 16px; }
+  .breadcrumb a { color: var(--bg); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .hero h1 { font-family: var(--heading); font-weight: 700; font-size: 32px; line-height: 1.15; letter-spacing: -0.01em; color: var(--bg); }
+  .meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; }
+  /* あるある度（頻発度）メーター。重大度ではない = 赤緑を使わず黄色ドットで表現 */
+  .aruaru-meter { display: inline-flex; align-items: center; gap: 8px; }
+  .aruaru-meter .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75; }
+  .aruaru-meter .dots { display: inline-flex; gap: 4px; }
+  .aruaru-meter .d { width: 10px; height: 10px; border-radius: 9999px; }
+  /* On the yellow hero band: filled = black, empty = translucent black */
+  .hero .aruaru-meter .lbl { color: var(--bg); }
+  .hero .aruaru-meter .d { background: rgba(0,0,0,0.2); }
+  .hero .aruaru-meter .d.on { background: var(--bg); }
+  .hero .cat { font-family: var(--mono); font-size: 12px; color: var(--bg); opacity: 0.8; letter-spacing: 0.04em; }
+  .hero .date { font-family: var(--mono); font-size: 12px; color: var(--bg); opacity: 0.7; }
+  .hero .dot { color: var(--bg); opacity: 0.4; }
+
+  /* Article body */
+  article { padding: 40px 0 8px; }
+  .qblock { margin-bottom: 28px; }
+  .qblock > .label {
+    display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 6px; margin-bottom: 12px; font-weight: 500;
+  }
+  .qblock.symptom > .label { background: var(--page-text); color: var(--page-bg); }
+  .qblock.cause > .label   { background: var(--tag-bg); color: var(--page-text-muted); border: 1px solid var(--tag-border); }
+  .qblock.solution > .label{ background: var(--accent); color: var(--bg); }
+  .qblock h2 { font-family: var(--heading); font-weight: 700; font-size: 20px; color: var(--page-text); margin-bottom: 8px; }
+  .qblock p { color: var(--page-text); margin-bottom: 12px; }
+  .qblock ul, .qblock ol { margin: 0 0 12px 1.2em; color: var(--page-text); }
+  .qblock li { margin-bottom: 6px; }
+  strong.hl { background: var(--accent); color: var(--bg); padding: 0 4px; border-radius: 3px; font-weight: 600; }
+
+  /* Code block (dark in both themes) */
+  pre { background: var(--code-bg); color: var(--code-text); border-radius: 10px; padding: 16px 18px; overflow-x: auto; margin: 4px 0 16px; border: 1px solid var(--border); }
+  code { font-family: var(--mono); font-size: 13px; line-height: 1.7; }
+  p code, li code { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--page-text); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+
+  /* Figures / images (theme-aware, easy to drop screenshots into) */
+  figure.shot { margin: 8px 0 20px; }
+  figure.shot img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--card-border); background: var(--card-bg); }
+  figure.shot figcaption { font-family: var(--mono); font-size: 12px; color: var(--page-text-muted); margin-top: 8px; text-align: center; letter-spacing: 0.02em; }
+  /* Placeholder shown until a real screenshot is dropped in */
+  .shot .ph {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    aspect-ratio: 16 / 9; width: 100%; border-radius: 10px;
+    border: 1px dashed var(--card-border); background: var(--card-bg);
+    color: var(--page-text-muted);
+  }
+  .shot .ph .ph-icon { width: 36px; height: 36px; opacity: 0.5; }
+  .shot .ph .ph-txt { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; }
+  /* Two-up gallery for before/after shots */
+  .shot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 8px 0 20px; }
+  .shot-grid figure { margin: 0; }
+  @media (max-width: 560px) { .shot-grid { grid-template-columns: 1fr; } }
+
+  /* Source / note callout */
+  .note { background: var(--note-bg); border: 1px solid var(--card-border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 14px 16px; margin: 8px 0 20px; }
+  .note .note-h { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--page-text-muted); margin-bottom: 6px; }
+  .note p { font-size: 14px; color: var(--page-text-muted); margin: 0; }
+  .note a { color: var(--page-text); text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
+
+  /* Tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 8px; }
+  .tag { font-size: 12px; color: var(--page-text); background: var(--tag-bg); border: 1px solid var(--tag-border); padding: 3px 10px; border-radius: 9999px; text-decoration: none; }
+  .tag:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+  /* Related */
+  .related { border-top: 2px solid var(--rule); margin-top: 28px; padding-top: 22px; }
+  .related h3 { font-family: var(--heading); font-weight: 700; font-size: 16px; margin-bottom: 14px; }
+  .rel-card { display: block; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; text-decoration: none; transition: box-shadow .15s, transform .12s; }
+  .rel-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); transform: translateY(-1px); }
+  .rel-card .rc-top { font-family: var(--mono); font-size: 11px; color: var(--page-text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .rel-card .rc-title { font-family: var(--heading); font-weight: 500; font-size: 15px; color: var(--page-text); }
+
+  /* Prev/Next */
+  .pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 22px; }
+  .pager a { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; text-decoration: none; transition: box-shadow .15s; }
+  .pager a:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .pager .dir { font-family: var(--mono); font-size: 11px; color: var(--page-text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .pager .pt { font-size: 14px; color: var(--page-text); font-weight: 500; margin-top: 2px; display: block; }
+  .pager .next { text-align: right; }
+
+  /* Footer (dark, fixed) */
+  footer { background: var(--bg); color: var(--text); margin-top: 44px; padding: 32px 0 44px; }
+  footer .fwrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+  footer .disclaimer { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+  footer .disclaimer strong { color: var(--text); }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 26px; }
+    .pager { flex-direction: column; }
+    nav.links a:not(.keep) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand"><a class="mark" href="#">DevRevあるある</a><span class="badge-unofficial">非公式</span></div>
+    <nav class="links">
+      <a href="#">あるある</a>
+      <a href="#">検証してみた</a>
+      <button class="nav-search keep" type="button" aria-label="検索">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <button class="theme-toggle keep" id="themeToggle" type="button" aria-label="テーマ切り替え"><span id="themeLabel">Dark</span></button>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-band">
+  <div class="wrap">
+    <section class="hero">
+      <div class="breadcrumb"><a href="#">トップ</a> / <a href="#">あるある</a> / Computer</div>
+      <h1>Computerデスクトップアプリが繋がらない時は<br/>wss(443)の通信許可を確認</h1>
+      <div class="meta-row">
+        <span class="aruaru-meter" title="あるある度（どれくらいよく遭遇するか）">
+          <span class="lbl">あるある度</span>
+          <span class="dots"><span class="d on"></span><span class="d on"></span><span class="d"></span></span>
+        </span>
+        <span class="cat">Computer</span>
+        <span class="dot">•</span>
+        <span class="date">2026-09-04</span>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="wrap">
+  <article>
+    <div class="qblock symptom">
+      <span class="label">症状</span>
+      <h2>Web版は動くのに、デスクトップアプリだけ繋がらない</h2>
+      <p>
+        社内ネットワークやプロキシ／ファイアウォール配下で Computer デスクトップアプリを使うと、
+        ログインやエージェントの応答が進まず接続できない。ブラウザの Web 版は問題なく動くのに、
+        デスクトップ版だけが繋がらない、というパターンで気づくことが多い。
+      </p>
+      <!-- 実画像を入れる例（本番は <img src="/images/xxx.png"> に差し替え。ここではスクショ風のSVGを埋め込み） -->
+      <figure class="shot">
+        <img alt="デスクトップアプリのログイン画面がスピナーのまま進まない様子"
+          src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20450'%3E%3Crect%20width='800'%20height='450'%20fill='%23211f20'/%3E%3Crect%20x='250'%20y='120'%20width='300'%20height='210'%20rx='12'%20fill='%23161616'%20stroke='%233e3c3d'/%3E%3Ccircle%20cx='400'%20cy='200'%20r='22'%20fill='none'%20stroke='%23ffe600'%20stroke-width='4'%20stroke-dasharray='90%2040'/%3E%3Crect%20x='320'%20y='250'%20width='160'%20height='14'%20rx='7'%20fill='%233e3c3d'/%3E%3Crect%20x='350'%20y='278'%20width='100'%20height='10'%20rx='5'%20fill='%232c2a2b'/%3E%3C/svg%3E" />
+        <figcaption>図1: ログインが進まず、スピナーのまま止まる（イメージ）</figcaption>
+      </figure>
+    </div>
+
+    <div class="qblock cause">
+      <span class="label">原因</span>
+      <h2>WebSocket(wss) / 443 がブロックされている</h2>
+      <p>
+        デスクトップアプリは認証とエージェント呼び出しにインターネット接続が必須で、
+        DevRev との通信に <code>WebSocket Secure (wss)</code> を使う。
+        企業ファイアウォールやプロキシが WebSocket、あるいは接続先ホスト宛の 443 通信を
+        ブロックしていると疎通できない。フィルタ製品によっては、デスクトップ版が丸ごと弾かれることもある。
+      </p>
+    </div>
+
+    <div class="qblock solution">
+      <span class="label">対処</span>
+      <h2>wss / 443 の通信を許可する</h2>
+      <p>IT・ネットワーク担当に、次の通信の許可（allowlist 追加）を依頼する。</p>
+      <pre><code>プロトコル : wss://  (WebSocket Secure)
+ホスト    : app.devrev.ai
+ポート    : 443       (HTTPS / WSS の標準ポート)</code></pre>
+      <!-- 画像プレースホルダの例（執筆時に後からスクショを差し込みやすい枠） -->
+      <figure class="shot">
+        <div class="ph">
+          <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5L5 20"/></svg>
+          <span class="ph-txt">ここに設定画面のスクショを入れる</span>
+        </div>
+        <figcaption>図2: ネットワーク許可の設定例（キャプションは任意）</figcaption>
+      </figure>
+
+      <p>切り分けの順番はこう考えると早い。</p>
+      <ol>
+        <li>まず <strong class="hl">Web 版で疎通確認</strong>する（ブラウザで開けるか）。</li>
+        <li>Web 版が通ってデスクトップ版だけ落ちるなら、<code>wss</code> / 443 のブロックを疑う。</li>
+        <li>macOS の場合は、初回起動時の「ローカルネットワークアクセス許可」も確認する。</li>
+      </ol>
+      <div class="note">
+        <div class="note-h">出典 / 注記</div>
+        <p>
+          <code>.devrev.ai</code> の API / WebSocket ドメインは allowlist へ個別追加が必要な場合がある。
+          正確な要件は <a href="https://devrev.ai/">DevRev 公式ドキュメント</a> を確認のこと。
+        </p>
+      </div>
+    </div>
+
+    <div class="tags">
+      <a class="tag" href="#">Computer</a>
+      <a class="tag" href="#">デスクトップアプリ</a>
+      <a class="tag" href="#">ネットワーク</a>
+      <a class="tag" href="#">WebSocket</a>
+      <a class="tag" href="#">ファイアウォール</a>
+    </div>
+
+    <div class="related">
+      <h3>関連するあるある</h3>
+      <a class="rel-card" href="#">
+        <div class="rc-top">Snap-in • low</div>
+        <div class="rc-title">GitHubスナップインをOAuth接続するとOrg配下リポジトリのイベントが届かない</div>
+      </a>
+      <a class="rel-card" href="#">
+        <div class="rc-top">ポータル • medium</div>
+        <div class="rc-title">カスタマーポータルのOTPログインが特定ユーザーだけ失敗する</div>
+      </a>
+    </div>
+
+    <div class="pager">
+      <a class="prev" href="#">
+        <span class="dir">← 前のあるある</span>
+        <span class="pt">SQLでaccount名を直接フィルタすると0件になる</span>
+      </a>
+      <a class="next" href="#">
+        <span class="dir">次のあるある →</span>
+        <span class="pt">PRマージ＝Issue完了とは限らない</span>
+      </a>
+    </div>
+  </article>
+</div>
+
+<footer>
+  <div class="fwrap">
+    <p class="disclaimer">
+      <strong>本サイトは DevRev の非公式ファンサイトです。</strong>
+      DevRev社が運営・監修する公式サイトではありません。掲載内容は個人が実務で得た知見のまとめであり、
+      正確性を保証するものではありません。ブランドカラーおよび用語は識別のために参照していますが、
+      公式ロゴおよび公式フォントは使用していません。正確な情報は
+      <a href="https://devrev.ai/">DevRev公式サイト</a> および公式ドキュメントをご確認ください。
+    </p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var body = document.body, btn = document.getElementById('themeToggle'), label = document.getElementById('themeLabel');
+    function apply(t){ if(t==='dark'){ body.setAttribute('data-theme','dark'); label.textContent='Light'; } else { body.removeAttribute('data-theme'); label.textContent='Dark'; } }
+    btn.addEventListener('click', function(){ apply(body.getAttribute('data-theme')==='dark' ? 'light' : 'dark'); });
+  })();
+</script>
+
+</body>
+</html>
