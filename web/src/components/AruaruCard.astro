@@ -8,16 +8,20 @@ interface Props {
 }
 
 const { entry } = Astro.props;
+const titleId = `card-title-${entry.slug}`;
 ---
 
 <article class="card">
+  <a
+    class="card-stretched-link"
+    href={`/aruaru/${entry.slug}`}
+    aria-labelledby={titleId}
+  ></a>
   <div class="card-top">
     <FrequencyMeter frequency={entry.frequency} />
     <span class="cat">{entry.category}</span>
   </div>
-  <h3>
-    <a href={`/aruaru/${entry.slug}`}>{entry.title}</a>
-  </h3>
+  <h3 id={titleId}>{entry.title}</h3>
   <p>{entry.symptom}</p>
   <div class="tags">
     {entry.tags.map((tag) => (
