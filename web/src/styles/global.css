@@ -29,6 +29,8 @@
   --code-text: #f4f4f4;
   --note-bg: #ffffff;
   --link-underline: #514c4f;
+  --search-toolbar-bg: #ffffff;
+  --search-body-bg: #e6e4e1;
 }
 
 html[data-theme="dark"] {
@@ -42,6 +44,8 @@ html[data-theme="dark"] {
   --tag-border: #3e3c3d;
   --note-bg: #211f20;
   --link-underline: #a5a2a4;
+  --search-toolbar-bg: #2c2a2b;
+  --search-body-bg: #161616;
 }
 
 @layer base {
@@ -1074,7 +1078,59 @@ html[data-theme="dark"] {
     flex: none;
   }
 
-  /* Search */
+  /* Search page — toolbar (controls) + body (results) */
+  section.block--search {
+    padding-top: 28px;
+  }
+
+  .search-page {
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.05),
+      0 8px 28px rgba(0, 0, 0, 0.06);
+  }
+
+  .search-toolbar {
+    background: var(--search-toolbar-bg);
+    padding: 24px 24px 22px;
+    border-bottom: 2px solid var(--card-border);
+  }
+
+  .section-head--search {
+    margin-bottom: 18px;
+    border-bottom: 2px solid var(--card-border);
+    padding-bottom: 14px;
+  }
+
+  .search-toolbar .search-form {
+    background: var(--card-bg);
+    border-color: var(--card-border);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+    margin-bottom: 14px;
+  }
+
+  .search-body {
+    position: relative;
+    background: var(--search-body-bg);
+    border-top: 3px solid var(--accent);
+    padding: 22px 24px 26px;
+  }
+
+  html[data-theme="dark"] .search-body {
+    border-top-color: var(--accent-strong);
+  }
+
+  .search-body-label {
+    margin: 0 0 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--page-text-muted);
+  }
+
   .search-form {
     display: flex;
     align-items: center;
@@ -1116,8 +1172,24 @@ html[data-theme="dark"] {
     margin: 0;
   }
 
-  .search-results {
-    margin-top: 8px;
+  .search-body .search-results {
+    margin-top: 0;
+  }
+
+  .search-body .pl-row {
+    background: var(--card-bg);
+    border-color: var(--card-border);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  html[data-theme="dark"] .search-body .pl-row {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  }
+
+  .search-body .empty-state {
+    background: var(--card-bg);
+    border-style: solid;
+    border-color: var(--card-border);
   }
 
   /* Empty state */

@@ -41,3 +41,18 @@
 - **匿名化**: コミット/Issue/ポート/本番 URL（完成節以外）は一般化
 - **ステータス**: idea
 - **DevRev Issue**: (未起票)
+
+### DA-7 候補 — 検索をどう実装するか（Fuse.js vs Pagefind）（2026-09-16）
+
+- **記事の主題**: デザインだけ先に決まった検索 UI に、**方式選定から実装**する過程（CSP・日本語・件数増化）
+- **build-log**: [`build-log.md` §2026-09-16](./build-log.md)（ISS-69 着手）
+- **設計メモ**: [`search-feature-notes.md`](./search-feature-notes.md)
+- **想定タイトル**: 「【とあるあるあるサイトをつくる】検索は Fuse.js から始める — 静的サイトの全文検索選定」
+- **書ける切り口**:
+  - UI はモック済み、ロジックは `includes()` だけだった現状
+  - 静的配信 + CSP でランタイム API 不可 → クライアント完結の選択肢
+  - Fuse.js で始めて Pagefind に移行する段階戦略（件数・日本語・ビルドコスト）
+  - PoC の比較観点（threshold、インデックスサイズ、Astro ビルド連携）
+- **匿名化**: Issue ID・ポート・本番 URL
+- **ステータス**: idea
+- **DevRev Issue**: ISS-69

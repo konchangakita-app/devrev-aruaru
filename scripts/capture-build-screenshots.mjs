@@ -36,6 +36,17 @@ const shotsByPhase = {
     { url: 'http://localhost:3101/this-page-does-not-exist', file: '10-404-light.png', darkFile: null },
     { url: 'http://localhost:3101/aruaru/?category=SQL', file: '11-list-sql-light.png', darkFile: null },
   ],
+  69: [
+    { url: 'http://localhost:3101/', file: '01-top-hero-search-light.png', darkFile: null },
+    { url: 'http://localhost:3101/search/', file: '02-search-empty-light.png', darkFile: null },
+    { url: 'http://localhost:3101/search/?q=GitHub', file: '03-search-results-light.png', darkFile: null },
+    { url: 'http://localhost:3101/search/?q=存在しないキーワードxyz', file: '04-search-no-results-light.png', darkFile: null },
+    {
+      url: 'http://localhost:3101/aruaru/github-oauth-no-events/',
+      file: '05-detail-nav-search-light.png',
+      darkFile: null,
+    },
+  ],
 };
 
 const shots = shotsByPhase[phase] ?? shotsByPhase['1-2'];

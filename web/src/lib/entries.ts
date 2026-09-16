@@ -1,5 +1,6 @@
 import { z } from 'astro/zod';
 import rawEntries from '../data/entries.json';
+import { fuseSearch } from './search-fuse';
 
 const entrySchema = z.object({
   slug: z.string(),
@@ -84,20 +85,5 @@ export function getCategoryGroups(): { category: string; entries: AruaruEntry[] 
 }
 
 export function searchEntries(query: string): AruaruEntry[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return [];
-
-  return getEntries().filter((entry) => {
-    const haystack = [
-      entry.title,
-      entry.symptom,
-      entry.cause,
-      entry.fix,
-      entry.category,
-      ...entry.tags,
-    ]
-      .join(' ')
-      .toLowerCase();
-    return haystack.includes(q);
-  });
+  return fuseSearch(getEntries(), query);
 }

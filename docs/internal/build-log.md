@@ -392,3 +392,78 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 **ブログ素材メモ**: 「モック通りのヒーローを載せたら小画面で長すぎた」「AI と数値で size を往復調整した」「stretched link でカード全体クリック + タグ独立」の3点が記事ネタになりやすい
 
 **次**: PR 作成、10件反映後の再スクショ、本番デプロイ
+
+---
+
+### 2026-09-16 — ISS-69 検索機能: ブランチ作成・ベースライン記録（Cursor）
+
+**きっかけ**: Computer が DevRev Issue **ISS-69** を起票し、`docs/internal/search-feature-notes.md` に設計メモを残した。オーナー「作業用ブランチを作成、ブログ用メモとスクショを取得しながら進める」。
+
+**ブランチ**: `feature/ISS-69-search`（base: `main` @ PR #7 マージ後）
+
+**現状の検索実装（実装前ベースライン）**
+
+| 項目 | 状態 |
+|---|---|
+| トップヒーロー検索窓 | `HeroHome.astro` → `/search?q=` に GET 送信 |
+| ナビ虫めがね | `Header.astro` → `/search` へリンク |
+| 検索ページ | `search.astro` + `searchEntries()` |
+| マッチング | `entries.json` 全文を `join(' ').includes(q)` の**部分一致のみ**（ファジー・重み付けなし） |
+| フィールド | title / symptom / cause / fix / category / tags（`solution` は `fix` キー） |
+
+**ISS-69 で詰める論点**（`search-feature-notes.md` 要約）
+
+1. Fuse.js（クライアント・軽量） vs Pagefind（ビルド時 index）— 段階移行候補
+2. フィールド重み付け、絞り込み併用、UI 挙動（インクリメンタル vs 結果ページ）
+3. CSP 制約（ランタイムネット不可）、日本語トークナイズ
+
+**スクショ**: `docs/internal/build-screenshots/phase-69/` — 実装前の検索 UI・結果あり/なし
+
+**次**: Fuse.js / Pagefind の PoC → 方針決定 → 実装
+
+---
+
+### 2026-09-16 — ISS-69 Phase 1: Fuse.js クライアント検索（Cursor）
+
+**方針決定**: 設計メモの段階移行案を採用。**まず Fuse.js**（10件・CSP・静的配信向け）。Pagefind は件数増加後。
+
+**問題（ベースライン）**: `search.astro` の `searchEntries()` はビルド時 SSG のため、`?q=` が本番/プレビューで効かない。開発でも `/search` と `/search/` の差でクエリが落ちることがあった。
+
+**実装**
+
+| 項目 | 内容 |
+|---|---|
+| `fuse.js` | `web/package.json` に追加 |
+| `search-fuse.ts` | 重み付け keys（title 0.35, tags 0.25, category 0.15, symptom/cause/fix）, threshold 0.35 |
+| `search-page.ts` | クライアントで URL `q` を読み取り結果描画。静的ビルドでも動作 |
+| `search.astro` | entries JSON を `application/json` で埋め込み、結果は JS 描画 |
+| リンク統一 | ヒーロー・ナビ・タグ空状態 → `/search/` |
+
+**開発環境**: `docker compose up` 正規。`fuse.js` はコンテナ `node_modules` 用に **image rebuild** が必要。`astro dev` ロックは `.astro/dev.json` 削除 or `npm run dev -- --force` で回避。
+
+**検証**: `http://localhost:3101/search/?q=GitHub` → 4件表示、document.title 更新。`npm run build` 成功（22 pages）。
+
+**次**: インクリメンタル検索（ヒーロー）、絞り込み併用、phase-69 実装後スクショ、PR
+
+---
+
+### 2026-09-16 — 検索結果画面の2ゾーン色分け（Cursor）
+
+**きっかけ**: オーナー「検索結果」と入力バーと結果リストが同じ面に見える → **色分けした方が見やすいかも**。
+
+**方針**: トップの黄ヒーローほど強くしない。**カード面（操作）＋薄いグレー面（結果）** の2段。一覧の2ペイン（左メニュー=カード、右リスト=行カード）と同系の「領域の切り分け」。
+
+| ゾーン | クラス | 背景 | 内容 |
+|---|---|---|---|
+| 上（操作） | `.search-toolbar` | `--card-bg`（白/ダーク面） | 見出し・件数・検索フォーム・ヒント |
+| 下（結果） | `.search-body` | `--tag-bg`（薄グレー） | 「一致したあるある」ラベル + 結果行 / EmptyState |
+
+- 外枠 `.search-page` で1枚のパネルにまとめ（border-radius 14px）
+- 検索フォームは toolbar 上で `--page-bg` にして入力欄を浮かせる
+- 未検索時は `search-body` を非表示（ツールバーのみ）
+
+**意図**: 見出しと入力は「操作」、その下は「読む場所」と一目で分ける。黄帯はトップ専用のまま。
+
+**次**: オーナー目視 → 濃さ・ラベル文言の調整、ダークモードスクショ
+
+**調整（同日）**: コントラスト強化 — `--search-toolbar-bg` / `--search-body-bg` 専用トークン（ライト: 白 vs `#e6e4e1`、ダーク: `#2c2a2b` vs `#161616`）。境界に黄 3px ライン、結果行は白カードで浮かせる。
