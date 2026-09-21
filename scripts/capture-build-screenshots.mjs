@@ -47,6 +47,24 @@ const shotsByPhase = {
       darkFile: null,
     },
   ],
+  70: [
+    { url: 'http://localhost:3101/search/', file: '01-search-empty-light.png', darkFile: '02-search-empty-dark.png' },
+    {
+      url: 'http://localhost:3101/search/?q=GitHub',
+      file: '03-search-results-light.png',
+      darkFile: '04-search-results-dark.png',
+    },
+    {
+      url: 'http://localhost:3101/search/?q=存在しないキーワードxyz',
+      file: '05-search-no-results-light.png',
+      darkFile: null,
+    },
+    {
+      url: 'http://localhost:3101/aruaru/github-oauth-no-events/',
+      file: '06-detail-reading-light.png',
+      darkFile: '07-detail-reading-dark.png',
+    },
+  ],
 };
 
 const shots = shotsByPhase[phase] ?? shotsByPhase['1-2'];

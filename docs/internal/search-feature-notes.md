@@ -1,7 +1,7 @@
 # あるあるサイト 検索機能 設計メモ（ISS-69）
 
 > DevRev Issue: **ISS-69**（kon-jp / PROD-11）`don:core:dvrv-jp-1:devo/6M2YuzjOnn:issue/69`
-> ステータス: 着手前（論点を詰める段階）。Computer と Cursor 双方で設計検討する。
+> ステータス: **Phase 1 実装済み**（Fuse.js + UI 仕上げ）。Pagefind 移行・インクリメンタル検索は次フェーズ。
 > コミット/PR には `work-item:ISS-69` を付与（マージで ISS 自動 completed）。
 
 ## 背景
