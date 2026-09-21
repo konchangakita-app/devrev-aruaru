@@ -64,6 +64,13 @@ const shotsByPhase = {
       file: '06-detail-reading-light.png',
       darkFile: '07-detail-reading-dark.png',
     },
+    {
+      url: 'http://localhost:3101/search/?q=存在しないキーワードxyz',
+      file: '08-search-no-results-dark.png',
+      darkFile: null,
+      darkOnly: true,
+    },
+    { url: 'http://localhost:3101/', file: '09-top-compact-light.png', darkFile: '10-top-compact-dark.png' },
   ],
 };
 
@@ -81,16 +88,19 @@ const mockShots = [
   },
 ];
 
-async function capturePage(page, url, file, darkFile) {
+async function capturePage(page, url, file, darkFile, darkOnly = false) {
   await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
   await page.waitForTimeout(500);
-  await page.screenshot({ path: path.join(outDir, file), fullPage: true });
-  if (darkFile) {
+  if (!darkOnly) {
+    await page.screenshot({ path: path.join(outDir, file), fullPage: true });
+  }
+  const darkShot = darkOnly ? file : darkFile;
+  if (darkShot) {
     const toggle = page.locator('#themeToggle');
     if (await toggle.count()) {
       await toggle.click();
       await page.waitForTimeout(400);
-      await page.screenshot({ path: path.join(outDir, darkFile), fullPage: true });
+      await page.screenshot({ path: path.join(outDir, darkShot), fullPage: true });
     }
   }
 }
@@ -109,8 +119,8 @@ try {
   }
 
   for (const shot of shots) {
-    await capturePage(page, shot.url, shot.file, shot.darkFile);
-    console.log('saved', shot.file, shot.darkFile ?? '');
+    await capturePage(page, shot.url, shot.file, shot.darkFile, shot.darkOnly);
+    console.log('saved', shot.file, shot.darkOnly ? '(dark only)' : shot.darkFile ?? '');
   }
 
   if (phase === '1-2') {

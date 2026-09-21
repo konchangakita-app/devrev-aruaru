@@ -31,6 +31,7 @@
 
 - **記事の主題**: モック載せ**後**の UX 仕上げ — ヒーロー縦幅・コピー・カードクリック。Cursor とオーナーが数値を往復調整
 - **build-log**: [`build-log.md` §2026-09-15](./build-log.md)（トップ UX 仕上げ）
+- **スクショ**: `phase-1-2/01-top-light.png`（Before 相当）→ `phase-70/09-10`（コンパクトヒーロー・ライト/ダーク）
 - **元コミット**: `8446157`（`feature/ISS-68-aruaru-site`）
 - **想定タイトル**: 「【とあるあるあるサイトをつくる】ヒーローが大きすぎた — モック載せ後の UX 調整」
 - **書ける切り口**:
@@ -48,7 +49,7 @@
 - **build-log**: [`build-log.md` §2026-09-16〜21](./build-log.md)（ISS-69）
 - **設計メモ**: [`search-feature-notes.md`](./search-feature-notes.md)
 - **検証ログ**: [`verification/ISS-69-search-qa-2026-09-16.md`](./verification/ISS-69-search-qa-2026-09-16.md)
-- **スクショ**: `build-screenshots/phase-69/`（Before）→ `phase-70/` 01〜05（After・ライト/ダーク）
+- **スクショ**: `build-screenshots/phase-69/`（Before）→ `phase-70/` 01〜05, 08（After・ライト/ダーク）
 - **想定タイトル**: 「【とあるあるあるサイトをつくる】検索は Fuse.js から始める — 静的サイトの全文検索選定」
 - **書ける切り口**:
   - UI はモック済み、ロジックは `includes()` だけだった現状
