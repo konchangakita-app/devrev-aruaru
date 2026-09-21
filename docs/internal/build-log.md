@@ -547,3 +547,12 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 - 本番ビルド 22 ページ（draft 除外）、プレビュービルド 25 ページ（draft 含む）
 
 **次**: PR（`work-item:ISS-72`）→ ISS-71 公開フロー再開
+
+---
+
+### 2026-09-22 — ISS-72 マージ + ISS-71 公開 PR（Cursor）
+
+- PR #9 マージ（ISS-72）。DevRev ISS-72 → in_review
+- Computer へ ISS-71/72 タイムライン通知（プレビュー手順・ガイド更新依頼）
+- `feature/ISS-71-publish-slack`: Slack あるある `status: published` 化
+- 本番ビルド 25 ページ、slack ページ・タグ生成確認
