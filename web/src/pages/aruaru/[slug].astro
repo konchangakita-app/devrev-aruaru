@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import AruaruCard from '../../components/AruaruCard.astro';
 import EntryPager from '../../components/EntryPager.astro';
 import HeroDetail from '../../components/HeroDetail.astro';
 import SectionBlock from '../../components/SectionBlock.astro';
@@ -24,41 +23,51 @@ const related = getRelatedEntries(entry);
 ---
 
 <BaseLayout title={`${entry.title} | DevRevあるある`} description={entry.symptom}>
-  <HeroDetail slot="hero" entry={entry} />
+  <div class="entry-page">
+    <HeroDetail entry={entry} />
 
-  <article class="entry-article">
-    <SectionBlock type="symptom" label="症状">
-      <p>{entry.symptom}</p>
-    </SectionBlock>
+    <div class="entry-body">
+      <div class="entry-body__inner">
+        <article class="entry-sheet">
+          <div class="tags entry-tags entry-tags--top">
+            {entry.tags.map((tag) => (
+              <TagPill href={`/tags/${encodeURIComponent(tag)}`} label={tag} />
+            ))}
+          </div>
 
-    <SectionBlock type="cause" label="原因">
-      <p>{entry.cause}</p>
-    </SectionBlock>
+          <p class="qflow-intro">症状 → 原因 → 対処の流れで整理しています</p>
 
-    <SectionBlock type="solution" label="対処">
-      <p>{entry.fix}</p>
-    </SectionBlock>
+          <ol class="qflow qflow--flat">
+            <SectionBlock type="symptom" label="症状">
+              <p>{entry.symptom}</p>
+            </SectionBlock>
 
-    <div class="tags entry-tags">
-      {entry.tags.map((tag) => (
-        <TagPill href={`/tags/${encodeURIComponent(tag)}`} label={tag} />
-      ))}
+            <SectionBlock type="cause" label="原因">
+              <p>{entry.cause}</p>
+            </SectionBlock>
+
+            <SectionBlock type="solution" label="対処">
+              <p>{entry.fix}</p>
+            </SectionBlock>
+          </ol>
+
+          {
+            related.length > 0 && (
+              <section class="related">
+                <h3>関連するあるある</h3>
+                {related.map((item) => (
+                  <a class="rel-card" href={`/aruaru/${item.slug}`}>
+                    <div class="rc-top">{item.category}</div>
+                    <div class="rc-title">{item.title}</div>
+                  </a>
+                ))}
+              </section>
+            )
+          }
+
+          <EntryPager prev={prev} next={next} />
+        </article>
+      </div>
     </div>
-
-    {
-      related.length > 0 && (
-        <section class="related">
-          <h3>関連するあるある</h3>
-          {related.map((item) => (
-            <a class="rel-card" href={`/aruaru/${item.slug}`}>
-              <div class="rc-top">{item.category}</div>
-              <div class="rc-title">{item.title}</div>
-            </a>
-          ))}
-        </section>
-      )
-    }
-
-    <EntryPager prev={prev} next={next} />
-  </article>
+  </div>
 </BaseLayout>
