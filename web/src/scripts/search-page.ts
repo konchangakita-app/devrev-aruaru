@@ -20,10 +20,13 @@ function renderResults(entries: AruaruEntry[]) {
   return entries
     .map(
       (entry) => `
-        <a class="pl-row" href="/aruaru/${encodeURIComponent(entry.slug)}/">
-          <span class="${dotClass(entry.frequency)}" aria-hidden="true"></span>
-          <span class="ttl">${escapeHtml(entry.title)}</span>
-          <span class="cat">${escapeHtml(entry.category)}</span>
+        <a class="search-hit" href="/aruaru/${encodeURIComponent(entry.slug)}/">
+          <div class="search-hit__top">
+            <span class="${dotClass(entry.frequency)}" aria-hidden="true"></span>
+            <span class="search-hit__cat">${escapeHtml(entry.category)}</span>
+          </div>
+          <h2 class="search-hit__title">${escapeHtml(entry.title)}</h2>
+          <p class="search-hit__snippet">${escapeHtml(entry.symptom)}</p>
         </a>
       `,
     )
@@ -58,26 +61,23 @@ function initSearchPage() {
 
   const fuse = new Fuse(entries, fuseSearchOptions);
   const input = root.querySelector<HTMLInputElement>('[data-search-input]');
-  const heading = root.querySelector<HTMLElement>('[data-search-heading]');
-  const count = root.querySelector<HTMLElement>('[data-search-count]');
   const hint = root.querySelector<HTMLElement>('[data-search-hint]');
   const body = root.querySelector<HTMLElement>('[data-search-body]');
-  const bodyLabel = root.querySelector<HTMLElement>('[data-search-body-label]');
+  const meta = root.querySelector<HTMLElement>('[data-search-meta]');
   const resultsRoot = root.querySelector<HTMLElement>('[data-search-results]');
   const emptyRoot = root.querySelector<HTMLElement>('[data-search-empty]');
 
-  if (!input || !heading || !count || !hint || !body || !bodyLabel || !resultsRoot || !emptyRoot) return;
+  if (!input || !hint || !body || !meta || !resultsRoot || !emptyRoot) return;
 
   function runSearch(query: string) {
     const q = query.trim();
     input.value = q;
 
     if (!q) {
-      heading.textContent = 'あるあるを検索';
-      count.hidden = true;
       hint.hidden = false;
       body.hidden = true;
-      bodyLabel.hidden = true;
+      meta.hidden = true;
+      meta.textContent = '';
       resultsRoot.hidden = true;
       resultsRoot.innerHTML = '';
       emptyRoot.hidden = true;
@@ -87,20 +87,17 @@ function initSearchPage() {
     }
 
     const results = fuse.search(q).map((result) => result.item);
-    heading.textContent = '検索結果';
-    count.textContent = `${results.length} 件`;
-    count.hidden = false;
     hint.hidden = true;
     body.hidden = false;
+    meta.hidden = false;
+    meta.innerHTML = `「<strong>${escapeHtml(q)}</strong>」で <strong>${results.length}</strong> 件`;
 
     if (results.length === 0) {
-      bodyLabel.hidden = true;
       resultsRoot.hidden = true;
       resultsRoot.innerHTML = '';
       emptyRoot.hidden = false;
       emptyRoot.innerHTML = renderEmpty(q);
     } else {
-      bodyLabel.hidden = false;
       emptyRoot.hidden = true;
       emptyRoot.innerHTML = '';
       resultsRoot.hidden = false;

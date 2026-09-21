@@ -15,12 +15,14 @@ const entries = getEntries();
   <section class="block block--search">
     <div class="search-page" data-search-page>
       <div class="search-toolbar">
-        <div class="section-head section-head--search">
-          <h2 data-search-heading>あるあるを検索</h2>
-          <span class="legacy-muted" data-search-count hidden></span>
-        </div>
+        <header class="search-header">
+          <h1 class="search-header__title">あるあるを検索</h1>
+          <p class="search-header__hint" data-search-hint>
+            タイトル・症状・原因・対処・カテゴリ・タグから検索します（あいまい一致）。
+          </p>
+        </header>
 
-        <form class="search-form" role="search" action="/search/" method="get">
+        <form class="hero-search search-form--page" role="search" action="/search/" method="get">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="11" cy="11" r="7"></circle>
             <path d="M21 21l-4.3-4.3"></path>
@@ -33,18 +35,16 @@ const entries = getEntries();
             aria-label="検索キーワード"
             autofocus
           />
-          <button type="submit" class="btn btn-primary">検索</button>
+          <button type="submit">検索</button>
         </form>
-
-        <p class="search-hint" data-search-hint>
-          タイトル・症状・原因・対処・カテゴリ・タグから検索します（あいまい一致）。
-        </p>
       </div>
 
       <div class="search-body" data-search-body hidden>
-        <p class="search-body-label" data-search-body-label hidden>一致したあるある</p>
-        <div class="pane-list search-results" data-search-results hidden></div>
-        <div data-search-empty hidden></div>
+        <div class="search-body__inner">
+          <p class="search-body__meta" data-search-meta hidden></p>
+          <div class="search-results" data-search-results hidden></div>
+          <div data-search-empty hidden></div>
+        </div>
       </div>
     </div>
   </section>
