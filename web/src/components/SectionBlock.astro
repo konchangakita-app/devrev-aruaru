@@ -6,10 +6,23 @@ interface Props {
 }
 
 const { type, label, heading } = Astro.props;
+
+const hint = {
+  symptom: '何が起きているか',
+  cause: 'なぜ起きるか',
+  solution: 'どう対処するか',
+}[type];
 ---
 
-<div class={`qblock ${type}`}>
-  <span class="label">{label}</span>
-  {heading && <h2>{heading}</h2>}
-  <slot />
-</div>
+<li class={`qblock qblock--${type}`}>
+  <header class="qblock__head">
+    <span class="qblock__label">{label}</span>
+    <span class="qblock__hint">{hint}</span>
+  </header>
+
+  {heading && <h2 class="qblock__heading">{heading}</h2>}
+
+  <div class="qblock__content">
+    <slot />
+  </div>
+</li>

@@ -28,7 +28,7 @@ const { tag, entries } = Astro.props;
             message="タグが付いたエントリがまだないか、名称が変わった可能性があります。"
           >
             <a class="btn btn-outline" href="/aruaru">一覧を見る</a>
-            <a class="btn btn-outline" href="/search">検索する</a>
+            <a class="btn btn-outline" href="/search/">検索する</a>
           </EmptyState>
         ) : (
           entries.map((entry) => <AruaruCard entry={entry} />)
