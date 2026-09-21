@@ -12,16 +12,31 @@ const entrySchema = z.object({
   frequency: z.number().int().min(1).max(3),
   tags: z.array(z.string()),
   publishedAt: z.string(),
+  status: z.enum(['draft', 'published']).default('published'),
 });
 
 export type AruaruEntry = z.infer<typeof entrySchema>;
 
 const entriesSchema = z.array(entrySchema);
 
-export function getEntries(): AruaruEntry[] {
-  return entriesSchema.parse(rawEntries).sort(
+function showDraftEntries(): boolean {
+  return import.meta.env.PUBLIC_SHOW_DRAFTS === 'true' || import.meta.env.DEV;
+}
+
+function sortEntries(entries: AruaruEntry[]): AruaruEntry[] {
+  return entries.sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
+}
+
+export function getAllEntries(): AruaruEntry[] {
+  return sortEntries(entriesSchema.parse(rawEntries));
+}
+
+export function getEntries(): AruaruEntry[] {
+  const entries = getAllEntries();
+  if (showDraftEntries()) return entries;
+  return entries.filter((entry) => entry.status !== 'draft');
 }
 
 export function getEntryBySlug(slug: string): AruaruEntry | undefined {

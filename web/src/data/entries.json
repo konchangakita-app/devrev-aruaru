@@ -7,7 +7,10 @@
     "fix": "Settings > Snap-ins から GitHub for DevRev をインストールし、GitHub Appとして対象Org/リポジトリを接続し直す",
     "category": "Snap-in",
     "frequency": 3,
-    "tags": ["GitHub連携", "スナップイン"],
+    "tags": [
+      "GitHub連携",
+      "スナップイン"
+    ],
     "publishedAt": "2026-08-20"
   },
   {
@@ -18,7 +21,11 @@
     "fix": "ブランチ名を `feature/ISS-XXX-...` にし、コミットメッセージ末尾に `work-item:ISS-XXX`、PRタイトルに `[ISS-XXX]` を付ける（`docs/devrev-github-issue-policy.md` 参照）",
     "category": "GitHub連携",
     "frequency": 3,
-    "tags": ["GitHub連携", "Issue", "スナップイン"],
+    "tags": [
+      "GitHub連携",
+      "Issue",
+      "スナップイン"
+    ],
     "publishedAt": "2026-08-19"
   },
   {
@@ -29,7 +36,10 @@
     "fix": "DevRevのワークフロー設定で、PRマージ時の遷移先ステージを確認する。期待どおりなら設定を変更する",
     "category": "GitHub連携",
     "frequency": 2,
-    "tags": ["GitHub連携", "Issue"],
+    "tags": [
+      "GitHub連携",
+      "Issue"
+    ],
     "publishedAt": "2026-08-18"
   },
   {
@@ -40,7 +50,11 @@
     "fix": "まず code change が DevRev に記録されているか確認。問題なければワークフローのステージ遷移ルールを見直す",
     "category": "Snap-in",
     "frequency": 2,
-    "tags": ["スナップイン", "Issue", "GitHub連携"],
+    "tags": [
+      "スナップイン",
+      "Issue",
+      "GitHub連携"
+    ],
     "publishedAt": "2026-08-17"
   },
   {
@@ -51,7 +65,9 @@
     "fix": "IT に wss 通信（443/TLS）の許可を依頼する。プロキシ環境では Computer 用の通信要件ドキュメントを添えて確認する",
     "category": "Computer",
     "frequency": 3,
-    "tags": ["Computer"],
+    "tags": [
+      "Computer"
+    ],
     "publishedAt": "2026-08-16"
   },
   {
@@ -62,7 +78,9 @@
     "fix": "Computer を完全終了 → ブラウザの DevRev セッションを一度ログアウト → アプリ再起動。改善しなければキャッシュ削除または再インストール",
     "category": "Computer",
     "frequency": 3,
-    "tags": ["Computer"],
+    "tags": [
+      "Computer"
+    ],
     "publishedAt": "2026-08-15"
   },
   {
@@ -73,7 +91,9 @@
     "fix": "スキルの README どおりに配置パスと実行権限を確認。Computer の作業フォルダ設定と、ターミナルから手動実行できるかを切り分ける",
     "category": "Computer",
     "frequency": 2,
-    "tags": ["Computer"],
+    "tags": [
+      "Computer"
+    ],
     "publishedAt": "2026-08-14"
   },
   {
@@ -84,7 +104,9 @@
     "fix": "対象ユーザーの DON を DevRev UI または API で取得し、`account.id` や DON フィールドでフィルタする",
     "category": "SQL",
     "frequency": 3,
-    "tags": ["SQL"],
+    "tags": [
+      "SQL"
+    ],
     "publishedAt": "2026-08-13"
   },
   {
@@ -95,7 +117,9 @@
     "fix": "DON は STRING のまま比較・JOIN する。集計キーが必要なら別カラム（数値ID）の有無をスキーマで確認する",
     "category": "SQL",
     "frequency": 2,
-    "tags": ["SQL"],
+    "tags": [
+      "SQL"
+    ],
     "publishedAt": "2026-08-12"
   },
   {
@@ -106,7 +130,25 @@
     "fix": "`WHERE flag IS NOT TRUE` や `(flag = false OR flag IS NULL)` など、意図に合わせて NULL を明示的に扱う",
     "category": "SQL",
     "frequency": 1,
-    "tags": ["SQL"],
+    "tags": [
+      "SQL"
+    ],
     "publishedAt": "2026-08-11"
+  },
+  {
+    "slug": "slack-devrev-conversation-sync",
+    "title": "SlackとDevRev Conversationが同期しない",
+    "symptom": "Slackチャンネルの投稿がDevRevのConversationとして作成されない／DevRev側の返信がSlackに反映されない",
+    "cause": "同期には2ステップ両方が必要。チャンネルとワークスペースのリンク、またはDevRev Botのチャンネル招待のどちらかが欠けていると双方向同期は動かない（Botがチャンネルに居ないと同期しないのはSlackの仕様）",
+    "fix": "対象チャンネルで /devrev link を実行してDevRevワークスペース(Rev Org)にリンクし、さらに /invite @DevRev でDevRev Botを招待する。両方完了後、/devrev help で疎通確認。大量チャンネルはスナップインのdiscussionパネルから /SlackInviteBot で公開チャンネルへ一括招待できる",
+    "category": "Snap-in",
+    "frequency": 3,
+    "tags": [
+      "Slack連携",
+      "スナップイン",
+      "Conversation"
+    ],
+    "publishedAt": "2026-09-21",
+    "status": "draft"
   }
 ]
