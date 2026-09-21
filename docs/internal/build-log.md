@@ -515,3 +515,35 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 **追記（同日）**: 症状/原因/対処は **qflow--flat**（箱なし・横線区切り）に落ち着き。ラベルピル＋ヒント行、対処のみ左黄線。タグはシート上部へ移動。番号付きタイムライン案は不採用。
 
 **スクショ（同日）**: `docs/internal/build-screenshots/phase-70/` — 検索リデザイン後（空/結果/0件・ライト/ダーク）+ 詳細読むモード（ライト/ダーク）+ DA-6 トップコンパクト（09-10）+ 検索0件ダーク（08）。`phase-69/` は実装前ベースラインのまま（Before/After 比較用）。
+
+---
+
+### 2026-09-21 — ISS-71 検証開始: draft 未対応でブロック（Cursor）
+
+**きっかけ**: オーナー「ISS-71 であるある一件とおす検証」。ISS-70 公開ワークフローの初回ドッグフーディング（Slack同期あるある）。
+
+**ISS-71 状態（API）**: triage / Open。Computer 担当分（`entries.json` draft 追記 + ISS 起票）完了。
+
+**ブロッカー発見**: `status: "draft"` は JSON にあるがサイト未対応。
+
+- `entries.ts` に `status` なし、`getEntries()` は全件返す
+- `npm run build` で `/aruaru/slack-devrev-conversation-sync/` が通常ページとして生成
+- ISS-70 Step 3「サイト（プレビュー）で確認」が成立しない
+
+**判断**: 先に Computer へフィードバック。`status` サイト対応 ISS の起票を依頼（Cursor は起票しない）。ISS-71 公開 PR はその後。
+
+**記録**: `publish-workflow-notes.md` フィードバック節、`verification/ISS-71-draft-gap-2026-09-21.md`、ISS-70/71 タイムラインコメント。
+
+---
+
+### 2026-09-21 — ブランチ整理 + ISS-72 draft 対応実装（Cursor）
+
+**ブランチ整理**:
+- `feature/ISS-69-search` → PR #8 マージ済み。`main` に切替・pull、旧ブランチ削除
+- `feature/ISS-72-draft-status` を `main` から新規作成
+
+**ISS-72 実装**:
+- `entries.ts`: `status` フィールド、 `getEntries()` フィルタ、`PUBLIC_SHOW_DRAFTS` / dev プレビュー
+- 本番ビルド 22 ページ（draft 除外）、プレビュービルド 25 ページ（draft 含む）
+
+**次**: PR（`work-item:ISS-72`）→ ISS-71 公開フロー再開
