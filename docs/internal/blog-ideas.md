@@ -24,8 +24,8 @@
 - **記事の主題**: 骨組み後のデザインを Computer/Cursor と詰めた過程
 - **記録**: [`design-log.md`](./design-log.md) + [`build-log.md`](./build-log.md)（Phase 0〜5）
 - **想定タイトル**: 「【とあるあるあるサイトをつくる】AIと一緒にサイトのデザインを考える」
-- **ステータス**: idea
-- **DevRev Issue**: (未起票)
+- **ステータス**: in_development（執筆開始）
+- **DevRev Issue**: ISS-74（親: ISS-73）
 
 ### DA-6 候補 — トップを「使える」大きさに仕上げる（2026-09-15）
 
@@ -40,8 +40,8 @@
   - **stretched link** でカード全体クリック、タグは独立
   - リンクホバーの黄色下線 → `--link-underline`（muted）に統一
 - **匿名化**: コミット/Issue/ポート/本番 URL（完成節以外）は一般化
-- **ステータス**: idea
-- **DevRev Issue**: (未起票)
+- **ステータス**: triage（DA-5公開後に着手）
+- **DevRev Issue**: ISS-75（親: ISS-73）
 
 ### DA-7 候補 — 検索をどう実装するか（Fuse.js vs Pagefind）（2026-09-16）
 
@@ -58,8 +58,9 @@
   - PoC の比較観点（threshold、インデックスサイズ、Astro ビルド連携）
   - **UI 仕上げ**: 2ゾーン色分け → 外枠カード廃止 → ヒーロー同型ピル検索 + `search-hit` カード（2026-09-21）
 - **匿名化**: Issue ID・ポート・本番 URL
-- **ステータス**: idea
-- **DevRev Issue**: ISS-69
+- **ステータス**: triage（DA-5公開後に着手）
+- **実装 Issue**: ISS-69（completed）
+- **記事執筆 Issue**: ISS-76（親: ISS-73）
 
 ### DA-8 候補 — 詳細ページを「読むモード」にする（2026-09-21）
 
@@ -74,8 +75,9 @@
   - タグを本文上に移動した理由
   - 番号付きタイムライン案は不採用（シンプル優先）
 - **匿名化**: Issue ID・ポート・本番 URL
-- **ステータス**: idea
-- **DevRev Issue**: ISS-69（検索と同ブランチで実装。記事は分割可）
+- **ステータス**: triage（DA-5公開後に着手）
+- **実装 Issue**: ISS-69（completed、検索と同ブランチで実装）
+- **記事執筆 Issue**: ISS-77（親: ISS-73）
 
 ### DA-9 候補 — 記事づくりを「AIと人の分業」で回す（2026-09-21）
 
@@ -97,5 +99,6 @@
 - **設計メモ**: [`publish-workflow-notes.md`](./publish-workflow-notes.md), [`aruaru-draft-guide.md`](./aruaru-draft-guide.md)
 - **検証ログ**: [`verification/ISS-71-draft-gap-2026-09-21.md`](./verification/ISS-71-draft-gap-2026-09-21.md), [`verification/ISS-72-draft-status-2026-09-21.md`](./verification/ISS-72-draft-status-2026-09-21.md), [`verification/ISS-71-publish-2026-09-22.md`](./verification/ISS-71-publish-2026-09-22.md)
 - **匿名化**: Issue ID・組織 slug・リポジトリ実名・製品固有名（「あるSaaS」「タスク管理ツール」等に一般化）。ツール固有の解説が主役化しないこと。
-- **ステータス**: idea
-- **DevRev Issue**: ISS-70（初回ドッグフーディング完走: ISS-71 公開 + ISS-72 draft 対応、2026-09-22）
+- **ステータス**: triage（DA-5公開後に着手）
+- **実装 Issue**: ISS-70（初回ドッグフーディング完走: ISS-71 公開 + ISS-72 draft 対応、2026-09-22）
+- **記事執筆 Issue**: ISS-78（親: ISS-73）
