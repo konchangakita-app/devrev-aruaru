@@ -93,6 +93,7 @@
   - **draft プレビューの実装話**（2026-09-22 完走）: `entries.json` の `status: draft | published` をサイトが扱う実装（ISS-72）。本番ビルドは published のみ、**`npm run dev` または `PUBLIC_SHOW_DRAFTS=true` で draft 表示**。22 ページ vs 25 ページの差で「下書きが本番に漏れない」ことをビルドで担保した、という技術的な安心感。
   - **「確認ステップを飛ばした」反省**（2026-09-22 実体験）: フロー上は **published 化の前に人間が dev で draft を目視確認**（Step 3）する設計だったが、ISS-72 マージ後に一気に公開 PR まで進めてしまった。→ 「自動化が進むほど、**どこで人が止まるか**をフローに明示しないと省略される」という教訓。次回以降は Step 3 を必須ゲートにする。
   - **初回ドッグフーディング完走のまとめ**（2026-09-22）: ISS-70 設計 → ISS-71（1件公開）→ 途中で ISS-72（前提実装）が割り込む → 両方マージでタスク自動クローズ。1件通すだけで「スキーマ分裂」「サイト未対応」「確認タイミング」の3つの学びが出た。
+  - **一度通した流れをスキルに固定した話**（2026-09-22）: 実走で得たガードレール（本番データの見分け方、裏取り、draft限定、タスク起票で止める境界）を、書くAIが次回も同じ品質で再利用できるスキルに落とした。手順書だけでなく、実行時に迷わない「ガードレール」にする価値。
 - **設計メモ**: [`publish-workflow-notes.md`](./publish-workflow-notes.md), [`aruaru-draft-guide.md`](./aruaru-draft-guide.md)
 - **検証ログ**: [`verification/ISS-71-draft-gap-2026-09-21.md`](./verification/ISS-71-draft-gap-2026-09-21.md), [`verification/ISS-72-draft-status-2026-09-21.md`](./verification/ISS-72-draft-status-2026-09-21.md), [`verification/ISS-71-publish-2026-09-22.md`](./verification/ISS-71-publish-2026-09-22.md)
 - **匿名化**: Issue ID・組織 slug・リポジトリ実名・製品固有名（「あるSaaS」「タスク管理ツール」等に一般化）。ツール固有の解説が主役化しないこと。
