@@ -556,3 +556,18 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 - Computer へ ISS-71/72 タイムライン通知（プレビュー手順・ガイド更新依頼）
 - `feature/ISS-71-publish-slack`: Slack あるある `status: published` 化
 - 本番ビルド 25 ページ、slack ページ・タグ生成確認
+
+---
+
+### 2026-09-22 — ISS-71/72 完走・初回ドッグフーディング完了（Cursor）
+
+**マージ**:
+- PR #9（ISS-72）→ DevRev ISS-72 completed
+- PR #10（ISS-71）→ DevRev ISS-71 completed
+
+**フロー上の学び（ブログネタ DA-9 に追記）**:
+- Step 3「人間: dev で draft プレビュー確認」は **published 化の前** が正しいタイミング
+- 今回は Step 3 を省略して ISS-71 公開 PR まで一気に進めた → 次回以降は必須ゲートにする
+- ISS-72 実装: 本番 22 ページ（draft 除外）/ プレビュー 25 ページ（`npm run dev` or `PUBLIC_SHOW_DRAFTS=true`）
+
+**次**: Computer ターン（ガイド Step 6 追記・次の draft 準備）。Cursor は ISS 起票待ち。
