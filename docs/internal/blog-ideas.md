@@ -33,7 +33,7 @@
 - **build-log**: [`build-log.md` §2026-09-15](./build-log.md)（トップ UX 仕上げ）
 - **スクショ**: `phase-1-2/01-top-light.png`（Before 相当）→ `phase-70/09-10`（コンパクトヒーロー・ライト/ダーク）
 - **元コミット**: `8446157`（`feature/ISS-68-aruaru-site`）
-- **想定タイトル**: 「【とあるあるあるサイトをつくる】ヒーローが大きすぎた — モック載せ後の UX 調整」
+- **想定タイトル**: 「【とあるあるあるサイトをつくる】モック載せ後の UX 調整」
 - **書ける切り口**:
   - 黄ヒーローはかっこいいが小画面で新着まで遠い → **到達距離**優先で `.hero--home` のみ圧縮
   - コピー短文化 + AI への段階指示（70–80% → +10% → 縦+20% → 検索130%）
@@ -50,7 +50,7 @@
 - **設計メモ**: [`search-feature-notes.md`](./search-feature-notes.md)
 - **検証ログ**: [`verification/ISS-69-search-qa-2026-09-16.md`](./verification/ISS-69-search-qa-2026-09-16.md)
 - **スクショ**: `build-screenshots/phase-69/`（Before）→ `phase-70/` 01〜05, 08（After・ライト/ダーク）
-- **想定タイトル**: 「【とあるあるあるサイトをつくる】検索は Fuse.js から始める — 静的サイトの全文検索選定」
+- **想定タイトル**: 「【とあるあるあるサイトをつくる】検索は Fuse.js から始める」
 - **書ける切り口**:
   - UI はモック済み、ロジックは `includes()` だけだった現状
   - 静的配信 + CSP でランタイム API 不可 → クライアント完結の選択肢
@@ -67,7 +67,7 @@
 - **記事の主題**: トップと同じ黄ヒーローだと読みにくい → **ページ役割の分離**（発見 vs 読む）と症状/原因/対処の見せ方
 - **build-log**: [`build-log.md` §2026-09-21](./build-log.md)（詳細リデザイン）
 - **スクショ**: `phase-1-2/03-detail-light.png`（Before・黄ヒーロー）→ `phase-70/06-07`（After・読むモード）
-- **想定タイトル**: 「【とあるあるあるサイトをつくる】詳細ページは黄ヒーローをやめる — 読むモードのデザイン」
+- **想定タイトル**: 「【とあるあるあるサイトをつくる】読むモードのデザイン」
 - **書ける切り口**:
   - トップ＝発見、詳細＝読む、検索＝探す — 黄の使い方をページごとに変える
   - muted 全幅バンド + 白シート（検索結果と同型のパターン再利用）
@@ -81,6 +81,7 @@
 
 ### DA-9 候補 — 記事づくりを「AIと人の分業」で回す（2026-09-21）
 
+- **想定タイトル**: 「【とあるあるあるサイトをつくる】DevRev Computerと分業であるあるを公開する」
 - **記事の主題**: サイトに載せる記事（コンテンツ）を作って公開するまでを、**AIと人・ツールの役割分担**で仕組み化する話。ネタ発生 → 下書き → タスク化 → 確認 → 公開 → タスク自動クローズ、という「コンテンツ公開パイプライン」を、どこをAIに任せてどこを人が判断するかで設計した回。
 - **役割分担の肝（記事の芯）**: 「調べて内容を書く担当AI」と「コードを書いて公開する担当AI／人」を分けた。前者はドメイン知識と裏取りが得意、後者はコード実装とGit運用が得意。境界を決めたことで受け渡しが明確になった、という体験談。
 - **ツールの絡み方**: コンテンツの下書きに合わせてタスク（Issue）を自動で立て、コードのPRとタスクをひも付けておくと、**公開（マージ）と同時にタスクが自動で完了**する。この「作業が勝手に閉じる」体験を仕組みのエッセンスとして紹介（主役はあくまでAIを使った記事づくりのフロー）。
@@ -102,3 +103,112 @@
 - **ステータス**: triage（DA-5公開後に着手）
 - **実装 Issue**: ISS-70（初回ドッグフーディング完走: ISS-71 公開 + ISS-72 draft 対応、2026-09-22）
 - **記事執筆 Issue**: ISS-78（親: ISS-73）
+- **DA-10 への橋渡し**: Issue の概念・起票の詳細は DA-10。下書き PLUS は「次回」に差し替え予定
+
+### DA-10 候補 — DevRev Issue の使い方と Computer による起票（2026-09-23）
+
+- **想定タイトル**: 「【とあるあるあるサイトをつくる】DevRev Issueの使い方」（副題なし。Computer 起票を主題にするなら「DevRev ComputerでISSを起票する」も可 — **Computer 起票時に確定**）
+- **記事の主題**: [DA-9](/articles/20260927-devrev-aruaru-publish-pipeline-da9) で触れた「タスク（Issue）」を、**DevRev Issue として正しく説明**する回。あわせて **あるある 1 件が生まれるとき Computer が ISS を起票する**流れまで踏み込む。DA-2/DA-4 で出てきた「Issue」との混同もここで整理する。
+- **前回との関係**: DA-9 = 公開パイプラインの**下流**（1 件ドッグフーディング）。DA-10 = 同じフローの**上流**（Issue とは何か → 起票 → entries draft → 実装 ISS へ受け渡し）。時系列は逆だが、読者は DA-9 の Step 1 を詳しく知りたい状態で読む想定。
+- **記事執筆 ISS**: `(未起票)` — **起票要否・親 ISS・タイミングは Computer 判断**（Cursor は起票しない）
+- **ステータス**: `idea`（骨子のみ。DA-9 下書き公開後または並行で執筆可）
+- **設計メモ**: [`publish-workflow-notes.md`](./publish-workflow-notes.md), [`aruaru-draft-guide.md`](./aruaru-draft-guide.md)
+- **検証ログ（執筆時参照・記事では匿名化）**: ISS-70 設計、ISS-71 公開、ISS-72 draft 対応、ISS-71-draft-gap
+- **匿名化**: 公開記事では ISS 番号・組織 slug・リポジトリ実名・PAT 詳細なし。DevRev / Issue / Computer / Part 等の**製品用語は本シリーズ例外で使ってよい**（`OPERATIONS.md` §2 連載例外）。
+
+#### 骨子（見出し案）
+
+**導入**
+
+- [前回 DA-9](/articles/20260927-devrev-aruaru-publish-pipeline-da9): 分業で 1 件公開まで通した。フロー図の Step 1「Computer が ISS 起票」は触れたが、**DevRev Issue 自体の説明はしていない**
+- ここまで連載で「Issue」と書いてきた箇所（DA-2 の GitHub Issue、DA-4 の Issue→PR→マージ）と、**DevRev 上の Issue** は別物 — 今回整理する
+
+---
+
+**§1 DevRev Issue とは**
+
+- DevRev 上の**作業単位**（チケット）。1 Issue ≒ 1 作業（このプロジェクトの運用）
+- **Part** — プロダクト／サイト単位で Issue を束ねる（例: あるあるサイト Part）
+- **Stage（ステージ）** — triage → in progress → in review → completed 等。進捗の正本
+- **Timeline** — コメント・イベント。人間だけでなく **AI 同士の非同期な伝言板** としても使う（DA-9 で実体験済み）
+- GitHub Issue との違い（DA-2）: サイト投稿受け口は GitHub 側の話。**開発・公開のタスク管理は DevRev Issue**
+
+---
+
+**§2 GitHub との連携 — マージでタスクが閉じる**
+
+- ブランチ名・コミット・PR に `work-item:ISS-XX`（形式は一般化して記載）
+- PR 作成 → DevRev 側 Stage が自動遷移（in review 等）
+- **マージ → Issue が completed** — DA-9 の「マージ＝タスク完了」の正体
+- DA-4 の「Issue → PR → マージ」は **DevRev Issue 起点** の運用と読み替え可能（DA-4 本文は触らず、DA-10 で補足）
+
+---
+
+**§3 このサイトでの Issue の置き方**
+
+- **親 Issue（エピック）** — 連載執筆まとめ、公開ワークフロー設計など大きな塊
+- **子 Issue** — あるある 1 件の公開、draft 対応の実装、記事 1 本の執筆、など
+- **粒度**: あるある 1 件 = ISS 1 件（`publish-workflow-notes.md` 確定事項）
+- **役割分担**（`OPERATIONS.md` §3）:
+  - **Computer のみ**: ISS 起票、Part、ステージ操作、あるある内容＋draft 追記
+  - **Cursor 主**: コード実装、Git/PR、起票済み ISS の DevRev 検証
+  - **Cursor は起票しない** — 境界を記事でも明示
+
+---
+
+**§4 あるある 1 件が DevRev Issue になる流れ**
+
+想定フロー（匿名化した図・表）:
+
+```
+[1] Computer: 内容作成（症状/原因/対処/裏取り）
+[2] Computer: entries.json に status:draft 追記
+[3] Computer: あるある公開用 ISS 起票（Part 紐付け、本文に要点・受け入れ条件）
+[4] 人間: dev / PUBLIC_SHOW_DRAFTS でプレビュー確認
+[5] Cursor: published 化 + PR（work-item 記載）
+[6] マージ → ISS completed
+```
+
+- 起票時に ISS 本文へ書くもの（案）:  slug、下書き要点、裏取り出典、Step 3 確認の指示、公開 PR 担当
+- **初回ドッグフーディングの振り返り**（番号なしで叙述）:
+  - 設計 ISS → 1 件目公開 ISS → draft 未対応で実装 ISS が割り込む — DA-9 の 3 つの穴の**上流**
+  - 実装 AI がタイムラインで「実装 ISS を起票して」と依頼 → Computer が起票 — DA-9 §「AI 同士がタスクで受け渡した」の詳細版
+
+---
+
+**§5 Computer が ISS を起票するとき（実務）
+
+- **いつ起票するか**: あるあるネタ確定＋draft 追記のタイミング（内容とタスクを同時に残す）
+- **誰が起票するか**: DevRev Computer（プラットフォーム上の AI）。Cursor は依頼・検証のみ
+- **起票しないもの**: Cursor からの ISS 新規作成（プロジェクトルール）
+- スキル／ガードレール: 実走後に固定した「書く AI 用スキル」の ISS 起票境界（DA-9 末尾）を 1 段落で参照
+- スクショ候補（執筆時）: DevRev Issue 一覧、Timeline、Part 紐付け、Stage 遷移 — **取得は Cursor、UI に ISS 番号が写る場合はマスク**
+
+---
+
+**§6 DA-9 との接続 — パイプライン全体像（再掲）
+
+- DA-9 のフロー図を **Issue 用語付き** で再掲（短く）
+- 「Issue の説明（DA-10）→ 公開の実践（DA-9）」の順で読むと全体がつながる — PLUS で DA-9 へリンク
+
+---
+
+**HACK+PLUS（案）
+
+- **HACK**: DevRev Issue = 作業＋伝言板＋GitHub 連動の三役；Computer 起票で Cursor は実装に集中
+- **PLUS**: 親子 ISS の付け方はまだ手探り；記事執筆 ISS も Computer 起票；連載は DA-10 で一区切り or サイト機能ネタは別 ISS で続く
+
+---
+
+#### Computer への引き渡し（ISS 起票判断）
+
+Cursor は本骨子を `blog-ideas.md` に記録した。**以下は Computer 判断に委ねる**:
+
+| 判断項目 | Cursor の提案（参考） | 決定者 |
+| --- | --- | --- |
+| DA-10 記事執筆 ISS を起票するか | DA-9（ISS-78）と同様、親 ISS-73 配下で起票 | **Computer** |
+| 起票タイミング | DA-9 下書き FC 前後、または DA-9 公開後 | **Computer** |
+| タイトル確定 | 「DevRev Issueの使い方」vs「DevRev ComputerでISSを起票する」 | **Computer / オーナー** |
+| ISS 本文に載せる acceptance | 骨子 §1〜§5 をカバー、匿名化、voice-check-try、前回 DA-9 リンク | **Computer** |
+
+起票後: Cursor は `blog-ideas.md` の `(未起票)` を ISS 番号に更新し、hack-plus `drafts/` に下書き執筆を開始する。

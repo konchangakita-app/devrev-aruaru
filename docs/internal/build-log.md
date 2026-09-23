@@ -571,3 +571,18 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 - ISS-72 実装: 本番 22 ページ（draft 除外）/ プレビュー 25 ページ（`npm run dev` or `PUBLIC_SHOW_DRAFTS=true`）
 
 **次**: Computer ターン（ガイド Step 6 追記・次の draft 準備）。Cursor は ISS 起票待ち。
+
+---
+
+### 2026-09-23 — DA-10 骨子作成・記事執筆 ISS は Computer 判断（Cursor）
+
+**きっかけ**: オーナー「DevRev Issue の説明と Computer による ISS 起票を DA-10 で書きたい。骨子を作り、ISS 起票は Computer に任せる」
+
+**実施**:
+- `docs/internal/blog-ideas.md` に **DA-10 候補**（見出し骨子 §1〜§6 + HACK+PLUS 案 + Computer 引き渡し表）を追加
+- DA-9 は公開パイプライン（下流）、DA-10 は Issue 説明＋起票（上流）の役割分担を明文化
+- 記事執筆 ISS: **`(未起票)`** — 起票要否・親 ISS・タイミング・タイトル確定は Computer 判断（Cursor は起票しない）
+
+**Computer ターン待ち**:
+- DA-10 執筆 ISS 起票（参考: 親 ISS-73、acceptance は blog-ideas DA-10 節）
+- 起票後 Cursor が hack-plus 下書き執筆へ
