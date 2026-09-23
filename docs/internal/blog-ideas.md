@@ -107,12 +107,13 @@
 
 ### DA-10 候補 — DevRev Issue の使い方と Computer による起票（2026-09-23）
 
-- **想定タイトル**: 「【とあるあるあるサイトをつくる】DevRev Issueの使い方」（副題なし。Computer 起票を主題にするなら「DevRev ComputerでISSを起票する」も可 — **Computer 起票時に確定**）
+- **想定タイトル**: 「【とあるあるあるサイトをつくる】ComputerとDevRev Issueで、あるある公開を管理する」（ISS-79の作業タイトル。記事公開時の最終タイトルはオーナー/Cursorが調整）
 - **記事の主題**: [DA-9](/articles/20260927-devrev-aruaru-publish-pipeline-da9) で触れた「タスク（Issue）」を、**DevRev Issue として正しく説明**する回。あわせて **あるある 1 件が生まれるとき Computer が ISS を起票する**流れまで踏み込む。DA-2/DA-4 で出てきた「Issue」との混同もここで整理する。
 - **前回との関係**: DA-9 = 公開パイプラインの**下流**（1 件ドッグフーディング）。DA-10 = 同じフローの**上流**（Issue とは何か → 起票 → entries draft → 実装 ISS へ受け渡し）。時系列は逆だが、読者は DA-9 の Step 1 を詳しく知りたい状態で読む想定。
-- **記事執筆 ISS**: `(未起票)` — **起票要否・親 ISS・タイミングは Computer 判断**（Cursor は起票しない）
-- **ステータス**: `idea`（骨子のみ。DA-9 下書き公開後または並行で執筆可）
+- **記事執筆 ISS**: ISS-79（hack-plus / PROD-2、親: ISS-73、DA-9執筆 ISS-78 と関連記事リンク済み。起票・リンクは Computer）
+- **ステータス**: `idea`（骨子のみ。執筆 ISS は triage。DA-9 下書き公開後または並行で執筆可）
 - **設計メモ**: [`publish-workflow-notes.md`](./publish-workflow-notes.md), [`aruaru-draft-guide.md`](./aruaru-draft-guide.md)
+- **Issue解説用の図表・ファクトチェック**: [`da10-devrev-issue-reference.md`](./da10-devrev-issue-reference.md)（公式仕様とこのプロジェクト固有の運用を区別した執筆資料）
 - **検証ログ（執筆時参照・記事では匿名化）**: ISS-70 設計、ISS-71 公開、ISS-72 draft 対応、ISS-71-draft-gap
 - **匿名化**: 公開記事では ISS 番号・組織 slug・リポジトリ実名・PAT 詳細なし。DevRev / Issue / Computer / Part 等の**製品用語は本シリーズ例外で使ってよい**（`OPERATIONS.md` §2 連載例外）。
 
@@ -176,7 +177,7 @@
 
 ---
 
-**§5 Computer が ISS を起票するとき（実務）
+**§5 Computer が ISS を起票するとき（実務）**
 
 - **いつ起票するか**: あるあるネタ確定＋draft 追記のタイミング（内容とタスクを同時に残す）
 - **誰が起票するか**: DevRev Computer（プラットフォーム上の AI）。Cursor は依頼・検証のみ
@@ -186,23 +187,23 @@
 
 ---
 
-**§6 DA-9 との接続 — パイプライン全体像（再掲）
+**§6 DA-9 との接続 — パイプライン全体像（再掲）**
 
 - DA-9 のフロー図を **Issue 用語付き** で再掲（短く）
 - 「Issue の説明（DA-10）→ 公開の実践（DA-9）」の順で読むと全体がつながる — PLUS で DA-9 へリンク
 
 ---
 
-**HACK+PLUS（案）
+**HACK+PLUS（案）**
 
 - **HACK**: DevRev Issue = 作業＋伝言板＋GitHub 連動の三役；Computer 起票で Cursor は実装に集中
 - **PLUS**: 親子 ISS の付け方はまだ手探り；記事執筆 ISS も Computer 起票；連載は DA-10 で一区切り or サイト機能ネタは別 ISS で続く
 
 ---
 
-#### Computer への引き渡し（ISS 起票判断）
+#### Computer への引き渡し（ISS 起票結果）
 
-Cursor は本骨子を `blog-ideas.md` に記録した。**以下は Computer 判断に委ねる**:
+Cursor が本骨子を記録し、Computer が ISS-79 を起票した（親 ISS-73、DA-9執筆 ISS-78 と関連記事リンク）。以下は引き渡し時の判断記録:
 
 | 判断項目 | Cursor の提案（参考） | 決定者 |
 | --- | --- | --- |
@@ -211,4 +212,4 @@ Cursor は本骨子を `blog-ideas.md` に記録した。**以下は Computer �
 | タイトル確定 | 「DevRev Issueの使い方」vs「DevRev ComputerでISSを起票する」 | **Computer / オーナー** |
 | ISS 本文に載せる acceptance | 骨子 §1〜§5 をカバー、匿名化、voice-check-try、前回 DA-9 リンク | **Computer** |
 
-起票後: Cursor は `blog-ideas.md` の `(未起票)` を ISS 番号に更新し、hack-plus `drafts/` に下書き執筆を開始する。
+起票結果は上記に反映済み。Cursor は DA-9 との公開順・「前回」表現の整合を確認し、hack-plus `drafts/` に下書き執筆を開始する。
