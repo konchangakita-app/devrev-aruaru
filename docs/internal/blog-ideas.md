@@ -40,8 +40,9 @@
   - **stretched link** でカード全体クリック、タグは独立
   - リンクホバーの黄色下線 → `--link-underline`（muted）に統一
 - **匿名化**: コミット/Issue/ポート/本番 URL（完成節以外）は一般化
-- **ステータス**: triage（DA-5公開後に着手）
+- **ステータス**: in_development（執筆開始 2026-09-24）
 - **DevRev Issue**: ISS-75（親: ISS-73）
+- **ブランチ**: `hack-plus` `feature/ISS-75-da6-review`
 
 ### DA-7 候補 — 検索をどう実装するか（Fuse.js vs Pagefind）（2026-09-16）
 

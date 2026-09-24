@@ -605,3 +605,18 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 - `/favicon.ico` 200 `image/x-icon`、MS Windows icon resource（16/32/48/64）を確認
 - HTML に ICO/SVG の `<link rel="icon">` 2件を確認
 - ブラウザタブでも吹き出し案の favicon が表示されることを確認
+
+---
+
+### 2026-09-24 — DA-6 執筆準備（Cursor）
+
+**きっかけ**: オーナー「hack-plus であるある記事 6 本目対応。ブランチ切って準備」
+
+**実施**:
+- hack-plus `feature/ISS-75-da6-review` を `main` から作成
+- 下書き `20260925-devrev-aruaru-hero-ux-da6.md` に Before/After スクショ3枚を埋め込み
+- 画像: `da6-before-top.png`（phase-1-2）/ `da6-top-light.png`・`da6-top-dark.png`（phase-70）
+- 検証ログ `docs/internal/verification/ISS-75-da6-draft-2026-09-24.md` を起票
+- `blog-ideas.md` DA-6 を `in_development` に更新
+
+**次**: draft-content-reviewer → オーナー確認 → ファクトチェック → 公開
