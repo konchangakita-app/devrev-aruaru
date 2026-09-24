@@ -586,3 +586,22 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 **Computer ターン待ち**:
 - DA-10 執筆 ISS 起票（参考: 親 ISS-73、acceptance は blog-ideas DA-10 節）
 - 起票後 Cursor が hack-plus 下書き執筆へ
+
+---
+
+### 2026-09-24 — favicon を吹き出し案に差し替え（Cursor）
+
+**きっかけ**: オーナーが比較画像 `devrev-aruaru-favicon-a-options.png` の右案（黒地＋黄吹き出し＋「あ」）を採用
+
+**実施**:
+- `docs/internal/design-mocks/devrev-aruaru-favicon-chat.svg` を `web/public/favicon.svg` に適用
+- 16/32/48/64px を含む正しい ICO を生成し `web/public/favicon.ico` を差し替え（旧ファイルは PNG 偽装だった）
+- `BaseLayout.astro` に ICO フォールバック `<link rel="icon" href="/favicon.ico" sizes="any" />` を追加
+- `npm run build` で `dist/favicon.svg` / `dist/favicon.ico` の出力を確認
+
+**検証（2026-09-24 ローカルコンテナ）**:
+- `podman compose up --build -d` → http://localhost:3101 で Astro dev 起動
+- `/favicon.svg` 200 `image/svg+xml`、黒地＋黄吹き出し＋「あ」の内容を確認
+- `/favicon.ico` 200 `image/x-icon`、MS Windows icon resource（16/32/48/64）を確認
+- HTML に ICO/SVG の `<link rel="icon">` 2件を確認
+- ブラウザタブでも吹き出し案の favicon が表示されることを確認
