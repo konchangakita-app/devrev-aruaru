@@ -59,9 +59,10 @@
   - PoC の比較観点（threshold、インデックスサイズ、Astro ビルド連携）
   - **UI 仕上げ**: 2ゾーン色分け → 外枠カード廃止 → ヒーロー同型ピル検索 + `search-hit` カード（2026-09-21）
 - **匿名化**: Issue ID・ポート・本番 URL
-- **ステータス**: triage（DA-5公開後に着手）
+- **ステータス**: in_development（執筆開始 2026-09-28）
 - **実装 Issue**: ISS-69（completed）
 - **記事執筆 Issue**: ISS-76（親: ISS-73）
+- **ブランチ**: `hack-plus` `feature/ISS-76-da7-review`（PR #4 Draft）
 
 ### DA-8 候補 — 詳細ページを「読むモード」にする（2026-09-21）
 

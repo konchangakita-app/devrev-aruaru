@@ -620,3 +620,18 @@ design-log / 2026-08-26 decisions より。実装タスクのメモ（完了し�
 - `blog-ideas.md` DA-6 を `in_development` に更新
 
 **次**: draft-content-reviewer → オーナー確認 → ファクトチェック → 公開
+
+---
+
+### 2026-09-28 — DA-7 下書き着手（Cursor）
+
+**きっかけ**: オーナー「7本目の記事を下書きから」。hack-plus は DevRev GitHub 連携外のため ISS-76 は手動更新済み。
+
+**実施**:
+- hack-plus `feature/ISS-76-da7-review` / Draft PR #4（連載表 DA-7 `draft` は先行コミット済み）
+- 下書き `20260926-devrev-aruaru-search-da7.md` を改稿（です・ます調、ビルド手順 `cd web`、スクショ3枚）
+- 画像: `da7-before-search.png`（phase-69）/ `da7-search-light.png`・`da7-search-results-light.png`（phase-70）
+- 検証ログ `docs/internal/verification/ISS-76-da7-draft-2026-09-28.md`
+- `blog-ideas.md` DA-7 を `in_development` に更新
+
+**次**: draft-content-reviewer → オーナー確認 → ファクトチェック → 公開
