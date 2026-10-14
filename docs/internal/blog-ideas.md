@@ -79,7 +79,7 @@
   - タグを本文上に移動した理由
   - 番号付きタイムライン案は不採用（シンプル優先）
 - **匿名化**: Issue ID・ポート・本番 URL
-- **ステータス**: published（hack-plus 公開準備 2026-10-14、PR マージ待ち）
+- **ステータス**: published（hack-plus PR #5 マージ 2026-10-14）
 - **実装 Issue**: ISS-69（completed、検索と同ブランチで実装）
 - **記事執筆 Issue**: ISS-77（親: ISS-73）
 - **ブランチ**: `hack-plus` `feature/ISS-77-da8-review`
