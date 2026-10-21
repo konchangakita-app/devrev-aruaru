@@ -111,11 +111,13 @@
 - **実装 Issue**: ISS-70（初回ドッグフーディング完走: ISS-71 公開 + ISS-72 draft 対応、2026-09-22）
 - **記事執筆 Issue**: ISS-78（親: ISS-73）
 - **DA-10 への橋渡し**: Issue の概念・起票の詳細は DA-10。下書き PLUS は「次回」に差し替え予定
+- **外部投稿フローの検討（2026-10-19、構想・未実走）**: 外部の標準入口はGitHub Issueでの提案、慣れた投稿者は直接PRも可。採用判断後にComputerが裏取り・draft・DevRev作業ISSを用意し、CursorがPRを扱う。オーナーは後からPRコメントにISS番号を書いて連携する方法を試したいが、後付けの関連付け・自動ステージ遷移は未検証。DA-9では実走したComputer起点と外部経路の構想を明確に分けて書く。確認メモ: [`verification/2026-10-19-external-intake-computer-confirm.md`](./verification/2026-10-19-external-intake-computer-confirm.md)。
 
 ### DA-10 候補 — DevRev Issue の使い方と Computer による起票（2026-09-23）
 
 - **想定タイトル**: 「【とあるあるあるサイトをつくる】ComputerとDevRev Issueで、あるある公開を管理する」（ISS-79の作業タイトル。記事公開時の最終タイトルはオーナー/Cursorが調整）
-- **記事の主題**: [DA-9](/articles/20260927-devrev-aruaru-publish-pipeline-da9) で触れた「タスク（Issue）」を、**DevRev Issue として正しく説明**する回。あわせて **あるある 1 件が生まれるとき Computer が ISS を起票する**流れまで踏み込む。DA-2/DA-4 で出てきた「Issue」との混同もここで整理する。
+- **記事の主題**: DA-9 で触れた「タスク（Issue）」を、**DevRev Issue として正しく説明**する回。あわせて **あるある 1 件が生まれるとき Computer が ISS を起票する**流れまで踏み込む。DA-2/DA-4 で出てきた「Issue」との混同もここで整理する。DA-9の公開URLが確定するまで公開済みのリンクとして扱わない。
+- **外部入口の整合（2026-10-19）**: 標準は投稿用GitHub Issue、直接PRは任意。どちらも採用後に内部のDevRev IssueをComputerが起票する。外部起点は未実走、PRコメントによる後付け連携も未検証。比較表・フロー図をこの区別に合わせる（確認メモはDA-9節から参照）。
 - **前回との関係**: DA-9 = 公開パイプラインの**下流**（1 件ドッグフーディング）。DA-10 = 同じフローの**上流**（Issue とは何か → 起票 → entries draft → 実装 ISS へ受け渡し）。時系列は逆だが、読者は DA-9 の Step 1 を詳しく知りたい状態で読む想定。
 - **記事執筆 ISS**: ISS-79（hack-plus / PROD-2、親: ISS-73、DA-9執筆 ISS-78 と関連記事リンク済み。起票・リンクは Computer）
 - **ステータス**: `idea`（骨子のみ。執筆 ISS は triage。DA-9 下書き公開後または並行で執筆可）

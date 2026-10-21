@@ -13,12 +13,12 @@
 | 項目 | 方針 |
 |---|---|
 | Issue 管理 | **DevRev に一本化する** |
-| GitHub Issue | **使わない**（起票・運用しない） |
+| GitHub Issue | **開発タスク管理には使わない**。外部からの「あるある提案」は `OPERATIONS.md` §11 の投稿テンプレートで受け付ける |
 | GitHub | コード（ブランチ / PR / コミット）専用の場として使う |
 | 利用スナップイン | GitHub for DevRev スナップイン |
 | 連携方式 | ブランチ名・コミット・PR に DevRev の Issue ID（`ISS-XXX`）を記載する |
 
-**Issue の起票・優先度づけ・トリアージ・ステータス管理は、すべて DevRev 側で行います。GitHub 側で Issue を立てないでください。**
+**開発・公開の作業Issueの起票・優先度づけ・トリアージ・ステータス管理はDevRev側で行います。GitHub Issueを開発タスクとして立てないでください。** 外部からのあるある投稿は `OPERATIONS.md` §11 に従い、GitHub Issueを提案の受け口として利用します。採用後の公開作業はComputerがDevRev上で管理します。GitHub IssuesスナップインによるGitHub IssueのDevRev ISS取り込み設定は完了済みで、取り込み側ISSと公開作業の関係は初回実例で確認します。
 
 ---
 
@@ -31,7 +31,7 @@ DevRev は開発作業を 2 つのレイヤーに分けて管理します。
 
 GitHub for DevRev スナップインは、GitHub の PR を DevRev の **code change オブジェクト**として取り込みます。PR は「DevRev Issue に写し替えるもの」ではなく、「Issue に紐づく実装エビデンス」として別オブジェクトとして扱われます。
 
-このため、**GitHub Issue と DevRev Issue の同期は行いません**。連携するのは GitHub の「コード活動（ブランチ・コミット・PR）」であり、GitHub Issue ではありません。
+**開発・公開作業の管理先はDevRev Issueです。** 外部の投稿・提案はGitHub Issueで受け付けます。GitHub IssuesスナップインでGitHub IssueをDevRev ISSに取り込む設定は完了していますが、投稿内容の採用・公開を自動化するものと混同しません。GitHub for DevRevによるブランチ・コミット・PRの連携は、GitHub Issuesの取り込みとは別です。
 
 ### この設計を採用する理由
 
@@ -47,7 +47,7 @@ GitHub for DevRev スナップインは、GitHub の PR を DevRev の **code ch
 4. **トレーサビリティの粒度（1 Issue : N code change）**
    1 つの Issue に複数の PR・複数リポジトリの変更が紐づくのが通常。code change を独立オブジェクトにすることで、PR ごとに作成者・レビュアー・承認・変更行数 / ファイルまで記録し、Issue に複数ぶら下げられる。
 
-> 補足: 「GitHub Issue そのものを DevRev に持ち込みたい / 移行したい」ニーズには、別スナップイン **GitHub Issues AirSync**（Issue 双方向同期）が存在します。ただし本リポジトリでは **DevRev をメインとし、GitHub Issue は使わない** 方針のため、AirSync は利用しません。
+> 補足: GitHub IssuesスナップインによるGitHub Issue → DevRev ISS取り込みは設定済みです。初回投稿では取り込まれたISSと、採用後の公開作業を管理するISSの関係を確認します。公開採否は人が判断し、サイト掲載は別途レビューを経て行います。
 
 ---
 
@@ -55,7 +55,7 @@ GitHub for DevRev スナップインは、GitHub の PR を DevRev の **code ch
 
 ### 3.1 Issue は DevRev で起票する
 - 作業を始める前に、必ず DevRev 側で Issue（`ISS-XXX`）を起票する。
-- GitHub Issue は起票しない。
+- 開発・公開の作業をGitHub Issueとして起票しない。外部投稿は `OPERATIONS.md` §11 のGitHub Issueテンプレートで受け付ける。
 
 ### 3.2 ブランチ名に Issue ID を含める
 - ブランチ名に対象 Issue ID を含めること。
@@ -107,7 +107,7 @@ GitHub for DevRev スナップインは、GitHub の PR を DevRev の **code ch
 
 ## 6. まとめ
 
-本リポジトリでは、**DevRev を唯一の Issue 管理基盤**とし、GitHub はコードの場として使います。開発者は「DevRev で Issue を起票し、ブランチ / コミット / PR に Issue ID を書く」だけでよく、あとはスナップインがステージ遷移と実装記録（code change）を自動化します。これにより、顧客課題から実装までを 1 本のグラフで追跡でき、二重管理を防げます。
+本リポジトリでは、**DevRev を唯一の開発・公開作業のIssue管理基盤**とし、GitHub は外部提案の受け口とコード変更の場として使います。開発者は「DevRev で作業Issueを起票し、ブランチ / コミット / PR に Issue ID を書く」ことで、スナップインによるステージ遷移と実装記録（code change）に結びつけます。一般ユーザーは `OPERATIONS.md` §11 のGitHub Issueから提案でき、採用後の内部作業とは区別します。
 
 ---
 
